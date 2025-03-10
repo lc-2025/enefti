@@ -1,1 +1,5 @@
+cd backend
 npm run lint
+cd ..
+cd frontend
+#npm run lint

@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 // Constants
 /**
  * Getting Environment variables via `dotenv`
