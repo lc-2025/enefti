@@ -13,7 +13,7 @@ import { MESSAGE } from 'src/utils/constants';
  */
 const setError = (message: string, code: string, arg?: string): void => {
   throw new GraphQLError(message, {
-    extensions: { code, argumentName: arg  },
+    extensions: { code, argumentName: arg },
   });
 };
 

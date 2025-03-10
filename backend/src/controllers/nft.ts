@@ -84,7 +84,8 @@ const patchNft = async (
       // Updates and returns the record with new values
       .findOneAndUpdate({ id }, { owner }, { new: true })
       .exec()
-      .then((data) => { console.log(data)
+      .then((data) => {
+        console.log(data);
         // Data check
         if (!data) {
           // Async error handling via custom error middleware

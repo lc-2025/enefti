@@ -18,7 +18,7 @@ const MESSAGE = {
   CONNECTION_ERROR: 'Cannot connect to DB.',
   SEED_DUMP: 'DB dumped. Populating with fresh data...',
   SEED_DONE: 'DB populated. Closing connection...',
-  INPUT: 'BAD_USER_INPUT'
+  INPUT: 'BAD_USER_INPUT',
 };
 const EVENT = {
   ERROR: 'error',
