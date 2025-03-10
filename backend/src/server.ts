@@ -1,8 +1,16 @@
-import express from 'express';
+import express, { json } from 'express';
 import compression from 'compression';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import gql from 'graphql-tag';
+import { ApolloServer } from '@apollo/server';
+import { buildSubgraphSchema } from '@apollo/subgraph';
+import { expressMiddleware } from '@apollo/server/express4';
+import { readFileSync } from 'fs';
 import router from './routes';
+import resolvers from './graphql/resolvers';
+import connectDb from './database';
+import middlewares from './middlewares';
 import { PORT_DEFAULT, PORT, EVENT, ROUTES, MESSAGE } from './utils/constants';
 
 // Server
@@ -10,27 +18,54 @@ const app = express();
 
 app.set('port', PORT ?? PORT_DEFAULT);
 // Middlewares
-// Compression (requests body)
-app.use(compression());
-// CORS
-app.use(cors());
-// Parsing (request body)
-app.use(bodyParser.json());
 app.use(
-  bodyParser.urlencoded({
-    extended: false,
-  }),
+  // Compression (requests body)
+  compression(),
+  // CORS
+  cors(),
+  // Parsing (request body)
+  bodyParser.json(),
+  // Router
+  router,
+  // Error
+  middlewares.error,
 );
-// Router
-app.use(router);
 
-// Starting server
-const server = app
-  .listen(app.get('port'), () => {
-    console.log(`${MESSAGE.LISTEN} ${ROUTES.BASE_URL}:${app.get('port')}`);
-  })
-  .on(EVENT.ERROR, (error) => {
-    throw error;
+/**
+ * @description Server starting
+ * @author Luca Cattide
+ * @date 10/03/2025
+ */
+const server = async (): Promise<void> => {
+  await connectDb();
+
+  // GraphQL
+  const typeDefs = gql(
+    readFileSync(`${__dirname}/graphql/schema.graphql`, {
+      encoding: 'utf-8',
+    }),
+  );
+  const apollo = new ApolloServer({
+    schema: buildSubgraphSchema({ typeDefs, resolvers: resolvers.nft }),
   });
 
-export default server;
+  await apollo.start();
+
+  app.use(
+    ROUTES.API.GRAPHQL,
+    cors(),
+    json(),
+    // @ts-ignore
+    expressMiddleware(apollo),
+  );
+  // Start
+  app
+    .listen(app.get('port'), () => {
+      console.log(`${MESSAGE.LISTEN} ${ROUTES.BASE_URL}:${app.get('port')}`);
+    })
+    .on(EVENT.ERROR, (error) => {
+      throw error;
+    });
+};
+
+export default server();

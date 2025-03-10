@@ -1,0 +1,18 @@
+# GraphQL Schema
+type Query {
+  nfts: [Nft]
+  nft(id: ID!): Nft
+}
+
+type Mutation {
+  updateNft(id: ID!, owner: String!): Nft
+}
+
+type Nft {
+  id: ID
+  name: String
+  image: String
+  description: String
+  price: Float
+  owner: String
+}
