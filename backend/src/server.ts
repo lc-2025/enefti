@@ -1,13 +1,13 @@
 import express, { json } from 'express';
+import { Server } from 'http';
 import compression from 'compression';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import gql from 'graphql-tag';
 import { ApolloServer } from '@apollo/server';
 import { buildSubgraphSchema } from '@apollo/subgraph';
 import { expressMiddleware } from '@apollo/server/express4';
-import { readFileSync } from 'fs';
 import router from './routes';
+import typeDefs from './graphql/typeDefs';
 import resolvers from './graphql/resolvers';
 import connectDb from './database';
 import middlewares from './middlewares';
@@ -34,17 +34,13 @@ app.use(
 /**
  * @description Server starting
  * @author Luca Cattide
- * @date 10/03/2025
+ * @date 11/03/2025
+ * @returns {*}  {Promise<Server>}
  */
-const server = async (): Promise<void> => {
+const startServer = async (): Promise<Server> => {
   await connectDb();
 
   // GraphQL
-  const typeDefs = gql(
-    readFileSync(`${__dirname}/graphql/schema.graphql`, {
-      encoding: 'utf-8',
-    }),
-  );
   const apollo = new ApolloServer({
     schema: buildSubgraphSchema({ typeDefs, resolvers: resolvers.nft }),
   });
@@ -58,14 +54,19 @@ const server = async (): Promise<void> => {
     // @ts-ignore
     expressMiddleware(apollo),
   );
+
   // Start
-  app
+  const server = app
     .listen(app.get('port'), () => {
       console.log(`${MESSAGE.LISTEN} ${ROUTES.BASE_URL}:${app.get('port')}`);
     })
     .on(EVENT.ERROR, (error) => {
       throw error;
     });
+
+  return server;
 };
 
-export default server();
+const server = startServer();
+
+export default server;

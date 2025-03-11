@@ -38,5 +38,50 @@ const ROUTES = {
     },
   },
 };
+const ID = '67cf2395af3c7323d084dd3c';
+const OWNER = '0x123456789';
+const TEST = {
+  ID,
+  OWNER,
+  QUERY: {
+    NFTS: {
+      query: `
+        query Nfts {
+          nfts {
+           id
+         }
+        }
+      `,
+    },
+    NFT: {
+      query: `
+        query Nft {
+          nft(id: "${ID}") {
+            id
+          }
+        }
+      `,
+    },
+    NFT_UPDATE: {
+      query: `
+        mutation UpdateNft {
+          updateNft(id: "${ID}", owner: "${OWNER}") {
+            id
+            owner
+          }
+        }
+      `,
+    },
+    NFT_BAD: {
+      query: `
+        query Nft {
+          nft(id: "foo") {
+            id
+          }
+        }
+      `,
+    },
+  },
+};
 
-export { NODE_ENV, PORT_DEFAULT, PORT, MESSAGE, EVENT, ROUTES };
+export { NODE_ENV, PORT_DEFAULT, PORT, MESSAGE, EVENT, ROUTES, TEST };

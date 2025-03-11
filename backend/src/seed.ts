@@ -23,7 +23,7 @@ const seed = async (): Promise<void> => {
 
   /**
    * CoinGecko API Data-Fetching
-   * Getting random Crypto prices to populate mocked data
+   * Getting random crypto prices to populate mocked data
    */
   axios
     .get(ROUTES.API.COINGECKO)
