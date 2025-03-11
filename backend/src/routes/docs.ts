@@ -7,6 +7,10 @@ import docs from '../../docs/openapi.json';
 const docsRouter = Router();
 
 // Routes - NFT
-docsRouter.use(ROUTES.API.DOCS.REST, swaggerUi.serve, swaggerUi.setup(docs, { explorer: true }));
+docsRouter.use(
+  ROUTES.API.DOCS.REST,
+  swaggerUi.serve,
+  swaggerUi.setup(docs, { explorer: true }),
+);
 
 export default docsRouter;
