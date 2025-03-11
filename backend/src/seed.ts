@@ -46,4 +46,4 @@ const seed = async (): Promise<void> => {
 
 seed()
   .then(() => console.log(201))
-  .catch((error) => console.log(error));
+  .catch((error) => console.error(error));
