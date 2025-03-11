@@ -23,7 +23,7 @@
     "test": "jest --watch --silent=false",
     "test:ci": "jest",
     "build": "tsc --project ./tsconfig.json",
-    "start": "cross-env NODE_ENV=production node ./dist/server.js",
+    "start": "cross-env NODE_ENV=production node ./dist/src/server.js",
     "seed": "ts-node --project tsconfig.json ./src/seed.ts"
   },
   "dependencies": {
