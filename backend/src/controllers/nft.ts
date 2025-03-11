@@ -26,6 +26,16 @@ const getNfts = (req: Request, res: Response, next: NextFunction): void => {
     .catch((error) => next(error));
 };
 
+/**
+ * @description NFT getter
+ * Returns a specific NFT by ID
+ * @author Luca Cattide
+ * @date 11/03/2025
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ * @returns {*}  {Promise<void>}
+ */
 const getNft = async (
   req: Request,
   res: Response,

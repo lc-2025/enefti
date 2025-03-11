@@ -3,10 +3,9 @@ import TNFT from '../types/models/NFT';
 
 // Models - NFT
 const nftSchema = new Schema<TNFT>({
-  name: String,
+  name: { type: String, required: true },
   image: String,
   description: String,
-  // Price in ETH
   price: Number,
   owner: String,
 });

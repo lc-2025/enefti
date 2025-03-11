@@ -1,0 +1,213 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "eNefti Backend - OpenAPI 3.0",
+    "description": "NFT E-Commerce backend demo - © Luca Cattide 2021. All Rights reserved.",
+    "contact": {
+      "email": "lucacattide@pm.me"
+    },
+    "license": {
+      "name": "UNLICENSED"
+    },
+    "version": "0.1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "api",
+      "description": "REST API"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Home",
+        "description": "Verifies that the server is running",
+        "operationId": "home",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/nfts": {
+      "get": {
+        "tags": [
+          "api"
+        ],
+        "summary": "NFTs getter",
+        "description": "Returns all the NFTs",
+        "operationId": "getNfts",
+        "responses": {
+          "200": {
+            "description": "NFTs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Nft"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existing data"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/nft": {
+      "get": {
+        "tags": [
+          "api"
+        ],
+        "summary": "NFT getter",
+        "description": "Returns a specific NFT by ID",
+        "operationId": "getNft",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "NFT ID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "NFT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Nft"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing data: user input"
+          },
+          "404": {
+            "description": "No existing data"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "api"
+        ],
+        "summary": "NFT patcher",
+        "description": "Updates the NFT owner according to its last purchase",
+        "operationId": "patchNft",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "NFT ID"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "NFT owner wallet address",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "owner": {
+                    "type": "string",
+                    "description": "NFT owner wallet address",
+                    "example": "0x123456789"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "NFT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Nft"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing data: user input"
+          },
+          "404": {
+            "description": "No existing data"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Nft": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "NFT ID",
+            "example": 123456789
+          },
+          "name": {
+            "type": "string",
+            "description": "NFT name",
+            "example": "NFT #1 - Bitcoin"
+          },
+          "image": {
+            "type": "string",
+            "description": "NFT image",
+            "example": "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png?1696501400"
+          },
+          "description": {
+            "type": "string",
+            "description": "NFT description",
+            "example": "A unique NFT inspired by Bitcoin."
+          },
+          "price": {
+            "type": "number",
+            "description": "NFT price",
+            "example": 10
+          },
+          "owner": {
+            "type": "string",
+            "description": "Owner wallet address",
+            "example": "0x123456789"
+          }
+        }
+      }
+    }
+  }
+}

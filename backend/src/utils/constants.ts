@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import path from 'path';
 
 // Constants
 /**
@@ -35,6 +36,10 @@ const ROUTES = {
     NFT: {
       GET: '/nft',
       GET_ALL: '/nfts',
+    },
+    DOCS: {
+      BASE_PATHNAME: '/docs',
+      REST: '/rest',
     },
   },
 };
