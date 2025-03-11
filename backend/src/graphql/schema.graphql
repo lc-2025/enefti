@@ -1,4 +1,12 @@
 # GraphQL Schema
+# Interfaces
+interface Token {
+  id: ID!
+  name: String!
+  price: Float
+}
+
+# Types
 type Query {
   nfts: [Nft]
   nft(id: ID!): Nft
@@ -8,9 +16,9 @@ type Mutation {
   updateNft(id: ID!, owner: String!): Nft
 }
 
-type Nft {
-  id: ID
-  name: String
+type Nft implements Token {
+  id: ID!
+  name: String!
   image: String
   description: String
   price: Float

@@ -6,7 +6,7 @@ import 'dotenv/config';
  * Using environmental-config for per-project generic settings
  * as best-practice
  */
-const { NODE_ENV, BASE_URL, PORT, DB_NAME, DB_USER } = process.env;
+const { NODE_ENV, BASE_URL, PORT, DB_NAME, DB_USER, DB_PASSWORD } = process.env;
 const PORT_DEFAULT = 4000;
 const MESSAGE = {
   LISTEN: 'Server started and listening in',
@@ -29,7 +29,7 @@ const ROUTES = {
   API: {
     BASE_PATHNAME: '/api',
     GRAPHQL: '/graphql',
-    DATABASE: `mongodb+srv://admin:${DB_USER}/?retryWrites=true&w=majority&appName=${DB_NAME}`,
+    DATABASE: `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_NAME}.qgtlq.mongodb.net/?retryWrites=true&w=majority&appName=${DB_NAME}`,
     COINGECKO:
       'https://api.coingecko.com/api/v3/coins/markets?vs_currency=eth&per_page=100&page=1',
     NFT: {

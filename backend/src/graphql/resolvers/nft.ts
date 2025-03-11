@@ -41,7 +41,7 @@ const resolversNft: GraphQLResolverMap<any> = {
 
       const { id, owner } = args;
       const nft = await nftModel
-        .findOneAndUpdate({ id }, { owner }, { new: true })
+        .findOneAndUpdate({ _id: id }, { owner }, { new: true })
         .exec();
 
       // Data check
