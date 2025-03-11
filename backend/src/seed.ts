@@ -36,7 +36,7 @@ const seed = async (): Promise<void> => {
 
       console.log(MESSAGE.SEED_DONE);
     })
-    .catch((error) => console.log(error))
+    .catch((error) => console.error(error))
     .finally(async () => {
       await connection.close();
 
