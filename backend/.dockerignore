@@ -1,0 +1,14 @@
+coverage
+docs
+node_modules
+release
+.dockerignore
+.env.dist
+.eslintrc.json
+.gitignore
+.prettierignore
+.prettierrc
+docker-compose.yml
+jest.config.js
+nodemon.json
+README.md
