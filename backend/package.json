@@ -22,7 +22,7 @@
     "lint": "prettier --write . && prettier --check .",
     "test": "jest --watch --silent=false",
     "test:ci": "jest",
-    "build": "tsc --project ./tsconfig.json",
+    "build": "tsc --project ./tsconfig.json && cp ./src/graphql/schema.graphql ./dist/src/graphql/",
     "start": "cross-env NODE_ENV=production node ./dist/src/server.js",
     "seed": "ts-node --project tsconfig.json ./src/seed.ts"
   },
