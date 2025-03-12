@@ -13,7 +13,7 @@ env:
 jobs:
   # Workflow connection
   ci:
-    uses: .github/workflows/ci.yml@main
+    uses: lc-2025/enefti/.github/workflows/ci.yml@main
   build-push-image:
     runs-on: ubuntu-latest
     # Pipeline Check
