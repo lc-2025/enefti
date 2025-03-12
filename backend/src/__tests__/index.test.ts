@@ -1,5 +1,6 @@
 import { Server } from 'http';
 import request from 'supertest';
+import mongoose from 'mongoose';
 import server from '../server';
 import { ROUTES } from '../utils/constants';
 
@@ -22,7 +23,7 @@ describe('Backend Unit Test', () => {
   };
 
   // Setup
-  beforeEach(async () => {
+  beforeAll(async () => {
     await closeConnection();
   });
   // Tests
@@ -37,5 +38,6 @@ describe('Backend Unit Test', () => {
   // Teardown
   afterEach(async () => {
     await closeConnection();
-  });
+  })
+  afterAll(() => mongoose.connection.close());
 });
