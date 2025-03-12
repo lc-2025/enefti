@@ -2,10 +2,10 @@ name: eNefti CI
 run-name: eNefti Content-Integration
 on:
   push:
-    branches: [ "main" ]
+    branches: [main]
   # For collaborations
   pull_request:
-    branches: [ "main" ]
+    branches: [main]
 jobs:
   setup-build-test:
     runs-on: ubuntu-latest

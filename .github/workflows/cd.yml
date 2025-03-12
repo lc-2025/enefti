@@ -5,6 +5,7 @@ on:
   workflow_run:
     workflows: [eNefti CI]
     types: [completed]
+    branches: [main]
 env:
   # GitHub Packages
   REGISTRY: ghcr.io
@@ -50,7 +51,8 @@ jobs:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
-  success:
+  failure:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps:
-      - run: echo "Image pushed"
+      - run: echo 'The triggering workflow failed'
