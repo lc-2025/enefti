@@ -16,6 +16,12 @@ jobs:
       with:
         node-version: '18.x'
         cache: 'npm'
+    - name: Allow MongoDB Atlas IP
+      uses: textbook/atlas-ip@v1.1.0
+      with:
+        atlas-private-key: ${{ secrets.ATLAS_PRIVATE_KEY }}
+        atlas-public-key: ${{ secrets.ATLAS_PUBLIC_KEY }}
+        group-id: ${{ vars.ATLAS_GROUP_ID }}
     - name: Installing dependencies, building packages and test applications
       run: |
         npm run setup
