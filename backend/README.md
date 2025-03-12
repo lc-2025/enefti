@@ -10,8 +10,8 @@ A server application that provides **REST/GraphQL API** to access and manage the
 
 ## API Documentation
 
-The **REST API** documentation is provieded via _Swagger_ at [dedicated endpoint (see)](https://enefti-sha256.onrender.com/docs/rest)
-The **GraphQL API** documentation is accessible via _Apolllo Studio_ at [dedicated endpoint (see)](https://enefti-sha256.onrender.com/graphql)
+- The **REST API** documentation is provieded via _Swagger_ at [dedicated endpoint (see)](https://enefti-sha256.onrender.com/docs/rest)
+- The **GraphQL API** documentation is accessible via _Apolllo Studio_ at [dedicated endpoint (see)](https://enefti-sha256.onrender.com/graphql)
 
 ## Stack
 
@@ -61,6 +61,7 @@ The **GraphQL API** documentation is accessible via _Apolllo Studio_ at [dedicat
 ### Deployment
 
 - Docker/Compose
+- GitHub Container Registry
 - Render
 
 ### Data storage
@@ -141,7 +142,8 @@ docker-compose stop
 
 ## Deploy
 
-TBD
+_eNefti Backend_ is integrated and delivered to production via _GitHub Actions_ workflows pipeline, where the server is being set up, tested, built and containerized with _Docker_.
+Then the _Docker_ image is hosted on _GitHub Container Registry_ and deployed on _Render_ production environment available at https://enefti-sha256.onrender.com
 
 ## Storage
 
