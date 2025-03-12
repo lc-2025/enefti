@@ -3,7 +3,7 @@
 
 NFTs E-Commerce demo.
 
-![GitHub Actions](https://github.com/lc-2025/enefti/actions/workflows/enefty.yml/badge.svg)
+[![eNefti CI](https://github.com/lc-2025/enefti/actions/workflows/ci.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/ci.yml) [![eNefti CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
 
 ## About
 
