@@ -15,6 +15,18 @@ LABEL org.opencontainers.image.licenses=UNLICENSED
 WORKDIR /enefti
 # Production dependencies stage
 FROM base as deps
+# Build Arguments
+ARG BASE_URL
+ARG PORT
+ARG DB_NAME
+ARG DB_USER
+ARG DB_PASSWORD
+# Environment Variables
+ENV BASE_URL ${BASE_URL}
+ENV PORT ${PORT}
+ENV DB_NAME ${DB_NAME}
+ENV DB_USER ${DB_USER}
+ENV DB_PASSWORD ${DB_PASSWORD}
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.npm to speed up subsequent builds.
 # Leverage bind mounts to package.json and package-lock.json to avoid having to copy them
@@ -24,6 +36,18 @@ RUN --mount=type=bind,source=package.json,target=package.json \
     npm i --omit=dev
 # Production build stage
 FROM deps as build
+# Build Arguments
+ARG BASE_URL
+ARG PORT
+ARG DB_NAME
+ARG DB_USER
+ARG DB_PASSWORD
+# Environment Variables
+ENV BASE_URL ${BASE_URL}
+ENV PORT ${PORT}
+ENV DB_NAME ${DB_NAME}
+ENV DB_USER ${DB_USER}
+ENV DB_PASSWORD ${DB_PASSWORD}
 # Download additional development dependencies before building, as some projects require
 # "devDependencies" to be installed to build. If you don't need this, remove this step.
 RUN --mount=type=bind,source=package.json,target=package.json \
@@ -43,6 +67,6 @@ COPY package.json .
 COPY --from=deps /enefti/node_modules ./node_modules
 COPY --from=build /enefti/dist ./dist
 # Expore Port
-EXPOSE 4000
+EXPOSE ${PORT}
 # Start app
 CMD ["npm", "run", "start"]

@@ -13,6 +13,12 @@ env:
 jobs:
   build-push-image:
     runs-on: ubuntu-latest
+    env:
+      BASE_URL=${{ vars.BASE_URL }}
+      PORT=${{ vars.PORT }}
+      DB_NAME=${{ secrets.DB_NAME }}
+      DB_USER=${{ secrets.DB_USER }}
+      DB_PASSWORD=${{ secrets.DB_PASSWORD }}
     # Pipeline Check
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     permissions:
@@ -40,6 +46,12 @@ jobs:
         with:
           context: ./backend
           file: ./backend/release/Dockerfile
+          build-args: |
+            "BASE_URL=$BASE_URL"
+            "PORT=$PORT"
+            "DB_NAME=$DB_NAME"
+            "DB_USER=$DB_USER"
+            "DB_PASSWORD=$DB_PASSWORD"
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

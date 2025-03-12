@@ -9,8 +9,15 @@ on:
 jobs:
   setup-build-test:
     runs-on: ubuntu-latest
+    env:
+      BASE_URL=${{ vars.BASE_URL }}
+      PORT=${{ vars.PORT }}
+      DB_NAME=${{ secrets.DB_NAME }}
+      DB_USER=${{ secrets.DB_USER }}
+      DB_PASSWORD=${{ secrets.DB_PASSWORD }}
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
     - name: Use Node.js 18.x
       uses: actions/setup-node@v4
       with:
@@ -22,12 +29,20 @@ jobs:
         atlas-private-key: ${{ secrets.ATLAS_PRIVATE_KEY }}
         atlas-public-key: ${{ secrets.ATLAS_PUBLIC_KEY }}
         group-id: ${{ vars.ATLAS_GROUP_ID }}
+    - name: Create `env` file and provide environment variables
+      run: |
+        touch .env
+        echo BASE_URL=$BASE_URL >> .env
+        echo PORT=$PORT >> .env
+        echo DB_NAME=$DB_NAME >> .env
+        echo DB_USER=$DB_USER >> .env
+        echo DB_PASSWORD=$DB_PASSWORD >> .env
     - name: Installing dependencies, building packages and test applications
       run: |
         npm run setup
         npm run build
-        # TODO: Re-enable after other tests implementation
-        # npm run test
+        # TODO: Include frontend too
+        npm run test:ci -w @enefti/backend
     # Created files storing for future reuse
     - name: Archive production artifacts - Backend
       uses: actions/upload-artifact@v4
