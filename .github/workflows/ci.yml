@@ -10,11 +10,11 @@ jobs:
   setup-build-test:
     runs-on: ubuntu-latest
     env:
-      BASE_URL=${{ vars.BASE_URL }}
-      PORT=${{ vars.PORT }}
-      DB_NAME=${{ secrets.DB_NAME }}
-      DB_USER=${{ secrets.DB_USER }}
-      DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+      BASE_URL: ${{ vars.BASE_URL }}
+      PORT: ${{ vars.PORT }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4

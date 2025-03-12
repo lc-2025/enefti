@@ -14,11 +14,11 @@ jobs:
   build-push-image:
     runs-on: ubuntu-latest
     env:
-      BASE_URL=${{ vars.BASE_URL }}
-      PORT=${{ vars.PORT }}
-      DB_NAME=${{ secrets.DB_NAME }}
-      DB_USER=${{ secrets.DB_USER }}
-      DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+      BASE_URL: ${{ vars.BASE_URL }}
+      PORT: ${{ vars.PORT }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
     # Pipeline Check
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     permissions:
