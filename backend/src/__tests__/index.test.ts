@@ -38,6 +38,6 @@ describe('Backend Unit Test', () => {
   // Teardown
   afterEach(async () => {
     await closeConnection();
-  })
+  });
   afterAll(() => mongoose.connection.close());
 });
