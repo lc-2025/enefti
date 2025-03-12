@@ -20,6 +20,7 @@ The **GraphQL API** documentation is accessible via _GraphQL Explorer_ at [dedic
 - JavaScript
 - TypeScript
 - GraphQL
+- YAML
 - Bash
 
 ### Environments

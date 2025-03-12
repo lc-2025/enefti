@@ -22,6 +22,7 @@ TBD
 - JavaScript
 - TypeScript
 - GraphQL
+- YAML
 - Bash
 
 ### Environments
