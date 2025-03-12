@@ -1,5 +1,5 @@
 
-# eNefti - Backend Demo
+# eNefti
 
 NFTs E-Commerce demo.
 
