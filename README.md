@@ -84,6 +84,11 @@ For any contribution, maintanance and/or trial needs, please refer to the follow
 - [Frontend](./frontend/README.md)
 - [Backend](./backend/README.md)
 
+## Repository
+
+The project reflects a monolithic setting - monorepo - using _NPM Workspaces_ to organize both frontend than backend sides.
+Workspaces may be globally managed accordingly to the following specifications.
+
 ## Setting Up
 
 On terminal, from project root:
