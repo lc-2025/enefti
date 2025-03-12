@@ -1,3 +1,4 @@
+# Docker Compose - Configuration (Production)
 services:
   enefti-backend:
     container_name: enefti-backend
@@ -20,4 +21,4 @@ services:
       com.enefti.title: '@enefti/backend'
       com.enefti.description: 'NFT E-Commerce backend demo'
     env_file:
-      - .env
+      - .env.production

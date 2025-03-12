@@ -10,8 +10,8 @@ A server application that provides **REST/GraphQL API** to access and manage the
 
 ## API Documentation
 
-The **REST API** documentation is provieded via _Swagger_ at [dedicated endpoint (see)](https://:4000/docs/rest)
-The **GraphQL API** documentation is accessible via _GraphQL Explorer_ at [dedicated endpoint (see)](https://:4000/graphql)
+The **REST API** documentation is provieded via _Swagger_ at [dedicated endpoint (see)](https://enefti-sha256.onrender.com/docs/rest)
+The **GraphQL API** documentation is accessible via _GraphQL Explorer_ at [dedicated endpoint (see)](https://enefti-sha256.onrender.com/graphql)
 
 ## Stack
 
@@ -61,7 +61,7 @@ The **GraphQL API** documentation is accessible via _GraphQL Explorer_ at [dedic
 ### Deployment
 
 - Docker/Compose
-- Heroku
+- Render
 
 ### Data storage
 
@@ -141,7 +141,7 @@ docker-compose stop
 
 ## Deploy
 
-TBD
+
 
 ## Storage
 
