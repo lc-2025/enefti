@@ -6,7 +6,7 @@
 # It may causes problems with Node
 # See https://www.rockyourcode.com/dockerize-a-react-app/
 # Use node image for base image for all stages
-FROM node:18-buster-slim as base
+FROM --platform=linux/amd64 node:18-buster-slim as base
 # Metadata
 LABEL org.opencontainers.image.source=https://github.com/lc-2025/enefti
 LABEL org.opencontainers.image.description="eNefti"
