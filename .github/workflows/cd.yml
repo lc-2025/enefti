@@ -11,11 +11,14 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 jobs:
+  # Workflow connection
+  ci:
+    uses: .github/workflows/ci.yml@main
   build-push-image:
     runs-on: ubuntu-latest
     # Pipeline Check
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    needs: ['setup-build-test']
+    needs: ['ci']
     permissions:
       contents: read
       packages: write
