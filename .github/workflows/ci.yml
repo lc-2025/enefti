@@ -1,8 +1,9 @@
-name: eNefti
-run-name: eNefti
+name: eNefti CI
+run-name: eNefti Content-Integration
 on:
   push:
     branches: [ "main" ]
+  # For collaborations
   pull_request:
     branches: [ "main" ]
 jobs:
@@ -20,20 +21,15 @@ jobs:
         npm run setup
         npm run build
         npm run test
+    # Created files storing for future reuse
     - name: Archive production artifacts - Backend
       uses: actions/upload-artifact@v4
       with:
         name: production-backend
         path: backend/dist
+    # Tests report storing for QA/checks
     - name: Archive code coverage results - Backend
       uses: actions/upload-artifact@v4
       with:
         name: cc-backend
         path: backend/coverage/**/*
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Get production artifacts - Backend
-      uses: actions/download-artifact@v4
-      with:
-        name: production-backend

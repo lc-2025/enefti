@@ -7,6 +7,10 @@
 # See https://www.rockyourcode.com/dockerize-a-react-app/
 # Use node image for base image for all stages
 FROM node:18-buster-slim as base
+# Metadata
+LABEL org.opencontainers.image.source=https://github.com/lc-2025/enefti
+LABEL org.opencontainers.image.description="eNefti"
+LABEL org.opencontainers.image.licenses=UNLICENSED
 # Working directory
 WORKDIR /enefti
 # Production dependencies stage
