@@ -99,16 +99,16 @@ On terminal, from project root:
 npm run setup
 ```
 
-- To run the tests in `testing` mode (staging or content-integration/delivery environments) on all the workspaces:
-
-```bash
-npm run test:ci
-```
-
 - To build the production version of all the workspaces:
 
 ```bash
 npm run build
+```
+
+- To run the tests in `testing` mode (staging or content-integration/delivery environments) on all the workspaces:
+
+```bash
+npm run test:ci
 ```
 
 ## Contributing
