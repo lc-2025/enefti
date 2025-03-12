@@ -11,7 +11,14 @@ import typeDefs from './graphql/typeDefs';
 import resolvers from './graphql/resolvers';
 import connectDb from './database';
 import middlewares from './middlewares';
-import { HOST, PORT_DEFAULT, PORT, EVENT, ROUTES, MESSAGE } from './utils/constants';
+import {
+  HOST,
+  PORT_DEFAULT,
+  PORT,
+  EVENT,
+  ROUTES,
+  MESSAGE,
+} from './utils/constants';
 
 // Server
 const app = express();
