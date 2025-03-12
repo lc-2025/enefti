@@ -73,7 +73,7 @@ TBD
 
 - Docker/Compose
 - Vercel
-- Heroku
+- Render
 
 ### Data storage
 

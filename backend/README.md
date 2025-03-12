@@ -141,8 +141,6 @@ docker-compose stop
 
 ## Deploy
 
-
-
 ## Storage
 
 The production database has been populated with mocked data generated via [automated seeding](./src/seed.ts). The process takes advantage of the third-party [CoinGecko API](https://www.coingecko.com/en/api) to provide realistic simulation of e-commerce crypto-related products.
