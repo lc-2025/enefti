@@ -4,14 +4,14 @@ NFTs E-Commerce backend demo.
 
 ## About
 
-A server application that provides **REST/GraphQL API** to access and manage the e-commerce products data stored on a NoSQL database cluster.
+A server application that provides **REST/GraphQL API** to access and manage the e-commerce products data stored on a **NoSQL database** cluster.
 
 © Luca Cattide 2025. All Rights reserved.
 
 ## API Documentation
 
 The **REST API** documentation is provieded via _Swagger_ at [dedicated endpoint (see)](https://enefti-sha256.onrender.com/docs/rest)
-The **GraphQL API** documentation is accessible via _GraphQL Explorer_ at [dedicated endpoint (see)](https://enefti-sha256.onrender.com/graphql)
+The **GraphQL API** documentation is accessible via _Apolllo Studio_ at [dedicated endpoint (see)](https://enefti-sha256.onrender.com/graphql)
 
 ## Stack
 
@@ -140,6 +140,8 @@ docker-compose stop
 ```
 
 ## Deploy
+
+TBD
 
 ## Storage
 

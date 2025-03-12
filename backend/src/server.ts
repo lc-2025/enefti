@@ -11,7 +11,7 @@ import typeDefs from './graphql/typeDefs';
 import resolvers from './graphql/resolvers';
 import connectDb from './database';
 import middlewares from './middlewares';
-import { PORT_DEFAULT, PORT, EVENT, ROUTES, MESSAGE } from './utils/constants';
+import { HOST, PORT_DEFAULT, PORT, EVENT, ROUTES, MESSAGE } from './utils/constants';
 
 // Server
 const app = express();
@@ -57,7 +57,7 @@ const startServer = async (): Promise<Server> => {
 
   // Start
   const server = app
-    .listen(app.get('port'), () => {
+    .listen(app.get('port'), HOST, () => {
       console.log(`${MESSAGE.LISTEN} ${ROUTES.BASE_URL}:${app.get('port')}`);
     })
     .on(EVENT.ERROR, (error) => {

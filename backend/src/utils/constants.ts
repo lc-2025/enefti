@@ -8,6 +8,8 @@ import path from 'path';
  * as best-practice
  */
 const { NODE_ENV, BASE_URL, PORT, DB_NAME, DB_USER, DB_PASSWORD } = process.env;
+// Listen to all interfaces
+const HOST = '0.0.0.0';
 const PORT_DEFAULT = 4000;
 const MESSAGE = {
   LISTEN: 'Server started and listening in',
@@ -89,4 +91,4 @@ const TEST = {
   },
 };
 
-export { NODE_ENV, PORT_DEFAULT, PORT, MESSAGE, EVENT, ROUTES, TEST };
+export { NODE_ENV, HOST, PORT_DEFAULT, PORT, MESSAGE, EVENT, ROUTES, TEST };

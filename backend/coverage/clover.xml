@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1741779809912" clover="3.2.0">
-  <project timestamp="1741779809912" name="All files">
-    <metrics statements="149" coveredstatements="134" conditionals="30" coveredconditionals="17" methods="38" coveredmethods="33" elements="217" coveredelements="184" complexity="0" loc="149" ncloc="149" packages="12" files="19" classes="19"/>
+<coverage generated="1741792812021" clover="3.2.0">
+  <project timestamp="1741792812021" name="All files">
+    <metrics statements="150" coveredstatements="135" conditionals="30" coveredconditionals="17" methods="38" coveredmethods="33" elements="218" coveredelements="185" complexity="0" loc="150" ncloc="150" packages="12" files="19" classes="19"/>
     <package name="src">
       <metrics statements="19" coveredstatements="17" conditionals="4" coveredconditionals="2" methods="4" coveredmethods="3"/>
       <file name="database.ts" path="/home/zeno/enefti/backend/src/database.ts">
@@ -222,17 +222,18 @@
       </file>
     </package>
     <package name="src.utils">
-      <metrics statements="11" coveredstatements="9" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <metrics statements="12" coveredstatements="10" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
       <file name="constants.ts" path="/home/zeno/enefti/backend/src/utils/constants.ts">
-        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="10" count="1" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
-        <line num="24" count="1" type="stmt"/>
-        <line num="27" count="1" type="stmt"/>
-        <line num="46" count="1" type="stmt"/>
-        <line num="47" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
         <line num="48" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
       </file>
       <file name="data.ts" path="/home/zeno/enefti/backend/src/utils/data.ts">
         <metrics statements="1" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
