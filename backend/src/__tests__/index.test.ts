@@ -33,8 +33,8 @@ describe('Backend Unit Test', () => {
       .expect('Content-Type', /text/)
       .expect(200);
   });
-  require('./routes/rest/nft.test.ts');
-  require('./routes/graphql/nft.test.ts');
+  require('./routes/rest/nft.test');
+  require('./routes/graphql/nft.test');
   // Teardown
   afterEach(async () => {
     await closeConnection();
