@@ -1,6 +1,9 @@
+
 # eNefti - Backend Demo
 
 NFTs E-Commerce demo.
+
+![GitHub Actions](https://github.com/lc-2025/enefti/actions/workflows/enefty.yml/badge.svg)
 
 ## About
 
