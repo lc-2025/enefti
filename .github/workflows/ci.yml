@@ -48,6 +48,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: enefti
+          include-hidden-files: true
           # Exclude dependencies to lighten artifacts (provided via cache)
           path: |
             .
@@ -84,6 +85,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: enefti-test
+          include-hidden-files: true
           path: |
             backend/coverage/**/*
             frontend/coverage/**/*
@@ -112,6 +114,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: enefti-production
+          include-hidden-files: true
           path: |
             backend/dist
             frontend/.next
