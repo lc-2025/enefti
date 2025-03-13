@@ -29,46 +29,62 @@ describe('NFT API Unit Test - REST', () => {
     await closeConnection();
   }, timeout);
   // Tests
-  it('Gets a list of NFTs', async () => {
-    response = await request(app)
-      .get(`${ROUTES.API.BASE_PATHNAME}${ROUTES.API.NFT.GET_ALL}`)
-      .expect('Content-Type', /json/)
-      .expect(200);
+  it(
+    'Gets a list of NFTs',
+    async () => {
+      response = await request(app)
+        .get(`${ROUTES.API.BASE_PATHNAME}${ROUTES.API.NFT.GET_ALL}`)
+        .expect('Content-Type', /json/)
+        .expect(200);
 
-    expect(response.body.length).toBeGreaterThan(0);
-  }, timeout);
-  it('Gets a specific NFT by ID', async () => {
-    response = await request(app)
-      .get(`${ROUTES.API.BASE_PATHNAME}${ROUTES.API.NFT.GET}`)
-      .query({ id: ID })
-      .expect('Content-Type', /json/)
-      .expect(200);
+      expect(response.body.length).toBeGreaterThan(0);
+    },
+    timeout,
+  );
+  it(
+    'Gets a specific NFT by ID',
+    async () => {
+      response = await request(app)
+        .get(`${ROUTES.API.BASE_PATHNAME}${ROUTES.API.NFT.GET}`)
+        .query({ id: ID })
+        .expect('Content-Type', /json/)
+        .expect(200);
 
-    expect(response.body).not.toBeNull();
-    expect(response.body._id).toBe(ID);
-  }, timeout);
-  it('Updates a specific NFT owner by ID', async () => {
-    response = await request(app)
-      .patch(`${ROUTES.API.BASE_PATHNAME}${ROUTES.API.NFT.GET}`)
-      .query({ id: ID })
-      .send({ owner: TEST.OWNER })
-      .expect('Content-Type', /json/)
-      .expect(200);
+      expect(response.body).not.toBeNull();
+      expect(response.body._id).toBe(ID);
+    },
+    timeout,
+  );
+  it(
+    'Updates a specific NFT owner by ID',
+    async () => {
+      response = await request(app)
+        .patch(`${ROUTES.API.BASE_PATHNAME}${ROUTES.API.NFT.GET}`)
+        .query({ id: ID })
+        .send({ owner: TEST.OWNER })
+        .expect('Content-Type', /json/)
+        .expect(200);
 
-    expect(response.body).not.toBeNull();
+      expect(response.body).not.toBeNull();
 
-    const { _id, owner } = response.body;
+      const { _id, owner } = response.body;
 
-    expect(_id).toBe(ID);
-    expect(owner).toBe(owner);
-  }, timeout);
-  it('Returns an error on unexpected user input', async () => {
-    response = await request(app)
-      .get(`${ROUTES.API.BASE_PATHNAME}${ROUTES.API.NFT.GET}`)
-      .query({ id: 'foo' })
-      .expect('Content-Type', /json/)
-      .expect(500);
-  }, timeout);
+      expect(_id).toBe(ID);
+      expect(owner).toBe(owner);
+    },
+    timeout,
+  );
+  it(
+    'Returns an error on unexpected user input',
+    async () => {
+      response = await request(app)
+        .get(`${ROUTES.API.BASE_PATHNAME}${ROUTES.API.NFT.GET}`)
+        .query({ id: 'foo' })
+        .expect('Content-Type', /json/)
+        .expect(500);
+    },
+    timeout,
+  );
   it('Returns an error on missing user input', async () => {
     response = await request(app)
       .get(`${ROUTES.API.BASE_PATHNAME}${ROUTES.API.NFT.GET}`)
