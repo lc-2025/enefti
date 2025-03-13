@@ -2,12 +2,13 @@ import { Server } from 'http';
 import request from 'supertest';
 import mongoose from 'mongoose';
 import server from '../server';
-import { ROUTES } from '../utils/constants';
+import { ROUTES, TEST } from '../utils/constants';
 
 // Backend Unit Test
 describe('Backend Unit Test', () => {
   let app: Server;
-  const timeout = 60000;
+  // Increasing timeout for CI environment
+  const { TIMEOUT } = TEST;
 
   // Helpers
   /**
@@ -26,7 +27,7 @@ describe('Backend Unit Test', () => {
   // Setup
   beforeAll(async () => {
     await closeConnection();
-  }, timeout);
+  }, TIMEOUT);
   // Tests
   it(
     'Checks if the server is actually running - Needs running node process',
@@ -36,7 +37,7 @@ describe('Backend Unit Test', () => {
         .expect('Content-Type', /text/)
         .expect(200);
     },
-    timeout,
+    TIMEOUT,
   );
   // Indexing tests to output a well-organized testing report
   require('./routes/rest/nft.test');
@@ -44,6 +45,6 @@ describe('Backend Unit Test', () => {
   // Teardown
   afterEach(async () => {
     await closeConnection();
-  }, timeout);
-  afterAll(() => mongoose.connection.close(), timeout);
+  }, TIMEOUT);
+  afterAll(() => mongoose.connection.close(), TIMEOUT);
 });

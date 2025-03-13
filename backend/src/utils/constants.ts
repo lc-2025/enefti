@@ -47,6 +47,7 @@ const ROUTES = {
 const ID = '67cf2395af3c7323d084dd3c';
 const OWNER = '0x123456789';
 const TEST = {
+  TIMEOUT: 60000,
   ID,
   OWNER,
   QUERY: {

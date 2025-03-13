@@ -7,8 +7,8 @@ import { ROUTES, TEST } from '../../../utils/constants';
 describe('NFT API Unit Test - GraphQL', () => {
   let app: Server;
   let response = null;
-  const { ID } = TEST;
-  const timeout = 60000;
+  // Increasing timeout for CI environment
+  const { TIMEOUT, ID } = TEST;
 
   // Helpers
   /**
@@ -27,7 +27,7 @@ describe('NFT API Unit Test - GraphQL', () => {
   // Setup
   beforeEach(async () => {
     await closeConnection();
-  }, timeout);
+  }, TIMEOUT);
   // Tests
   it(
     'Gets a list of NFTs',
@@ -40,7 +40,7 @@ describe('NFT API Unit Test - GraphQL', () => {
 
       expect(response.body.data.nfts.length).toBeGreaterThan(0);
     },
-    timeout,
+    TIMEOUT,
   );
   it(
     'Gets a specific NFT by ID',
@@ -54,7 +54,7 @@ describe('NFT API Unit Test - GraphQL', () => {
       expect(response.body).not.toBeNull();
       expect(response.body.data.nft.id).toBe(ID);
     },
-    timeout,
+    TIMEOUT,
   );
   it(
     'Updates a specific NFT owner by ID',
@@ -71,7 +71,7 @@ describe('NFT API Unit Test - GraphQL', () => {
       expect(id).toBe(ID);
       expect(owner).toBe(owner);
     },
-    timeout,
+    TIMEOUT,
   );
   it(
     'Returns an error on unexpected user input',
@@ -84,7 +84,7 @@ describe('NFT API Unit Test - GraphQL', () => {
 
       expect(response.body.errors).not.toBeUndefined();
     },
-    timeout,
+    TIMEOUT,
   );
   it(
     'Returns an error on missing user input',
@@ -96,10 +96,10 @@ describe('NFT API Unit Test - GraphQL', () => {
 
       expect(response.body.errors).not.toBeUndefined();
     },
-    timeout,
+    TIMEOUT,
   );
   // Teardown
   afterEach(async () => {
     await closeConnection();
-  }, timeout);
+  }, TIMEOUT);
 });
