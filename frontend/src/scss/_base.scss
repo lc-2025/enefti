@@ -1,0 +1,56 @@
+// Variables
+// Fonts
+// Using absolute units on layout & content for responsive
+$font-size-desktop: 1.4rem;
+$font-size-mobile: 1.2rem;
+$font-size-rem: 62.5%;
+// Resolutions
+// See: https://getbootstrap.com/docs/5.0/layout/breakpoints/
+$tablet: 768px;
+$desktop: 992px;
+// Media Queries
+$media-tablet: 'min-width: #{$tablet}';
+$media-desktop: 'min-width: #{$desktop}';
+
+// HTML
+html {
+  /**
+  * Setting this size ensures to achieve units correspondence
+  * - 62.5% of 16px user agent font size = 10px
+  * i.e. 1.2 * 10px = 12px -> 12px = 1.2rem
+  */
+  font-size: $font-size-rem;
+
+  // Body
+  body {
+    // Responsive base-font
+    font-size: $font-size-mobile;
+
+    @media ($media-tablet) {
+      font-size: $font-size-desktop;
+    }
+
+    // Container
+    .container {
+      // Sticky footer
+      &,
+      &#{__wrapper} {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+      }
+
+      &#{__wrapper} {
+        // Retro-compatibility notation
+        -webkit-box-flex: 1 0 0;
+        -ms-flex: 1 0 0;
+        flex: 1;
+
+        @media ($media-desktop) {
+          max-width: $media-desktop;
+        }
+      }
+    }
+  }
+}
