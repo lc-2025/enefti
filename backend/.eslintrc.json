@@ -1,7 +1,6 @@
 {
   "env": {
     "browser": false,
-    "es2021": true,
     "jest/globals": true
   },
   "extends": ["eslint:recommended", "prettier"],
@@ -11,9 +10,7 @@
     "sourceType": "module"
   },
   "plugins": ["prettier", "jest"],
-  "ignorePatterns": ["dist"],
   "rules": {
-    "prettier/prettier": "error",
     "no-param-reassign": 0,
     "import/extensions": [
       "error",
