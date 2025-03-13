@@ -69,10 +69,10 @@ jobs:
     needs: build-push
     steps:
       - name: Deploy Backend
-        uses: johnbeynon/render-deploy-action@v0.0.8
-        with:
-          service-id: ${{ secrets.RENDER_SERVICE_ID }}
-          api-key: ${{ secrets.RENDER_API_KEY }}
+        env:
+          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          curl "$deploy_url"
   # TODO: Add Frontend deployment
   failure:
     runs-on: ubuntu-latest
