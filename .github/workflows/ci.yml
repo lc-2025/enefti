@@ -74,7 +74,6 @@ jobs:
       - name: Test applications
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: |
-          cd enefti
           # TODO: Include Frontend too
           npm run test:ci -w @enefti/backend
       # Tests report storing for QA/checks
