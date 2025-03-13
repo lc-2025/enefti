@@ -7,7 +7,7 @@ NFTs E-Commerce demo.
 
 ## About
 
-A full-stack demo application based on MERN stack consisting of a NFTs e-commerce for demo purposes.
+A full-stack demo application based on MERN consisting of a NFTs e-commerce for demo purposes.
 
 © Luca Cattide 2025. All Rights reserved.
 
