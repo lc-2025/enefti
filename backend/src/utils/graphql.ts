@@ -1,5 +1,4 @@
 import { GraphQLError } from 'graphql';
-import { MESSAGE } from 'src/utils/constants';
 
 // GraphQL Utilities
 // Helpers
