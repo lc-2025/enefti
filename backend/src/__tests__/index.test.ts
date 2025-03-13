@@ -33,6 +33,7 @@ describe('Backend Unit Test', () => {
       .expect('Content-Type', /text/)
       .expect(200);
   });
+  // Indexing tests to output a well-organized testing report
   require('./routes/rest/nft.test');
   require('./routes/graphql/nft.test');
   // Teardown
