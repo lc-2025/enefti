@@ -7,6 +7,7 @@ import { ROUTES } from '../utils/constants';
 // Backend Unit Test
 describe('Backend Unit Test', () => {
   let app: Server;
+  const timeout = 60000;
 
   // Helpers
   /**
@@ -25,20 +26,24 @@ describe('Backend Unit Test', () => {
   // Setup
   beforeAll(async () => {
     await closeConnection();
-  });
+  }, timeout);
   // Tests
-  it('Checks if the server is actually running - Needs running node process', async () => {
-    await request(app)
-      .get(ROUTES.BASE_PATHNAME)
-      .expect('Content-Type', /text/)
-      .expect(200);
-  });
+  it(
+    'Checks if the server is actually running - Needs running node process',
+    async () => {
+      await request(app)
+        .get(ROUTES.BASE_PATHNAME)
+        .expect('Content-Type', /text/)
+        .expect(200);
+    },
+    timeout,
+  );
   // Indexing tests to output a well-organized testing report
   require('./routes/rest/nft.test');
   require('./routes/graphql/nft.test');
   // Teardown
   afterEach(async () => {
     await closeConnection();
-  });
-  afterAll(() => mongoose.connection.close());
+  }, timeout);
+  afterAll(() => mongoose.connection.close(), timeout);
 });

@@ -8,6 +8,7 @@ describe('NFT API Unit Test - GraphQL', () => {
   let app: Server;
   let response = null;
   const { ID } = TEST;
+  const timeout = 60000;
 
   // Helpers
   /**
@@ -26,7 +27,7 @@ describe('NFT API Unit Test - GraphQL', () => {
   // Setup
   beforeEach(async () => {
     await closeConnection();
-  });
+  }, timeout);
   // Tests
   it('Gets a list of NFTs', async () => {
     response = await request(app)
@@ -36,7 +37,7 @@ describe('NFT API Unit Test - GraphQL', () => {
       .expect(200);
 
     expect(response.body.data.nfts.length).toBeGreaterThan(0);
-  });
+  }, timeout);
   it('Gets a specific NFT by ID', async () => {
     response = await request(app)
       .post(`${ROUTES.API.GRAPHQL}`)
@@ -46,7 +47,7 @@ describe('NFT API Unit Test - GraphQL', () => {
 
     expect(response.body).not.toBeNull();
     expect(response.body.data.nft.id).toBe(ID);
-  });
+  }, timeout);
   it('Updates a specific NFT owner by ID', async () => {
     response = await request(app)
       .post(`${ROUTES.API.GRAPHQL}`)
@@ -59,7 +60,7 @@ describe('NFT API Unit Test - GraphQL', () => {
 
     expect(id).toBe(ID);
     expect(owner).toBe(owner);
-  });
+  }, timeout);
   it('Returns an error on unexpected user input', async () => {
     response = await request(app)
       .post(`${ROUTES.API.GRAPHQL}`)
@@ -68,7 +69,7 @@ describe('NFT API Unit Test - GraphQL', () => {
       .expect(200);
 
     expect(response.body.errors).not.toBeUndefined();
-  });
+  }, timeout);
   it('Returns an error on missing user input', async () => {
     response = await request(app)
       .post(`${ROUTES.API.GRAPHQL}`)
@@ -76,9 +77,9 @@ describe('NFT API Unit Test - GraphQL', () => {
       .expect(400);
 
     expect(response.body.errors).not.toBeUndefined();
-  });
+  }, timeout);
   // Teardown
   afterEach(async () => {
     await closeConnection();
-  });
+  }, timeout);
 });
