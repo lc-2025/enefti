@@ -34,8 +34,6 @@ jobs:
           echo DB_USER=$DB_USER >> .env
           echo DB_PASSWORD=$DB_PASSWORD >> .env
           mv .env backend/
-          # Ensure the file presence
-          ls backend -l -a
       - name: Installing dependencies
         run: |
           npm run setup
