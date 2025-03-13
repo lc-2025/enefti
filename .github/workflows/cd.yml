@@ -13,14 +13,14 @@ env:
 jobs:
   build-push-image:
     runs-on: ubuntu-latest
+    # Pipeline Check
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     env:
       BASE_URL: ${{ vars.BASE_URL }}
       PORT: ${{ vars.PORT }}
       DB_NAME: ${{ secrets.DB_NAME }}
       DB_USER: ${{ secrets.DB_USER }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-    # Pipeline Check
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     permissions:
       contents: read
       packages: write
@@ -55,6 +55,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=lc-2025/enefti:main
+          cache-to: type=inline
       # Created files attestation storing as proof
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
@@ -62,6 +64,7 @@ jobs:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
+  # TODO: Add Frontend deployment
   failure:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}

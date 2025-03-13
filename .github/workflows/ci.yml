@@ -7,7 +7,9 @@ on:
   pull_request:
     branches: [main]
 jobs:
-  setup-build-test:
+  # Following jobs might be simplified into single one
+  # Splitting as pipeline demonstration
+  setup:
     runs-on: ubuntu-latest
     env:
       BASE_URL: ${{ vars.BASE_URL }}
@@ -37,21 +39,54 @@ jobs:
         echo DB_NAME=$DB_NAME >> .env
         echo DB_USER=$DB_USER >> .env
         echo DB_PASSWORD=$DB_PASSWORD >> .env
-    - name: Installing dependencies, building packages and test applications
+        mv .env backend
+    - name: Installing dependencies
       run: |
         npm run setup
-        npm run build
-        # TODO: Include frontend too
-        npm run test:ci -w @enefti/backend
-    # Created files storing for future reuse
-    - name: Archive production artifacts - Backend
+    # Store project for future reuse
+    - name: Archive project artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: production-backend
-        path: backend/dist
+        name: enefti
+        path: .
+  test:
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+    # Download stored project
+    - name: Getting project artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: enefti
+    - name: Test applications
+      run: |
+        # TODO: Include Frontend too
+        npm run test:ci -w @enefti/backend
     # Tests report storing for QA/checks
     - name: Archive code coverage results - Backend
       uses: actions/upload-artifact@v4
       with:
-        name: cc-backend
-        path: backend/coverage/**/*
+        name: enefti-test
+        path: |
+          backend/coverage/**/*
+          frontend/coverage/**/*
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    # Download stored project
+    - name: Getting project artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: enefti
+    - name: Build packages
+      run: |
+        npm run build
+    # Store production versions for future reuse
+    - name: Archive production verions
+      uses: actions/upload-artifact@v4
+      with:
+        name: enefti-production
+        path: |
+          backend/dist
+          frontend/.next
