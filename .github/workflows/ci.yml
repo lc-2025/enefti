@@ -18,75 +18,98 @@ jobs:
       DB_USER: ${{ secrets.DB_USER }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Use Node.js 18.x
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18.x'
-        cache: 'npm'
-    - name: Allow MongoDB Atlas IP
-      uses: textbook/atlas-ip@v1.1.0
-      with:
-        atlas-private-key: ${{ secrets.ATLAS_PRIVATE_KEY }}
-        atlas-public-key: ${{ secrets.ATLAS_PUBLIC_KEY }}
-        group-id: ${{ vars.ATLAS_GROUP_ID }}
-    - name: Create `env` file and provide environment variables
-      run: |
-        touch .env
-        echo BASE_URL=$BASE_URL >> .env
-        echo PORT=$PORT >> .env
-        echo DB_NAME=$DB_NAME >> .env
-        echo DB_USER=$DB_USER >> .env
-        echo DB_PASSWORD=$DB_PASSWORD >> .env
-        mv .env backend
-    - name: Installing dependencies
-      run: |
-        npm run setup
-    # Store project for future reuse
-    - name: Archive project artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: enefti
-        path: .
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+      - name: Allow MongoDB Atlas IP
+        uses: textbook/atlas-ip@v1.1.0
+        with:
+          atlas-private-key: ${{ secrets.ATLAS_PRIVATE_KEY }}
+          atlas-public-key: ${{ secrets.ATLAS_PUBLIC_KEY }}
+          group-id: ${{ vars.ATLAS_GROUP_ID }}
+      - name: Create `env` file and provide environment variables
+        run: |
+          touch .env
+          echo BASE_URL=$BASE_URL >> .env
+          echo PORT=$PORT >> .env
+          echo DB_NAME=$DB_NAME >> .env
+          echo DB_USER=$DB_USER >> .env
+          echo DB_PASSWORD=$DB_PASSWORD >> .env
+          mv .env backend
+      - name: Installing dependencies
+        run: |
+          npm run setup
+      # Cache dependencies for future reuse
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+      # Store project for future reuse
+      - name: Archive project artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: enefti
+          path: .
   test:
     runs-on: ubuntu-latest
     needs: setup
     steps:
-    # Download stored project
-    - name: Getting project artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: enefti
-    - name: Test applications
-      run: |
-        # TODO: Include Frontend too
-        npm run test:ci -w @enefti/backend
-    # Tests report storing for QA/checks
-    - name: Archive code coverage results - Backend
-      uses: actions/upload-artifact@v4
-      with:
-        name: enefti-test
-        path: |
-          backend/coverage/**/*
-          frontend/coverage/**/*
+      # Get dependencies
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+      # Download stored project
+      - name: Getting project artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: enefti
+      - name: Test applications
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: |
+          cd enefti
+          # TODO: Include Frontend too
+          npm run test:ci -w @enefti/backend
+      # Tests report storing for QA/checks
+      - name: Archive code coverage results - Backend
+        uses: actions/upload-artifact@v4
+        with:
+          name: enefti-test
+          path: |
+            backend/coverage/**/*
+            frontend/coverage/**/*
   build:
     runs-on: ubuntu-latest
     needs: test
     steps:
-    # Download stored project
-    - name: Getting project artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: enefti
-    - name: Build packages
-      run: |
-        npm run build
-    # Store production versions for future reuse
-    - name: Archive production verions
-      uses: actions/upload-artifact@v4
-      with:
-        name: enefti-production
-        path: |
-          backend/dist
-          frontend/.next
+      # Get dependencies
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+      # Download stored project
+      - name: Getting project artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: enefti
+      - name: Build packages
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: |
+          npm run build
+      # Store production versions for future reuse
+      - name: Archive production verions
+        uses: actions/upload-artifact@v4
+        with:
+          name: enefti-production
+          path: |
+            backend/dist
+            frontend/.next
