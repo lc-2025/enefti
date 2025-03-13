@@ -64,6 +64,7 @@ const startServer = async (): Promise<Server> => {
 
   // Start
   const server = app
+    // Setting `host` to all interfaces as Render requirement
     .listen(app.get('port'), HOST, () => {
       console.log(`${MESSAGE.LISTEN} ${ROUTES.BASE_URL}:${app.get('port')}`);
     })
