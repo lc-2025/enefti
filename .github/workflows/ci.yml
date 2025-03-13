@@ -50,7 +50,7 @@ jobs:
           name: enefti
           # Exclude dependencies to lighten artifacts (provided via cache)
           path: |
-            !node_modules
+            !./node_modules
             .
   test:
     runs-on: ubuntu-latest
