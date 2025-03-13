@@ -48,7 +48,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: enefti
-          path: .
+          # Exclude dependencies to lighten artifacts (provided via cache)
+          path: |
+            !node_modules
+            .
   test:
     runs-on: ubuntu-latest
     needs: setup
@@ -70,7 +73,7 @@ jobs:
         with:
           atlas-private-key: ${{ secrets.ATLAS_PRIVATE_KEY }}
           atlas-public-key: ${{ secrets.ATLAS_PUBLIC_KEY }}
-          group-id: ${{ vars.ATLAS_GROUP_ID }}
+          group-id: ${{ secrets.ATLAS_GROUP_ID }}
       - name: Test applications
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: |
