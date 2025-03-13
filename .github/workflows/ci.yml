@@ -33,7 +33,7 @@ jobs:
           echo DB_NAME=$DB_NAME >> .env
           echo DB_USER=$DB_USER >> .env
           echo DB_PASSWORD=$DB_PASSWORD >> .env
-          mv .env backend
+          mv .env backend/
       - name: Installing dependencies
         run: |
           npm run setup
