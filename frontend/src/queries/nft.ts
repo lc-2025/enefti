@@ -1,11 +1,11 @@
-import { gql } from '@apollo/client';
+import { gql } from '@/types/graphql';
 
 // Queries - NFT
 const NFT_QUERY = {
   nfts: {
-    query: gql`
-      query Nfts {
-        nfts {
+    query: gql(`
+      query Nfts($offset: Int, $limit: Int) {
+        nfts(offset: $offset, limit: $limit) {
           id
           name
           image
@@ -14,7 +14,7 @@ const NFT_QUERY = {
           owner
         }
       }
-    `,
+    `),
   },
 };
 

@@ -1,5 +1,7 @@
 import React from 'react';
+import { Poppins } from 'next/font/google';
 import Header from '@/components/Header';
+import { ApolloWrapper } from '@/apolloSsr';
 import Footer from '@/components/Footer';
 import type { Metadata, Viewport } from 'next';
 import '../scss/global.scss';
@@ -15,6 +17,12 @@ export const viewport: Viewport = {
   initialScale: 1,
   width: 'device-width',
 };
+
+export const poppins = Poppins({
+  display: 'swap',
+  variable: '--font-poppins',
+  weight: '400'
+})
 
 /**
  * @description Main Layout
@@ -39,7 +47,7 @@ export default function RootLayout({
       {/* Content-Security Policy (vs. XSS) */}
       <meta
         httpEquiv="Content-Security-Policy"
-        content="default-src 'self' localhost:3000; script-src 'self' 'unsafe-inline'; style-src 'self' fonts.googleapis.com 'unsafe-inline'; img-src 'self'; connect-src 'self' localhost:3000; font-src 'self' fonts.googleapis.com fonts.gstatic.com; form-action 'self';"
+        content="default-src 'self' localhost:3000; script-src 'self' 'unsafe-inline'; style-src 'self' fonts.googleapis.com 'unsafe-inline'; img-src 'self' coin-images.coingecko.com; connect-src 'self' localhost:3000; font-src 'self' fonts.googleapis.com fonts.gstatic.com; form-action 'self';"
       />
       {/* Browser rendering version support (retro-compatibility) */}
       <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -48,11 +56,13 @@ export default function RootLayout({
         {/* JS fallback */}
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <Header />
-        {/* Container Start */}
-        <main className="container">
-          <div className="wrapper">{children}</div>
-        </main>
-        {/* Container End */}
+        <ApolloWrapper>
+          {/* Container Start */}
+          <main className="container max-w-full">
+            <div className="container__wrapper">{children}</div>
+          </main>
+          {/* Container End */}
+        </ApolloWrapper>
         <Footer />
       </body>
     </html>

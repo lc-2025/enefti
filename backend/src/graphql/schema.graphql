@@ -8,7 +8,8 @@ interface Token {
 
 # Types
 type Query {
-  nfts: [Nft]
+  # Query Pagination
+  nfts(offset: Int, limit: Int): [Nft]
   nft(id: ID!): Nft
 }
 

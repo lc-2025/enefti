@@ -6,8 +6,12 @@ import { MESSAGE } from '../../utils/constants';
 // GraphQL - NFT Resolvers
 const resolversNft: GraphQLResolverMap<any> = {
   Query: {
-    async nfts() {
-      const nfts = await nftModel.find({});
+    async nfts(parent, args) {
+      const nfts = await nftModel.find({}, null, {
+        // Query Pagination
+        skip: args.skip,
+        limit: args.limit,
+      }).exec();
 
       // Data check
       if (!nfts) {

@@ -7,7 +7,7 @@ import {
 import { NODE_ENV, BACKEND_URL } from './utilities/constants';
 
 // Apollo Client registration
-export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
+export const { getClient, query, PreloadQuery } = registerApolloClient((): ApolloClient<unknown> => {
   return new ApolloClient({
     cache: new InMemoryCache(),
     link: new HttpLink({

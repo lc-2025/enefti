@@ -1,26 +1,171 @@
 @import 'tailwindcss';
 
+/* Tailwind custom theme styles */
+/* CSS variables for colors and effects */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --accent-cyan: #00ffff;
+  --accent-pink: #ec4899;
+  --accent-purple: #8b5cf6;
+  --bg-dark: #0f0f0f;
+  --bg-gradient-end: #1a2a4a;
+  --bg-gradient-start: #2a1a3a;
+  --bg-primary: #1a1a1a;
+  --blur: 10px;
+  --font-family: 'Poppins', sans-serif;
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --text-primary: #fff;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Asymmetric grid for the catalog */
+.asymmetric-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  padding: 0 1.6rem 1.6rem 1.6rem;
 }
 
+/* Base styles */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+}
+
+.btn {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: var(--text-primary);
+  font-weight: bold;
+  padding: 1.6rem;
+  transition:
+    background 0.3s ease,
+    transform 0.2s ease;
+}
+
+/* Primary buttons (e.g., "Buy") */
+.btn-primary {
+  background: linear-gradient(45deg, var(--accent-purple), var(--accent-pink));
+}
+
+.btn-primary:hover {
+  background: linear-gradient(45deg, var(--accent-pink), var(--accent-purple));
+  transform: scale(1.05);
+}
+
+.btn-secondary {
+  background: linear-gradient(45deg, var(--accent-cyan), var(--accent-pink));
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(45deg, var(--accent-pink), var(--accent-cyan));
+  transform: scale(1.05);
+}
+
+/* Confirmation button for checkout */
+.confirm-btn {
+  background: linear-gradient(45deg, var(--accent-purple), var(--accent-cyan));
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  color: var(--text-primary);
+  padding: 1.6rem;
+  transition: transform 0.2s ease;
+}
+
+.confirm-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Translucent overlay for images in detail */
+.image-overlay {
+  backdrop-filter: blur(5px);
+  background: var(--glass-bg);
+  border-radius: 12px;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+/* Input for search and checkout */
+.input-glass {
+  backdrop-filter: blur(var(--blur));
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  padding: 1.6rem;
+  width: 100%;
+}
+
+.input-glass::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.link {
+  color: var(--accent-cyan);
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: var(--text-primary);
+}
+
+/* NFT card (Catalog and Wishlist) */
+.nft-card {
+  backdrop-filter: blur(var(--blur));
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 1.6rem;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.nft-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+/* Subtitles or prices */
+.subtitle {
+  color: var(--accent-pink);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Bold titles */
+.title {
+  color: var(--accent-purple);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Dark mode */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background-color: var(--bg-dark);
+  }
+
+  .title {
+    color: var(--accent-cyan);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Responsive */
+@media (max-width: 640px) {
+  .asymmetric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .subtitle {
+    font-size: 1.25rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
 }

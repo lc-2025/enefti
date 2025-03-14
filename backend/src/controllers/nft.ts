@@ -12,8 +12,14 @@ import { MESSAGE } from '../utils/constants';
  * @param {NextFunction} next
  */
 const getNfts = (req: Request, res: Response, next: NextFunction): void => {
+  // Query Pagination
+  const options = {
+    skip: req.query.skip ? Number(req.query.skip) : undefined,
+    limit: req.query.limit ? Number(req.query.limit) : undefined,
+  };
+
   nftModel
-    .find({})
+    .find({}, null, options)
     .then((data) => {
       // Data check
       if (!data) {

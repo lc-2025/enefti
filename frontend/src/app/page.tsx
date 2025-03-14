@@ -1,54 +1,41 @@
-import React, {Suspense} from 'react';
-import { notFound } from 'next/navigation';
-import { getClient, PreloadQuery, query } from '../apollo';
+import React, { Suspense } from 'react';
+import { PreloadQuery } from '@/apolloRsc';
+import Catalogue from '@/components/Catalogue/Catalogue';
 import Skeleton from '@/components/Skeleton';
-import Catalogue from '@/components/Catalogue';
-import CustomError from '@/components/CustomError';
 import NFT_QUERY from '@/queries/nft';
-import Preloader from '@/components/Preloader';
+import { QUERY } from '@/utilities/constants';
 
 /**
  * @description Index page
  * @author Luca Cattide
  * @date 13/03/2025
  * @export
- * @returns {*}  {Promise<React.ReactNode>}
+ * @returns {*}  {React.ReactNode}
  */
-export default async function Home(): Promise<React.ReactNode> {
-  // TODO: Pagination
-  //const { error, data } = await query(NFT_QUERY.nfts);
-
+export default function Home(): React.ReactNode {
   return (
     // Catalogue
-    /* error ? (
-      <CustomError error={error} />
-    ) : !data ? (
-      notFound()
-    ) : ( */
     <section className="catalogue">
       {/*  BEM notation for styles */}
-      <h1 className="catalogue__title">Catalogue</h1>
-      {/* Filters Start */}
-      <aside className="catalogue__filters">
-        <h2 className="filters__title">Filters</h2>
-        {/* TODO: */}
-      </aside>
-      {/* Filters End */}
-      {/* TODO: */}
-      {/* <Skeleton placeholder={<>Loading...</>}>
-          <Catalogue nfts={data.nfts} />
-        </Skeleton> */}
-      <PreloadQuery query={NFT_QUERY.nfts.query}>
-        <Suspense fallback={<>foo</>}>
-          <Catalogue />
-        </Suspense>
+      <h1 className="catalogue__title title uppercase mb-12 mt-12 text-center">Catalogue</h1>
+      <PreloadQuery
+        query={NFT_QUERY.nfts.query}
+        variables={QUERY.PAGINATION}
+      >
+        {/*
+          The query is referenced and executed in background
+          then passed to child and consumed via `read` hook.
+          This prevents request waterfalls
+          i.e. consecutive calls performed prior to previous outline ending
+          during suspension
+         */}
+        {(queryRef) => (
+          <Suspense fallback={<Skeleton />}>
+            <Catalogue queryRef={queryRef} />
+          </Suspense>
+        )}
       </PreloadQuery>
-      <aside className="catalogue__more">
-        <h2 className="more__title">More</h2>
-        <button className="more__button">Load more</button>
-      </aside>
     </section>
-    //)
     // Catalogue End
   );
 }

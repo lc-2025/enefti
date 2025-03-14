@@ -1,26 +1,14 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 
 /**
  * @description Skeleton placeholder
  * @author Luca Cattide
  * @date 13/03/2025
- * @param {{
- *   skeleton: React.ReactNode;
- *   children: React.ReactNode;
- * }} {
- *   skeleton,
- *   children,
- * }
  * @returns {*}  {React.ReactNode}
  */
-const Skeleton = ({
-  placeholder,
-  children,
-}: {
-  placeholder: React.ReactNode;
-  children: React.ReactNode;
-}): React.ReactNode => {
-  return <Suspense fallback={placeholder}>{children}</Suspense>;
+const Skeleton = (): React.ReactNode => {
+  // TODO:
+  return (<>Foo</>);
 };
 
 export default Skeleton;
