@@ -7,11 +7,13 @@ import { MESSAGE } from '../../utils/constants';
 const resolversNft: GraphQLResolverMap<any> = {
   Query: {
     async nfts(parent, args) {
-      const nfts = await nftModel.find({}, null, {
-        // Query Pagination
-        skip: args.skip,
-        limit: args.limit,
-      }).exec();
+      const nfts = await nftModel
+        .find({}, null, {
+          // Query Pagination
+          skip: args.skip,
+          limit: args.limit,
+        })
+        .exec();
 
       // Data check
       if (!nfts) {
