@@ -35,6 +35,8 @@ TBD
 
 ### Libraries
 
+- Heroicons
+- Headless UI
 - Apollo GraphQL
 
 ### Frameworks

@@ -22,23 +22,23 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
           key={id}
           className="container__element nft-card flex flex-col justify-stretch"
         >
-          <div className="element__image relative">
+          <div className="element__image relative overflow-hidden">
             <div
-              className="image__picture w-full rounded-2xl bg-center bg-no-repeat pb-48"
+              className="image__picture bg-cover w-full rounded-t-2xl bg-center bg-no-repeat pb-62"
               style={{ backgroundImage: `url(${image!})` }}
             ></div>
             <div className="image-overlay"></div>
           </div>
           {/* Titles Start */}
-          <hgroup className="element__titles mt-6 mb-6">
-            <h2 className="element__name title mb-6 min-h-19">{name}</h2>
-            <h3 className="element__price subtitle text-right uppercase">
+          <hgroup className="element__titles mt-6 mb-6 pl-6 pr-6">
+            <h2 className="element__name title mb-6 min-h-19 pl-6 pr-6">{name}</h2>
+            <h3 className="element__price subtitle pl-6 text-right uppercase">
               {setPrice(price!)} ETH
             </h3>
           </hgroup>
           {/* Titles End */}
           <Link
-            className="element__link link text-right font-bold"
+            className="element__link link pl-6 pr-6 text-right font-bold"
             href={`/nft/${id}`}
             title={`${name} details - eNefti`}
             tabIndex={i}
@@ -46,7 +46,7 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
             Details
           </Link>
           {/* Actions Start */}
-          <div className="element_actions mt-12 flex justify-end">
+          <div className="element_actions mt-12 flex justify-end pb-6 pl-6 pr-6">
             {/* Wishlist Start */}
             <button
               className="element__button btn btn-secondary flex cursor-pointer items-center justify-center uppercase"

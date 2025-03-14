@@ -43,6 +43,7 @@ export default function RootLayout({
 }>): React.ReactNode {
   return (
     // HTML Start
+    // Localization
     <html lang="en">
       {/* Content-Security Policy (vs. XSS) */}
       <meta

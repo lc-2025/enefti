@@ -1,27 +1,26 @@
-@import 'tailwindcss';
-
 /* Tailwind custom theme styles */
-/* CSS variables for colors and effects */
+@import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* CSS variables for colors and effects - Light Theme */
 :root {
   --accent-cyan: #00ffff;
   --accent-pink: #ec4899;
   --accent-purple: #8b5cf6;
-  --bg-dark: #0f0f0f;
-  --bg-gradient-end: #1a2a4a;
-  --bg-gradient-start: #2a1a3a;
-  --bg-primary: #1a1a1a;
+  --bg-primary: #f7fafc;
+  --bg-gradient-start: #e2e8f0;
+  --bg-gradient-end: #cbd5e1;
   --blur: 10px;
-  --font-family: 'Poppins', sans-serif;
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --text-primary: #fff;
+  --glass-bg: rgba(0, 0, 0, 0.1);
+  --glass-border: rgba(0, 0, 0, 0.2);
+  --text-primary: #1a202c;
 }
 
 /* Asymmetric grid for the catalog */
 .asymmetric-grid {
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   padding: 0 1.6rem 1.6rem 1.6rem;
 }
 
@@ -76,11 +75,24 @@ body {
   transform: scale(1.1);
 }
 
+/* Dark Theme */
+.dark {
+  --accent-cyan: #00ffff;
+  --accent-pink: #ec4899;
+  --accent-purple: #8b5cf6;
+  --bg-primary: #1a1a1a;
+  --bg-gradient-start: #2a1a3a;
+  --bg-gradient-end: #1a2a4a;
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --text-primary: #ffffff;
+}
+
 /* Translucent overlay for images in detail */
 .image-overlay {
   backdrop-filter: blur(5px);
   background: var(--glass-bg);
-  border-radius: 12px;
+  border-radius: 12px 12px 0 0;
   height: 100%;
   left: 0;
   position: absolute;
@@ -118,7 +130,6 @@ body {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 12px;
-  padding: 1.6rem;
   transition:
     box-shadow 0.3s ease,
     transform 0.3s ease;
@@ -142,17 +153,6 @@ body {
   font-size: 2rem;
   font-weight: 700;
   line-height: 1.2;
-}
-
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: var(--bg-dark);
-  }
-
-  .title {
-    color: var(--accent-cyan);
-  }
 }
 
 /* Responsive */
