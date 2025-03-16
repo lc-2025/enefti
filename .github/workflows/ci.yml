@@ -1,5 +1,5 @@
-name: eNefti CI
-run-name: eNefti Content-Integration
+name: eNeFTi CI
+run-name: eNeFTi Content-Integration
 on:
   push:
     branches: [main]

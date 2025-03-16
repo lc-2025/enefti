@@ -1,4 +1,4 @@
-# eNefti - Backend Demo
+# eNeFTi - Backend Demo
 
 NFTs E-Commerce backend demo.
 
@@ -142,7 +142,7 @@ docker-compose stop
 
 ## Deploy
 
-_eNefti Backend_ is integrated and delivered to production via _GitHub Actions_ workflows pipeline, where the server is being set up, tested, built and containerized with _Docker_.
+_eNeFTi Backend_ is integrated and delivered to production via _GitHub Actions_ workflows pipeline, where the server is being set up, tested, built and containerized with _Docker_.
 Then the _Docker_ image is hosted on _GitHub Container Registry_ and deployed on _Render_ production environment available at https://enefti-sha256.onrender.com
 
 ## Storage

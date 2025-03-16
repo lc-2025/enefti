@@ -8,7 +8,7 @@ import '../scss/global.scss';
 import '../css/globals.css';
 
 export const metadata: Metadata = {
-  title: 'eNefti',
+  title: 'eNeFTi',
   description: 'NFTs E-Commerce demo',
 };
 
@@ -21,8 +21,8 @@ export const viewport: Viewport = {
 export const poppins = Poppins({
   display: 'swap',
   variable: '--font-poppins',
-  weight: '400'
-})
+  weight: '400',
+});
 
 /**
  * @description Main Layout
@@ -52,18 +52,30 @@ export default function RootLayout({
       />
       {/* Browser rendering version support (retro-compatibility) */}
       <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-      {/* TODO: Favicon */}
+      {/* Icons */}
+      <link
+        rel="icon"
+        href="/icon?<generated>"
+        type="image/<generated>"
+        sizes="<generated>"
+      />
+      <link
+        rel="apple-touch-icon"
+        href="/apple-icon?<generated>"
+        type="image/<generated>"
+        sizes="<generated>"
+      />
       <body className={`antialiased`}>
         {/* JS fallback */}
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <Header />
-        <ApolloWrapper>
-          {/* Container Start */}
-          <main className="container max-w-full">
-            <div className="container__wrapper">{children}</div>
-          </main>
-          {/* Container End */}
-        </ApolloWrapper>
+        {/* Container Start */}
+        <main className="container max-w-full">
+          <div className="container__wrapper">
+            <ApolloWrapper>{children}</ApolloWrapper>
+          </div>
+        </main>
+        {/* Container End */}
         <Footer />
       </body>
     </html>

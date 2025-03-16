@@ -11,9 +11,14 @@
   --bg-gradient-start: #e2e8f0;
   --bg-gradient-end: #cbd5e1;
   --blur: 10px;
+  --button: #f3f8fb;
   --glass-bg: rgba(0, 0, 0, 0.1);
   --glass-border: rgba(0, 0, 0, 0.2);
+  --placeholder: rgba(0, 0, 0, 0.6);
   --text-primary: #1a202c;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 /* Asymmetric grid for the catalog */
@@ -34,7 +39,7 @@ body {
 .btn {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  color: var(--text-primary);
+  color: var(--button);
   font-weight: bold;
   padding: 1.6rem;
   transition:
@@ -85,7 +90,8 @@ body {
   --bg-gradient-end: #1a2a4a;
   --glass-bg: rgba(255, 255, 255, 0.1);
   --glass-border: rgba(255, 255, 255, 0.2);
-  --text-primary: #ffffff;
+  --placeholder: rgba(255, 255, 255, 0.6);
+  --text-primary: #fff;
 }
 
 /* Translucent overlay for images in detail */
@@ -112,16 +118,29 @@ body {
 }
 
 .input-glass::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--placeholder);
 }
 
+/* Link */
+
 .link {
-  color: var(--accent-cyan);
-  transition: color 0.2s ease;
+  color: var(--text-primary);
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .link:hover {
-  color: var(--text-primary);
+  opacity: 0.7;
+}
+
+/* Logo */
+.logo {
+  /* Image-Replacement technique */
+  background-image: url('../img/logo.svg');
+  background-size: 100%;
+  min-width: 241px;
+  padding: 0 0 4.6rem;
 }
 
 /* NFT card (Catalog and Wishlist) */
@@ -153,6 +172,11 @@ body {
   font-size: 2rem;
   font-weight: 700;
   line-height: 1.2;
+}
+
+/* Wishlist */
+.wishlist {
+  background-color: var(--bg-primary);
 }
 
 /* Responsive */

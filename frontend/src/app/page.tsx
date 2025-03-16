@@ -17,11 +17,10 @@ export default function Home(): React.ReactNode {
     // Catalogue
     <section className="catalogue">
       {/*  BEM notation for styles */}
-      <h1 className="catalogue__title title uppercase mb-12 mt-12 text-center">Catalogue</h1>
-      <PreloadQuery
-        query={NFT_QUERY.nfts.query}
-        variables={QUERY.PAGINATION}
-      >
+      <h1 className="catalogue__title title mt-12 mb-12 text-center uppercase">
+        Catalogue
+      </h1>
+      <PreloadQuery query={NFT_QUERY.nfts.query} variables={QUERY.PAGINATION}>
         {/*
           The query is referenced and executed in background
           then passed to child and consumed via `read` hook.
@@ -29,11 +28,9 @@ export default function Home(): React.ReactNode {
           i.e. consecutive calls performed prior to previous outline ending
           during suspension
          */}
-        {(queryRef) => (
-          <Suspense fallback={<Skeleton />}>
-            <Catalogue queryRef={queryRef} />
-          </Suspense>
-        )}
+        <Suspense fallback={<Skeleton />}>
+          <Catalogue />
+        </Suspense>
       </PreloadQuery>
     </section>
     // Catalogue End

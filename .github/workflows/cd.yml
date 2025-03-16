@@ -1,9 +1,9 @@
-name: eNefti CD
-run-name: eNefti Content-Delivery
+name: eNeFTi CD
+run-name: eNeeNeFTifti Content-Delivery
 on:
   # Pipeline dependency
   workflow_run:
-    workflows: [eNefti CI]
+    workflows: [eNeFTi CI]
     types: [completed]
     branches: [main]
 env:

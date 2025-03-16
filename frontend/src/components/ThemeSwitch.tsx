@@ -5,7 +5,7 @@ import { Switch } from '@headlessui/react';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 
 const ThemeSwitch = (): React.ReactNode => {
-  const [theme, setTheme] = useState(true);
+  const [theme, setTheme] = useState(false);
   const themeName = {
     light: 'light',
     dark: 'dark',
@@ -47,9 +47,12 @@ const ThemeSwitch = (): React.ReactNode => {
   useEffect(() => {
     // LocalStorage check
     if (window.localStorage) {
-      const themeSaved = localStorage.getItem(themeLabel);
+      const themeSaved = localStorage.getItem(themeLabel) ?? '';
 
-      isDark = themeSaved === themeName.dark;
+      // User preference + system-aware detection
+      isDark =
+        themeSaved === themeName.dark ||
+        window.matchMedia('(prefers-color-scheme: dark)').matches;
 
       setTheme(isDark);
       enableTheme(isDark);
@@ -64,6 +67,7 @@ const ThemeSwitch = (): React.ReactNode => {
         checked={theme}
         onChange={handleTheme}
         className="theme-switcher__field group relative flex h-12 w-24 cursor-pointer rounded-full bg-(--accent-pink)/10 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[checked]:bg-(--accent-purple)/10 data-[focus]:outline-1 data-[focus]:outline-(--accent-purple)"
+        tabIndex={3}
       >
         <span
           aria-hidden="true"

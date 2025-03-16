@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Radio, RadioGroup } from '@headlessui/react';
-import { CheckCircleIcon } from '@heroicons/react/24/outline';
+import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import TFilter from '@/types/components/Filter';
 
 /**
@@ -25,6 +25,17 @@ const Filter = ({
 }): React.ReactNode => {
   const [selected, setSelected] = useState(null);
 
+  // Handlers
+  /**
+   * @description Filter handler
+   * Resets the current selected filter
+   * @author Luca Cattide
+   * @date 16/03/2025
+   */
+  const handleFilter = (): void => {
+    setSelected(null);
+  };
+
   return (
     <div className="filters__container mb-12 w-full">
       <div className="container__filter w-full">
@@ -35,12 +46,13 @@ const Filter = ({
           onChange={setSelected}
           aria-label="Server size"
           className="space-y-6"
+          tabIndex={4}
         >
           {filters.map((filter) => (
             <Radio
               key={filter.name}
               value={filter}
-              className="filter__option group relative flex cursor-pointer rounded-lg bg-white/5 p-6 shadow-md transition hover:bg-white/10 focus:outline-none data-[checked]:bg-white/10 data-[focus]:outline-1 data-[focus]:outline-white"
+              className="filter__option group relative flex cursor-pointer rounded-lg bg-white/5 p-6 shadow-md transition hover:opacity-75 focus:outline-none data-[checked]:bg-white/10 data-[focus]:outline-1 data-[focus]:outline-white"
             >
               <div className="option__container flex w-full items-center justify-between">
                 <div className="container__label">
@@ -58,6 +70,15 @@ const Filter = ({
             </Radio>
           ))}
         </RadioGroup>
+        {selected && (
+          <div
+            className="filter__reset mt-6 flex cursor-pointer items-center transition-opacity duration-200 ease-linear hover:opacity-75"
+            onClick={handleFilter}
+          >
+            <XMarkIcon className="reset__icon mr-6 inline-block size-6" />
+            <span className="reset__label">Clear Filter</span>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ export default function Nft(): React.ReactNode {
       <Link
         className="nft__backlink"
         href="/"
-        title="Back to the NFT Catalogue - eNefti"
+        title="Back to the NFT Catalogue - eNeFTi"
       >
         Back to Catalogue
       </Link>

@@ -4,7 +4,7 @@ import {
   ApolloClient,
   InMemoryCache,
 } from '@apollo/experimental-nextjs-app-support';
-import { NODE_ENV, BACKEND_URL } from './utilities/constants';
+import { NODE_ENV, BACKEND_URL } from './utilities/environment';
 
 // Apollo Client registration
 export const { getClient, query, PreloadQuery } = registerApolloClient((): ApolloClient<unknown> => {

@@ -2,33 +2,25 @@
 
 import React, { useState } from 'react';
 import { notFound } from 'next/navigation';
-import { useQueryRefHandlers, useReadQuery, QueryRef } from '@apollo/client';
+import { useSuspenseQuery } from '@apollo/client';
 import CatalogueList from '@/components/Catalogue/CatalogueList';
 import Filter from '../Filter';
 import CustomError from '../CustomError';
 import updateCache from '@/utilities/graphql';
+import NFT_QUERY from '@/queries/nft';
+import { QUERY, FILTER } from '@/utilities/constants';
 
 /**
  * @description  NFTs Catalogue
  * @author Luca Cattide
  * @date 14/03/2025
- * @param {{ queryRef: QueryRef }} { queryRef }
  * @returns {*}  {React.ReactNode}
  */
-const Catalogue = ({ queryRef }: { queryRef: QueryRef }): React.ReactNode => {
+const Catalogue = (): React.ReactNode => {
   const [limit, setLimit] = useState(10);
-  const { data, error } = useReadQuery(queryRef);
-  const { fetchMore } = useQueryRefHandlers(queryRef);
-  const filter = {
-    prices: [
-      { name: 'Low to High', criteria: 'Ascendant' },
-      { name: 'High to Low', criteria: 'Descendant' },
-    ],
-    owners: [
-      { name: 'My NFTs', criteria: 'Personal collection' },
-      { name: 'All', criteria: 'From eNefti' },
-    ],
-  };
+  const { data, error, fetchMore } = useSuspenseQuery(NFT_QUERY.nfts.query, {
+    variables: { ...QUERY.PAGINATION, limit },
+  });
 
   // Helpers
   /**
@@ -48,7 +40,7 @@ const Catalogue = ({ queryRef }: { queryRef: QueryRef }): React.ReactNode => {
        */
       updateQuery(previousData, { fetchMoreResult, variables: { offset } }) {
         // Slicing to preserve immutability
-        const updatedFeed = previousData.feed.slice(0);
+        const updatedFeed = previousData.nfts.slice(0);
 
         return {
           ...previousData,
@@ -70,8 +62,8 @@ const Catalogue = ({ queryRef }: { queryRef: QueryRef }): React.ReactNode => {
       {/* Filters Start */}
       <aside className="catalogue__filters w-1/6 pr-6 pb-6 pl-6">
         <h2 className="filters__title title mb-12 uppercase">Filters</h2>
-        <Filter title="By Price" filters={filter.prices} />
-        <Filter title="By Purchase" filters={filter.owners} />
+        <Filter title="By Price" filters={FILTER.PRICES} />
+        <Filter title="By Purchase" filters={FILTER.OWNERS} />
       </aside>
       {/* Filters End */}
       <CatalogueList nfts={data.nfts} />
@@ -81,6 +73,7 @@ const Catalogue = ({ queryRef }: { queryRef: QueryRef }): React.ReactNode => {
         <button
           className="more__button btn btn-secondary cursor-pointer uppercase select-none"
           onClick={handleMore}
+          tabIndex={data.nfts.length + 1}
         >
           Load more
         </button>
