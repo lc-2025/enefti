@@ -1,5 +1,6 @@
 import { defineConfig } from 'cypress';
 
+// Cypress Configuration
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {

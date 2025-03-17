@@ -1,17 +1,96 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
-import setPrice from '@/utilities/utils';
+import NftActions from '../NftActions';
+import { addNft, addNfts, removeNft } from '@/slices/wishlist';
+import useStarredNft from '@/hooks/storage';
+import { useAppDispatch } from '@/hooks/state';
 import { Nft } from '@/types/graphql/graphql';
-import { ShoppingCartIcon, StarIcon } from '@heroicons/react/24/outline';
-import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid';
 
+/**
+ * @description Catalogue NFTs list
+ * @author Luca Cattide
+ * @date 17/03/2025
+ * @param {{ nfts: Array<Nft> }} { nfts }
+ * @returns {*}  {React.ReactNode}
+ */
 const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
-  const [click, setClick] = useState('');
+  // Hooks
+  const dispatch = useAppDispatch();
+  const [starred, setStarred] = useStarredNft();
+
+  // Helpers
+  /**
+   * @description NFT getter
+   * Returns a fetched NFT by ID
+   * @author Luca Cattide
+   * @date 17/03/2025
+   * @param {string} id
+   * @returns {*}  {Nft}
+   */
+  const getNft = (id: string): Nft => nfts.find((nft) => nft.id === id)!;
+
+  /**
+   * @description Starred NFT checker
+   * It verifies if an NFT is present in the user wishlist
+   * by its ID
+   * @author Luca Cattide
+   * @date 17/03/2025
+   * @param {string} id
+   * @returns {*}  {boolean}
+   */
+  const checkStarredNft = (id: string): boolean =>
+    (starred as Array<string>).find((starredId: string) => starredId === id)
+      ? true
+      : false;
+
+  /**
+   * @description Wishlist state setter
+   * Initializes the wishlist based on starred ones
+   * @author Luca Cattide
+   * @date 17/03/2025
+   */
+  const setWishlist = (): void => {
+    dispatch(
+      addNfts(
+        nfts.filter((nft) => (starred as Array<string>).includes(nft.id)),
+      ),
+    );
+  };
 
   // Handlers
+  /**
+   * @description Wishlist handler
+   * Add/removes preferred NFTs on a dedicated list
+   * @author Luca Cattide
+   * @date 17/03/2025
+   * @param {string} id
+   */
   const handleWishlist = (id: string): void => {
-    setClick((state) => (state === id ? '' : id));
+    // Data check
+    if (!checkStarredNft(id)) {
+      dispatch(addNft(getNft(id)));
+      setStarred((state: Array<string>) => [...state, id]);
+    } else {
+      dispatch(removeNft(id));
+      setStarred((state: Array<string>) => [
+        ...state.filter((starredId: string) => starredId !== id),
+      ]);
+    }
   };
+
+  /**
+   * @description Starred status handler
+   * Sets the action buttons UI based on the wishlist
+   * @author Luca Cattide
+   * @date 17/03/2025
+   * @param {string} id
+   * @returns {*}  {boolean}
+   */
+  const handleStarred = (id: string): boolean => checkStarredNft(id);
+
+  useEffect(() => {
+    setWishlist();
+  }, []);
 
   return (
     // List Start
@@ -35,7 +114,7 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
               {name}
             </h2>
             <h3 className="element__price subtitle pl-6 text-right uppercase">
-              {setPrice(price!)} ETH
+              {price!.toFixed(4)} ETH
             </h3>
           </hgroup>
           {/* Titles End */}
@@ -49,31 +128,12 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
           </Link>
           {/* Actions Start */}
           <div className="element_actions mt-12 flex justify-end pr-6 pb-6 pl-6">
-            {/* Wishlist Start */}
-            <button
-              className="element__button btn btn-secondary flex cursor-pointer items-center justify-center uppercase"
-              onClick={() => handleWishlist(id)}
-              tabIndex={11 + i}
-            >
-              <span className="button__icon">
-                {click === id ? (
-                  <StarIconSolid className="white size-9" />
-                ) : (
-                  <StarIcon className="white size-9" />
-                )}
-              </span>
-            </button>
-            {/* Wishlist End */}
-            {/* Cart Start */}
-            <button
-              className="element__button btn btn-primary ml-6 flex cursor-pointer items-center justify-center"
-              tabIndex={12 + i}
-            >
-              <span className="button__icon">
-                <ShoppingCartIcon className="white size-9" />
-              </span>
-            </button>
-            {/* Cart End */}
+            <NftActions
+              icons={true}
+              handler={() => handleWishlist(id)}
+              isStarred={() => handleStarred(id)}
+              position={i}
+            />
           </div>
           {/* Actions End */}
         </div>

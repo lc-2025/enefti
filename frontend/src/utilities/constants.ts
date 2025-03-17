@@ -15,4 +15,31 @@ const FILTER = {
   OWNERS: [{ name: 'My NFTs', criteria: 'Personal collection' }],
 };
 
-export { QUERY, FILTER };
+const STATE = {
+  WISHLIST: { nfts: [] },
+  FILTER: {
+    price: null,
+    owner: false,
+  },
+};
+
+const ACTION_PREFIX = {
+  WISHLIST: 'wishlist',
+  FILTER: 'filter',
+};
+
+const ACTION = {
+  WISHLIST: {
+    ADD: `${ACTION_PREFIX.WISHLIST}/addNft`,
+    REMOVE: `${ACTION_PREFIX.WISHLIST}/removeNft`,
+  },
+  FILTER: {
+    PRICE: {
+      ASCENDANT: `${ACTION_PREFIX.FILTER}/filterAsc`,
+      DESCENDANT: `${ACTION_PREFIX.FILTER}/filterDesc`,
+      RESET: `${ACTION_PREFIX.FILTER}/filterReset`,
+    },
+  },
+};
+
+export { QUERY, FILTER, STATE, ACTION_PREFIX, ACTION };

@@ -31,7 +31,7 @@ const Catalogue = (): React.ReactNode => {
   const handleMore = (): void => {
     fetchMore({
       variables: {
-        offset: data.nfts.length,
+        offset: data.nfts?.length,
         limit,
       },
       /**
@@ -73,7 +73,7 @@ const Catalogue = (): React.ReactNode => {
         <button
           className="more__button btn btn-secondary cursor-pointer uppercase select-none"
           onClick={handleMore}
-          tabIndex={data.nfts.length + 1}
+          tabIndex={data.nfts!.length + 1}
         >
           Load more
         </button>

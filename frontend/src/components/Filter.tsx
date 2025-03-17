@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Radio, RadioGroup } from '@headlessui/react';
 import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import TFilter from '@/types/components/Filter';
+import { useSelector } from 'react-redux';
+import { selectFilterOwner, selectFilterPrice } from '@/slices/filters';
 
 /**
  * @description Catalogue results filter
@@ -23,7 +25,9 @@ const Filter = ({
   title: string;
   filters: Array<TFilter>;
 }): React.ReactNode => {
-  const [selected, setSelected] = useState(null);
+  // Hooks
+  const filterPrice = useSelector(selectFilterPrice);
+  const filterOwner = useSelector(selectFilterOwner);
 
   // Handlers
   /**
@@ -32,9 +36,7 @@ const Filter = ({
    * @author Luca Cattide
    * @date 16/03/2025
    */
-  const handleFilter = (): void => {
-    setSelected(null);
-  };
+  const handleFilter = (): void => {};
 
   return (
     <div className="filters__container mb-12 w-full">

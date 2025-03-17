@@ -6,12 +6,18 @@ const NFT_QUERY = {
     query: gql(`
       query Nfts($offset: Int, $limit: Int) {
         nfts(offset: $offset, limit: $limit) {
-          id
-          name
-          image
-          description
-          price
-          owner
+          ...NftFragmentId
+          ...NftFragmentProps
+        }
+      }
+    `),
+  },
+  nft: {
+    query: gql(`
+      query Nft($id: ID!) {
+        nft(id: $id) {
+          ...NftFragmentId
+          ...NftFragmentProps
         }
       }
     `),

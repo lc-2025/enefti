@@ -51,7 +51,7 @@ const makeClient = (): ApolloClient<unknown> => {
                * Returns `undefined` if no existing field in cache
                * If so fetch its value from the server
                */
-              /* read(
+              read(
                 existing,
                 { args: { offset = 0, limit } },
               ): FieldReadFunction {
@@ -71,7 +71,7 @@ const makeClient = (): ApolloClient<unknown> => {
                 const merged = existing ? existing.slice(0) : [];
 
                 return updateCache(merged, incoming, offset);
-              }, */
+              },
             },
           },
         },

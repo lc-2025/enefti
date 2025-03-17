@@ -1,4 +1,5 @@
 import React from 'react';
+import StoreProvider from '@/components/StoreProvider';
 import { Poppins } from 'next/font/google';
 import Header from '@/components/Header';
 import { ApolloWrapper } from '@/apolloSsr';
@@ -68,14 +69,16 @@ export default function RootLayout({
       <body className={`antialiased`}>
         {/* JS fallback */}
         <noscript>You need to enable JavaScript to run this app.</noscript>
-        <Header />
-        {/* Container Start */}
-        <main className="container max-w-full">
-          <div className="container__wrapper">
-            <ApolloWrapper>{children}</ApolloWrapper>
-          </div>
-        </main>
-        {/* Container End */}
+        <StoreProvider>
+          <Header />
+          {/* Container Start */}
+          <main className="container max-w-full">
+            <div className="container__wrapper">
+              <ApolloWrapper>{children}</ApolloWrapper>
+            </div>
+          </main>
+          {/* Container End */}
+        </StoreProvider>
         <Footer />
       </body>
     </html>
