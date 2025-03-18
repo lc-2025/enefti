@@ -1,13 +1,23 @@
 // Types - State Management - Reducer (Filters)
-enum TPrice {
-  Ascendant = 'ASCENDANT',
-  Descendant = 'DESCENDANT',
+enum Price {
+  Ascendant = 'Ascendant',
+  Descendant = 'Descendant',
 }
 
+type TFilterProps = {
+  name: string;
+  criteria: string;
+};
+
+type TFilterPrice = {
+  value: TFilterProps | null;
+  order: Price | null;
+};
+
 type TFilter = {
-  price: TPrice | null;
+  price: TFilterPrice;
   owner: boolean;
 };
 
-export { TPrice };
-export type { TFilter };
+export { Price };
+export type { TFilterProps, TFilter };

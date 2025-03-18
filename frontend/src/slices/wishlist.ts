@@ -11,6 +11,9 @@ const wishlistSlice = createSlice({
   name: ACTION_PREFIX.WISHLIST,
   initialState,
   reducers: {
+    openWishlist: (state, action: PayloadAction<boolean>) => {
+      state.open = action.payload;
+    },
     addNft: (state, action: PayloadAction<Nft>) => {
       // Immutability is guaranteed by Redux
       state.nfts.push(action.payload);
@@ -25,9 +28,24 @@ const wishlistSlice = createSlice({
 });
 
 // Actions
-export const { addNft, addNfts, removeNft } = wishlistSlice.actions;
+const { openWishlist, addNft, addNfts, removeNft } = wishlistSlice.actions;
 
-// Selector
-export const selectStarred = (state: RootState) => state.wishlist.nfts;
+// Selectors
+/**
+ * @description Opening selector
+ * @author Luca Cattide
+ * @date 18/03/2025
+ * @param {RootState} state
+ */
+const selectOpen = (state: RootState) => state.wishlist.open;
 
+/**
+ * @description Starred NFTs selector
+ * @author Luca Cattide
+ * @date 18/03/2025
+ * @param {RootState} state
+ */
+const selectStarred = (state: RootState) => state.wishlist.nfts;
+
+export { openWishlist, addNft, addNfts, removeNft, selectOpen, selectStarred };
 export default wishlistSlice.reducer;

@@ -15,8 +15,8 @@ import { Nft } from '@/types/graphql/graphql';
  */
 const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
   // Hooks
-  const dispatch = useAppDispatch();
   const [starred, setStarred] = useStarredNft();
+  const dispatch = useAppDispatch();
 
   // Helpers
   /**
@@ -90,7 +90,7 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
 
   useEffect(() => {
     setWishlist();
-  }, []);
+  }, [starred]);
 
   return (
     // List Start

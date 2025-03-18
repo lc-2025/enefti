@@ -1,60 +1,70 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Switch } from '@headlessui/react';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
+import { useAppDispatch } from '@/hooks/state';
+import { selectTheme, setTheme } from '@/slices/theme';
+import { WINDOW, THEME } from '@/utilities/constants';
 
+/**
+ * @description Theme switch
+ * @author Luca Cattide
+ * @date 18/03/2025
+ * @returns {*}  {React.ReactNode}
+ */
 const ThemeSwitch = (): React.ReactNode => {
-  const [theme, setTheme] = useState(false);
-  const themeName = {
-    light: 'light',
-    dark: 'dark',
-  };
-  const themeLabel = 'theme';
+  // Hooks
+  const theme = useSelector(selectTheme);
+  const dispatch = useAppDispatch();
+  const { LABEL } = THEME;
+  const { LIGHT, DARK } = THEME.NAME;
   let isDark = false;
 
+  // Helpers
+  /**
+   * @description Theme enabler
+   * Activates the selected theme
+   * @author Luca Cattide
+   * @date 18/03/2025
+   * @param {boolean} isDark
+   */
   const enableTheme = (isDark: boolean): void => {
     // Dark Theme check
     if (isDark) {
-      document.documentElement.classList.add(themeName.dark);
+      document.documentElement.classList.add(DARK);
     } else {
-      document.documentElement.classList.remove(themeName.dark);
+      document.documentElement.classList.remove(DARK);
     }
   };
 
   // Handlers
-  const handleTheme = (): void => {
-    setTheme((theme) => {
-      const newTheme = !theme;
+  const handleTheme = (value: boolean): void => {
+    enableTheme(value);
 
-      enableTheme(newTheme);
-
-      // LocalStorage check
-      if (window.localStorage) {
-        // Theme check
-        if (newTheme) {
-          localStorage.setItem(themeLabel, themeName.dark);
-        } else {
-          localStorage.setItem(themeLabel, themeName.light);
-        }
+    // LocalStorage check
+    if (window.localStorage) {
+      // Theme check
+      if (value) {
+        localStorage.setItem(LABEL, DARK);
+      } else {
+        localStorage.setItem(LABEL, LIGHT);
       }
+    }
 
-      return newTheme;
-    });
+    dispatch(setTheme(value ? DARK : LIGHT));
   };
 
-  // Hooks
   useEffect(() => {
     // LocalStorage check
     if (window.localStorage) {
-      const themeSaved = localStorage.getItem(themeLabel) ?? '';
+      const themeSaved = localStorage.getItem(LABEL) ?? '';
 
       // User preference + system-aware detection
-      isDark =
-        themeSaved === themeName.dark ||
-        window.matchMedia('(prefers-color-scheme: dark)').matches;
+      isDark = themeSaved === DARK || window.matchMedia(WINDOW.MEDIA.THEME).matches;
 
-      setTheme(isDark);
+      dispatch(setTheme(isDark ? DARK : LIGHT));
       enableTheme(isDark);
     }
   }, []);
@@ -64,7 +74,7 @@ const ThemeSwitch = (): React.ReactNode => {
     <div className="theme-switcher flex">
       <SunIcon className="theme-switcher__icon white mr-6 size-12" />
       <Switch
-        checked={theme}
+        checked={theme === DARK}
         onChange={handleTheme}
         className="theme-switcher__field group relative flex h-12 w-24 cursor-pointer rounded-full bg-(--accent-pink)/10 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[checked]:bg-(--accent-purple)/10 data-[focus]:outline-1 data-[focus]:outline-(--accent-purple)"
         tabIndex={3}

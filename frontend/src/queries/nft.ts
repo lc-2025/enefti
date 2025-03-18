@@ -1,4 +1,7 @@
 import { gql } from '@/types/graphql';
+import { disableFragmentWarnings } from 'graphql-tag';
+
+disableFragmentWarnings();
 
 // Queries - NFT
 const NFT_QUERY = {

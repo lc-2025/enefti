@@ -22,7 +22,7 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
 
   return (
     // NFT Details Start
-    <div className="nft mx-auto flex w-2/3 flex-col items-center">
+    <div className="nft mx-auto flex w-1/3 flex-col items-center">
       <Link
         className="nft__backlink link flex items-center mb-12"
         href="/"

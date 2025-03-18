@@ -1,10 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import { StarIcon } from '@heroicons/react/24/outline';
 import Wishlist from './Wishlist';
 import ThemeSwitch from './ThemeSwitch';
+import { openWishlist, selectOpen } from '@/slices/wishlist';
+import { useAppDispatch } from '@/hooks/state';
 
 /**
  * @description Header
@@ -13,7 +16,9 @@ import ThemeSwitch from './ThemeSwitch';
  * @returns {*}  {React.ReactNode}
  */
 const Header = (): React.ReactNode => {
-  const [open, setOpen] = useState(false);
+  // Hooks
+  const open = useSelector(selectOpen);
+  const dispatch = useAppDispatch();
 
   // Handlers
   /**
@@ -23,7 +28,7 @@ const Header = (): React.ReactNode => {
    * @date 16/03/2025
    */
   const handleOpen = (): void => {
-    setOpen(!open);
+    dispatch(openWishlist(!open));
   };
 
   return (
@@ -35,10 +40,10 @@ const Header = (): React.ReactNode => {
         {/*
           Template images background technique
           Event though they might somehow downloaded, users cannot select/copy/right-click
-          directly on them.
+          them directly.
           Furthermore, through image-replacement technique, the logo is also indexable via its title
         */}
-        <aside className="header__logo logo h-auto w-full overflow-hidden bg-left-top bg-no-repeat relative select-none">
+        <aside className="header__logo logo relative h-auto w-full overflow-hidden bg-left-top bg-no-repeat select-none">
           <h2 className="logo__title absolute right-full">eNeFTi</h2>
         </aside>
       </Link>
@@ -54,21 +59,21 @@ const Header = (): React.ReactNode => {
         />
       </aside>
       {/* Search End */}
+      {/* Tools Start */}
       <aside className="header__tools group flex items-center">
         <h2 className="tools__name hidden">Tools</h2>
+        {/* Wishlist Start */}
         <div
-          className="tools__wishlist mr-12 flex cursor-pointer items-center"
+          className="tools__wishlist mr-12 flex items-center"
           onClick={handleOpen}
         >
-          <StarIcon className="wishlist__icon size-12" />
-          <span className="wishlist__label ml-6 text-5xl select-none">
-            Wishlist
-          </span>
-          {/* TODO: Move to `Catalogue` after Redux introduction */}
-          {/* <Wishlist open={open} /> */}
+          <StarIcon className="wishlist__icon cursor-pointer size-12" />
+          <Wishlist open={open} handler={handleOpen} />
         </div>
+        {/* Wishlist End */}
         <ThemeSwitch />
       </aside>
+      {/* Tools End */}
     </header>
     // Header End
   );

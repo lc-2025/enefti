@@ -13,6 +13,7 @@
   --blur: 10px;
   --button: #f3f8fb;
   --glass-bg: rgba(0, 0, 0, 0.1);
+  --glass-bg-1: rgba(0, 0, 0, 0.8);
   --glass-border: rgba(0, 0, 0, 0.2);
   --placeholder: rgba(0, 0, 0, 0.6);
   --text-primary: #1a202c;
@@ -34,6 +35,11 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-family);
+}
+
+/* Modal Popup */
+body.modal {
+  overflow: hidden;
 }
 
 .btn {
@@ -94,6 +100,12 @@ body {
   --text-primary: #fff;
 }
 
+.glass,
+.input-glass,
+.wishlist {
+  backdrop-filter: blur(var(--blur));
+}
+
 /* Translucent overlay for images in detail */
 .image-overlay {
   backdrop-filter: blur(5px);
@@ -108,7 +120,6 @@ body {
 
 /* Input for search and checkout */
 .input-glass {
-  backdrop-filter: blur(var(--blur));
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 8px;
@@ -172,11 +183,6 @@ body {
   font-size: 2rem;
   font-weight: 700;
   line-height: 1.2;
-}
-
-/* Wishlist */
-.wishlist {
-  background-color: var(--bg-primary);
 }
 
 /* Responsive */
