@@ -47,7 +47,7 @@ const Wishlist = ({
     >
       <h2 className="wishlist__title title mb-6 uppercase">Wishlist</h2>
       <XMarkIcon
-        className="wishlist__close absolute top-6 right-6 size-12 cursor-pointer transition duration-200 ease-linear hover:opacity-75"
+        className="wishlist__close absolute top-6 right-6 size-12 cursor-pointer transition duration-200 ease-linear text-white hover:opacity-75"
         onClick={handler}
       />
       {starred && starred.length > 0 ? (
@@ -57,7 +57,7 @@ const Wishlist = ({
             // NFT start
             <li
               key={id}
-              className="collection__element mt-6 flex flex-wrap justify-center p-6 transition duration-200 ease-linear odd:bg-(--bg-primary) even:bg-(--bg-primary)/75 hover:bg-(--accent-purple)/50"
+              className="collection__element mt-6 flex flex-wrap group justify-center p-6 transition duration-200 ease-linear odd:bg-(--bg-primary) even:bg-(--bg-primary)/75 hover:bg-(--accent-pink)/25 hover:text-white"
             >
               <Link
                 className="element__link flex flex-wrap items-center"
@@ -67,13 +67,14 @@ const Wishlist = ({
               >
                 {image && (
                   <img
-                    className="link__image size-24"
+                    className="link__image size-24 select-none"
                     src={image}
                     alt={`${name} - eNeFTi`}
                   />
                 )}
                 <div className="link__container mr-6 ml-6 flex min-w-2xl flex-col">
-                  <span className="link__name">{name}</span>
+                  See Details:
+                  <span className="link__name title">{name}</span>
                   <span className="link__price subtitle uppercase">
                     {price!.toFixed(4)} ETH
                   </span>

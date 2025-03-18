@@ -3,6 +3,10 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Switch } from '@headlessui/react';
+import {
+  MoonIcon as MoonIconSolid,
+  SunIcon as SunIconSolid,
+} from '@heroicons/react/24/solid';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 import { useAppDispatch } from '@/hooks/state';
 import { selectTheme, setTheme } from '@/slices/theme';
@@ -62,7 +66,8 @@ const ThemeSwitch = (): React.ReactNode => {
       const themeSaved = localStorage.getItem(LABEL) ?? '';
 
       // User preference + system-aware detection
-      isDark = themeSaved === DARK || window.matchMedia(WINDOW.MEDIA.THEME).matches;
+      isDark =
+        themeSaved === DARK || window.matchMedia(WINDOW.MEDIA.THEME).matches;
 
       dispatch(setTheme(isDark ? DARK : LIGHT));
       enableTheme(isDark);
@@ -72,7 +77,11 @@ const ThemeSwitch = (): React.ReactNode => {
   return (
     // Theme Switch Start
     <div className="theme-switcher flex">
-      <SunIcon className="theme-switcher__icon white mr-6 size-12" />
+      {theme === LIGHT ? (
+        <SunIconSolid className="theme-switcher__icon white mr-6 size-12" />
+      ) : (
+        <SunIcon className="theme-switcher__icon white mr-6 size-12" />
+      )}
       <Switch
         checked={theme === DARK}
         onChange={handleTheme}
@@ -84,7 +93,11 @@ const ThemeSwitch = (): React.ReactNode => {
           className="pointer-events-none inline-block size-10 translate-x-0 rounded-full bg-(--accent-pink) shadow-lg ring-0 transition duration-200 ease-in-out group-data-[checked]:translate-x-12 group-data-[checked]:bg-(--accent-purple)"
         />
       </Switch>
-      <MoonIcon className="theme-switcher__icon white ml-6 size-12" />
+      {theme === DARK ? (
+        <MoonIconSolid className="theme-switcher__icon white ml-6 size-12" />
+      ) : (
+        <MoonIcon className="theme-switcher__icon white ml-6 size-12" />
+      )}
     </div>
     // Theme Switch End
   );

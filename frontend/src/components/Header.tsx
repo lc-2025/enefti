@@ -3,7 +3,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
-import { StarIcon } from '@heroicons/react/24/outline';
+import { usePathname } from 'next/navigation';
+import { StarIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
+import { ShoppingBagIcon as ShoppingBagIconSolid } from '@heroicons/react/24/solid';
 import Wishlist from './Wishlist';
 import ThemeSwitch from './ThemeSwitch';
 import { openWishlist, selectOpen } from '@/slices/wishlist';
@@ -17,6 +19,7 @@ import { useAppDispatch } from '@/hooks/state';
  */
 const Header = (): React.ReactNode => {
   // Hooks
+  const pathname = usePathname();
   const open = useSelector(selectOpen);
   const dispatch = useAppDispatch();
 
@@ -63,14 +66,26 @@ const Header = (): React.ReactNode => {
       <aside className="header__tools group flex items-center">
         <h2 className="tools__name hidden">Tools</h2>
         {/* Wishlist Start */}
-        <div
-          className="tools__wishlist mr-12 flex items-center"
-          onClick={handleOpen}
-        >
-          <StarIcon className="wishlist__icon cursor-pointer size-12" />
+        <div className="tools__wishlist mr-12 flex items-center">
+          <StarIcon
+            className="wishlist__icon size-12 cursor-pointer transition duration-200 ease-linear hover:opacity-75"
+            onClick={handleOpen}
+          />
           <Wishlist open={open} handler={handleOpen} />
         </div>
         {/* Wishlist End */}
+        <Link
+          className="tools__checkout"
+          href="/checkout"
+          title="Go to checkout - eNefti"
+          tabIndex={2}
+        >
+          {pathname === '/checkout' ? (
+            <ShoppingBagIconSolid className="checkout__icon mr-12 size-12 transition duration-200 ease-linear hover:opacity-75" />
+          ) : (
+            <ShoppingBagIcon className="checkout__icon mr-12 size-12 transition duration-200 ease-linear hover:opacity-75" />
+          )}
+        </Link>
         <ThemeSwitch />
       </aside>
       {/* Tools End */}
