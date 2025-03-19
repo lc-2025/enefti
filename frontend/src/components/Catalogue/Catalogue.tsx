@@ -8,8 +8,7 @@ import Empty from '../Empty';
 import CustomError from '../CustomError';
 import updateCache from '@/utilities/graphql';
 import NFT_QUERY from '@/queries/nft';
-import { useSelector } from 'react-redux';
-import { useAppDispatch } from '@/hooks/state';
+import { useAppDispatch, useAppSelector } from '@/hooks/state';
 import { selectOffset, selectLimit, updateOffset } from '@/slices/catalogue';
 import {
   selectFilterOwner,
@@ -28,11 +27,11 @@ import type { Nft } from '@/types/graphql/graphql';
  */
 const Catalogue = (): React.ReactNode => {
   // Hooks
-  const offset = useSelector(selectOffset);
-  const limit = useSelector(selectLimit);
-  const filterPrice = useSelector(selectFilterPrice);
-  const filterPriceOrder = useSelector(selectFilterPriceOrder);
-  const filterOwner = useSelector(selectFilterOwner);
+  const offset = useAppSelector(selectOffset);
+  const limit = useAppSelector(selectLimit);
+  const filterPrice = useAppSelector(selectFilterPrice);
+  const filterPriceOrder = useAppSelector(selectFilterPriceOrder);
+  const filterOwner = useAppSelector(selectFilterOwner);
   const { data, error, fetchMore } = useSuspenseQuery(NFT_QUERY.nfts.query, {
     variables: { ...QUERY.PAGINATION, limit },
     // Caching queries as performance improvement

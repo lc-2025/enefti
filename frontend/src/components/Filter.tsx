@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { useSelector } from 'react-redux';
 import {
   Radio,
   RadioGroup,
@@ -11,7 +10,7 @@ import {
   Description,
 } from '@headlessui/react';
 import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useAppDispatch } from '@/hooks/state';
+import { useAppDispatch, useAppSelector } from '@/hooks/state';
 import {
   selectFilterOwner,
   selectFilterPrice,
@@ -48,8 +47,8 @@ const Filter = ({
   type: string;
 }): React.ReactNode => {
   // Hooks
-  const filterPrice = useSelector(selectFilterPrice);
-  const filterOwner = useSelector(selectFilterOwner);
+  const filterPrice = useAppSelector(selectFilterPrice);
+  const filterOwner = useAppSelector(selectFilterOwner);
   const dispatch = useAppDispatch();
 
   // Handlers

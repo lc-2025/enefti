@@ -1,14 +1,13 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { Switch } from '@headlessui/react';
 import {
   MoonIcon as MoonIconSolid,
   SunIcon as SunIconSolid,
 } from '@heroicons/react/24/solid';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
-import { useAppDispatch } from '@/hooks/state';
+import { useAppDispatch, useAppSelector } from '@/hooks/state';
 import { selectTheme, setTheme } from '@/slices/theme';
 import { WINDOW, THEME } from '@/utilities/constants';
 
@@ -20,7 +19,7 @@ import { WINDOW, THEME } from '@/utilities/constants';
  */
 const ThemeSwitch = (): React.ReactNode => {
   // Hooks
-  const theme = useSelector(selectTheme);
+  const theme = useAppSelector(selectTheme);
   const dispatch = useAppDispatch();
   const { LABEL } = THEME;
   const { LIGHT, DARK } = THEME.NAME;

@@ -1,10 +1,22 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
-import NftActions from '../NftActions';
-import { addNft, addNfts, removeNft } from '@/slices/wishlist';
-import useStarredNft from '@/hooks/storage';
+import NftActions from '../Nft/NftActions';
+import {
+  addNft as addNftWishlist,
+  addNfts as addNftsWishlist,
+  removeNft as removeNftWishlist,
+} from '@/slices/wishlist';
+import {
+  addNft as addNftCart,
+  addNfts as addNftsCart,
+  removeNft as removeNftCart,
+} from '@/slices/cart';
+import useNftStored from '@/hooks/storage';
 import { useAppDispatch } from '@/hooks/state';
+import checkNftStatus from '@/utilities/utils';
+import { ACTION_PREFIX } from '@/utilities/constants';
 import { Nft } from '@/types/graphql/graphql';
+import TStorage from '@/types/storage';
 
 /**
  * @description Catalogue NFTs list
@@ -15,8 +27,10 @@ import { Nft } from '@/types/graphql/graphql';
  */
 const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
   // Hooks
-  const [starred, setStarred] = useStarredNft();
+  const [storage, setStorage] = useNftStored();
   const dispatch = useAppDispatch();
+  const { wishlist, cart } = storage;
+  const { WISHLIST, CART } = ACTION_PREFIX;
 
   // Helpers
   /**
@@ -30,67 +44,117 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
   const getNft = (id: string): Nft => nfts.find((nft) => nft.id === id)!;
 
   /**
-   * @description Starred NFT checker
-   * It verifies if an NFT is present in the user wishlist
-   * by its ID
+   * @description Wishlist/Cart state setter
+   * Initializes the wishlist or the cart
+   * based on starred/added ones
    * @author Luca Cattide
-   * @date 17/03/2025
-   * @param {string} id
-   * @returns {*}  {boolean}
+   * @date 19/03/2025
+   * @param {string} state
    */
-  const checkStarredNft = (id: string): boolean =>
-    (starred as Array<string>).find((starredId: string) => starredId === id)
-      ? true
-      : false;
+  const setState = (state: string): void => {
+    const action = {
+      [WISHLIST]: (): void => {
+        dispatch(
+          addNftsWishlist(nfts.filter((nft) => wishlist.includes(nft.id))),
+        );
+      },
+      [CART]: (): void => {
+        dispatch(addNftsCart(nfts.filter((nft) => cart.includes(nft.id))));
+      },
+    };
 
-  /**
-   * @description Wishlist state setter
-   * Initializes the wishlist based on starred ones
-   * @author Luca Cattide
-   * @date 17/03/2025
-   */
-  const setWishlist = (): void => {
-    dispatch(
-      addNfts(
-        nfts.filter((nft) => (starred as Array<string>).includes(nft.id)),
-      ),
-    );
+    action[state]();
   };
 
   // Handlers
   /**
-   * @description Wishlist handler
-   * Add/removes preferred NFTs on a dedicated list
+   * @description Starred/Added status handler
+   * Sets the action buttons UI based on the wishlist/cart
    * @author Luca Cattide
    * @date 17/03/2025
-   * @param {string} id
-   */
-  const handleWishlist = (id: string): void => {
-    // Data check
-    if (!checkStarredNft(id)) {
-      dispatch(addNft(getNft(id)));
-      setStarred((state: Array<string>) => [...state, id]);
-    } else {
-      dispatch(removeNft(id));
-      setStarred((state: Array<string>) => [
-        ...state.filter((starredId: string) => starredId !== id),
-      ]);
-    }
-  };
-
-  /**
-   * @description Starred status handler
-   * Sets the action buttons UI based on the wishlist
-   * @author Luca Cattide
-   * @date 17/03/2025
+   * @param {string} status
    * @param {string} id
    * @returns {*}  {boolean}
    */
-  const handleStarred = (id: string): boolean => checkStarredNft(id);
+  const handleStatus = (status: string, id: string): boolean => {
+    const action = {
+      [WISHLIST]: wishlist ?? [],
+      [CART]: cart ?? [],
+    };
+
+    return checkNftStatus(id, action[status]);
+  };
+
+  /**
+   * @description Wishlist/Cart handler
+   * Add/removes preferred/added NFTs on a dedicated list
+   * @author Luca Cattide
+   * @date 17/03/2025
+   * @param {string} action
+   * @param {string} id
+   */
+  const handleAction = (action: string, id: string): void => {
+    const data = {
+      [WISHLIST]: wishlist,
+      [CART]: cart,
+    };
+    const callback = {
+      add: {
+        [WISHLIST]: (): void => {
+          dispatch(addNftWishlist(getNft(id)));
+          setStorage((state: TStorage) => ({
+            ...state,
+            wishlist: [...state.wishlist, id],
+          }));
+        },
+        [CART]: (): void => {
+          dispatch(addNftCart(getNft(id)));
+          setStorage((state: TStorage) => ({
+            ...state,
+            cart: [...state.cart, id],
+          }));
+        },
+      },
+      remove: {
+        [WISHLIST]: (): void => {
+          dispatch(removeNftWishlist(id));
+          setStorage((state: TStorage) => ({
+            ...state,
+            wishlist: [
+              ...state.wishlist.filter((starredId: string) => starredId !== id),
+            ],
+          }));
+        },
+        [CART]: (): void => {
+          dispatch(removeNftCart(id));
+          setStorage((state: TStorage) => ({
+            ...state,
+            cart: [
+              ...state.wishlist.filter((addedId: string) => addedId !== id),
+            ],
+          }));
+        },
+      },
+    };
+
+    // Data check
+    if (!checkNftStatus(id, data[action] as Array<string> ?? [])) {
+      callback.add[action]();
+    } else {
+      callback.remove[action]();
+    }
+  };
 
   useEffect(() => {
-    setWishlist();
-  }, [starred]);
+    const actions = [WISHLIST, CART];
+
+    actions.forEach((action) => {
+      // Existing data check
+      if (storage[action]) {
+        setState(action);
+      }
+    });
+  }, [wishlist, cart]);
 
   return (
     // List Start
@@ -130,8 +194,10 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
           <div className="element_actions mt-12 flex justify-end pr-6 pb-6 pl-6">
             <NftActions
               icons={true}
-              handler={() => handleWishlist(id)}
-              isStarred={() => handleStarred(id)}
+              isStarred={handleStatus(WISHLIST, id)}
+              handleWishlist={() => handleAction(WISHLIST, id)}
+              isAdded={handleStatus(CART, id)}
+              handleCart={() => handleAction(CART, id)}
               position={i}
             />
           </div>

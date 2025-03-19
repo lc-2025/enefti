@@ -1,9 +1,11 @@
 import React, { MouseEvent } from 'react';
-import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import { selectTheme } from '@/slices/theme';
 import { THEME } from '@/utilities/constants';
+import { setKey, setNfts } from '@/slices/search';
+import { selectOpen, openWishlist } from '@/slices/wishlist';
 import type { Nft } from '@/types/graphql/graphql';
+import {useAppDispatch, useAppSelector} from '@/hooks/state';
 
 /**
  * @description NFTs list
@@ -31,13 +33,27 @@ const NftList = ({
   handler?: (e: MouseEvent<HTMLButtonElement>, id: string) => void;
 }): React.ReactNode => {
   // Hooks
-  const theme = useSelector(selectTheme);
+  const theme = useAppSelector(selectTheme);
+  const open = useAppSelector(selectOpen);
+  const dispatch = useAppDispatch();
   const { DARK } = THEME.NAME;
+
+  // Handlers
+  /**
+   * @description NFTs list visibility handler
+   * @author Luca Cattide
+   * @date 19/03/2025
+   */
+  const handleList = (): void => {
+    // Batching natively abvailable from React v18
+    dispatch(search ? setNfts([]) : openWishlist(!open));
+    dispatch(setKey(''));
+  };
 
   return (
     // List Start
     <ul
-      className={`wishlist__collection flex max-h-2/3 flex-col overflow-x-hidden overflow-y-auto ${search ? 'border-2 fixed z-40 bg-(--bg-primary)' : 'pr-6'}`}
+      className={`wishlist__collection flex max-h-2/3 flex-col overflow-x-hidden overflow-y-auto ${search ? 'fixed z-40 border-2 bg-(--bg-primary)' : 'pr-6'}`}
     >
       {nfts.map(({ id, name, image, price }, i) => (
         // NFT start
@@ -47,9 +63,10 @@ const NftList = ({
         >
           <Link
             className="element__link flex flex-wrap items-center"
-            href={`nft/${id}`}
+            href={`/nft/${id}`}
             title={`${name} - Details - eNeFTi`}
             tabIndex={100 + i}
+            onClick={handleList}
           >
             {image && (
               <img
@@ -70,7 +87,7 @@ const NftList = ({
           </Link>
           {handler && (
             <button
-              className="element__button btn btn-primary cursor-pointer uppercase"
+              className="element__button btn btn-primary cursor-pointer ml-12 uppercase"
               onClick={(e: MouseEvent<HTMLButtonElement>) => handler(e, id!)}
             >
               Remove

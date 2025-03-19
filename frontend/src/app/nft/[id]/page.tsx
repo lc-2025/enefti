@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { query } from '@/apolloRsc';
 import Skeleton from '@/components/Skeleton';
-import NftDetails from '@/components/NftDetails';
+import NftDetails from '@/components/Nft/NftDetails';
 import CustomError from '@/components/CustomError';
 import NFT_QUERY from '@/queries/nft';
 import type { Nft } from '@/types/graphql/graphql';

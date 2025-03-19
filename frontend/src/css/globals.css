@@ -62,6 +62,7 @@ body.modal {
   overflow: hidden;
 }
 
+/* Primary buttons (e.g., "Buy") */
 .btn {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -73,7 +74,6 @@ body.modal {
     transform 0.2s ease;
 }
 
-/* Primary buttons (e.g., "Buy") */
 .btn-primary {
   background: linear-gradient(45deg, var(--accent-purple), var(--accent-pink));
 }
@@ -83,6 +83,7 @@ body.modal {
   transform: scale(1.05);
 }
 
+/* Secondary buttons */
 .btn-secondary {
   background: linear-gradient(45deg, var(--accent-cyan), var(--accent-pink));
 }

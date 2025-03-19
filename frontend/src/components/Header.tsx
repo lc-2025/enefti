@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { StarIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
@@ -9,7 +8,7 @@ import { ShoppingBagIcon as ShoppingBagIconSolid } from '@heroicons/react/24/sol
 import Wishlist from './Wishlist';
 import ThemeSwitch from './ThemeSwitch';
 import { openWishlist, selectOpen } from '@/slices/wishlist';
-import { useAppDispatch } from '@/hooks/state';
+import { useAppDispatch, useAppSelector } from '@/hooks/state';
 import SearchSelect from './SearchSelect';
 
 /**
@@ -21,7 +20,7 @@ import SearchSelect from './SearchSelect';
 const Header = (): React.ReactNode => {
   // Hooks
   const pathname = usePathname();
-  const open = useSelector(selectOpen);
+  const open = useAppSelector(selectOpen);
   const dispatch = useAppDispatch();
 
   // Handlers

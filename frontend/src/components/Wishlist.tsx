@@ -1,13 +1,13 @@
 import React, { MouseEvent } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { useSelector } from 'react-redux';
 import Empty from './Empty';
-import { useAppDispatch } from '@/hooks/state';
-import useStarredNft from '@/hooks/storage';
+import NftList from './Nft/NftList';
+import { useAppDispatch, useAppSelector } from '@/hooks/state';
+import useNftStored from '@/hooks/storage';
 import { selectTheme } from '@/slices/theme';
 import { removeNft, selectStarred } from '@/slices/wishlist';
 import { THEME } from '@/utilities/constants';
-import NftList from './NftList';
+import TStorage from '@/types/storage';
 
 const Wishlist = ({
   open,
@@ -17,9 +17,9 @@ const Wishlist = ({
   handler: () => void;
 }): React.ReactNode => {
   // Hooks
-  const theme = useSelector(selectTheme);
-  const starred = useSelector(selectStarred);
-  const [, setStarred] = useStarredNft();
+  const theme = useAppSelector(selectTheme);
+  const starred = useAppSelector(selectStarred);
+  const [, setStorage] = useNftStored();
   const dispatch = useAppDispatch();
   const { DARK } = THEME.NAME;
 
@@ -36,9 +36,12 @@ const Wishlist = ({
     e.stopPropagation();
 
     dispatch(removeNft(id));
-    setStarred((state: Array<string>) => [
-      ...state.filter((starredId: string) => starredId !== id),
-    ]);
+    setStorage((state: TStorage) => ({
+      ...state,
+      wishlist: [
+        ...state.wishlist.filter((starredId: string) => starredId !== id),
+      ],
+    }));
   };
 
   return (

@@ -1,8 +1,10 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import themeReducer from './slices/theme';
+import searchReducer from './slices/search';
 import wishlistReducer from './slices/wishlist';
 import filterReducer from './slices/filters';
 import catalogueReducer from './slices/catalogue';
+import cartReducer from './slices/cart';
 import wishlistMiddleware from './middlewares/wishlist';
 import filtersMiddleware from './middlewares/filters';
 
@@ -19,9 +21,11 @@ import filtersMiddleware from './middlewares/filters';
  */
 const rootReducer = combineReducers({
   theme: themeReducer,
+  search: searchReducer,
   wishlist: wishlistReducer,
   filter: filterReducer,
   catalogue: catalogueReducer,
+  cart: cartReducer,
 });
 const store = () => {
   return configureStore({

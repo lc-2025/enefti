@@ -36,7 +36,14 @@ const STATE = {
   THEME: {
     selected: THEME.NAME.LIGHT,
   },
-  WISHLIST: { open: false, nfts: [] },
+  SEARCH: {
+    key: '',
+    nfts: [],
+  },
+  WISHLIST: {
+    open: false,
+    nfts: [],
+  },
   FILTER: {
     price: {
       value: null,
@@ -48,16 +55,24 @@ const STATE = {
     offset: QUERY.PAGINATION.offset,
     limit: QUERY.PAGINATION.limit,
   },
+  CART: {
+    nfts: [],
+  },
 };
 const ACTION_PREFIX = {
   THEME: 'theme',
+  SEARCH: 'search',
   WISHLIST: 'wishlist',
   FILTER: 'filter',
   CATALOGUE: 'catalogue',
+  CART: 'cart',
 };
 const ACTION = {
   THEME: {
     SELECT: `${ACTION_PREFIX.WISHLIST}/setTheme`,
+  },
+  SEARCH: {
+    NFTS: `${ACTION_PREFIX.SEARCH}/setNfts`,
   },
   WISHLIST: {
     OPEN: `${ACTION_PREFIX.WISHLIST}/openWishlist`,
@@ -75,7 +90,11 @@ const ACTION = {
     },
   },
   CATALOGUE: {
-    UPDATE: `${ACTION_PREFIX.CATALOGUE}/updateLimit`,
+    UPDATE: `${ACTION_PREFIX.CATALOGUE}/updateOffset`,
+  },
+  CART: {
+    ADD: `${ACTION_PREFIX.CART}/addNft`,
+    REMOVE: `${ACTION_PREFIX.CART}/removeNft`,
   },
 };
 
