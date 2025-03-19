@@ -49,7 +49,7 @@ export default function RootLayout({
       {/* Content-Security Policy (vs. XSS) */}
       <meta
         httpEquiv="Content-Security-Policy"
-        content="default-src 'self' localhost:3000; script-src 'self' 'unsafe-inline'; style-src 'self' fonts.googleapis.com 'unsafe-inline'; img-src 'self' coin-images.coingecko.com; connect-src 'self' localhost:3000; font-src 'self' fonts.googleapis.com fonts.gstatic.com; form-action 'self';"
+        content="default-src 'self' localhost:4000 enefti-sha256.onrender.com; script-src 'self' 'unsafe-inline'; style-src 'self' fonts.googleapis.com 'unsafe-inline'; img-src 'self' coin-images.coingecko.com; connect-src 'self' localhost:4000 enefti-sha256.onrender.com; font-src 'self' fonts.googleapis.com fonts.gstatic.com; form-action 'self';"
       />
       {/* Browser rendering version support (retro-compatibility) */}
       <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -70,14 +70,14 @@ export default function RootLayout({
         {/* JS fallback */}
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <StoreProvider>
-          <Header />
-          {/* Container Start */}
-          <main className="container max-w-full">
-            <div className="container__wrapper">
-              <ApolloWrapper>{children}</ApolloWrapper>
-            </div>
-          </main>
-          {/* Container End */}
+          <ApolloWrapper>
+            <Header />
+            {/* Container Start */}
+            <main className="container max-w-full">
+              <div className="container__wrapper">{children}</div>
+            </main>
+            {/* Container End */}
+          </ApolloWrapper>
         </StoreProvider>
         <Footer />
       </body>

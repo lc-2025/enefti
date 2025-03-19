@@ -14,6 +14,10 @@ import type { Dispatch, SetStateAction } from 'react';
 
 const useStarredNft = (): (string[] | Dispatch<SetStateAction<string[]>>)[] => {
   // Hooks
+  /**
+   * This is an example of local state
+   * Used at hook level to manage external API - Browser `storage`
+   */
   const [starred, setStarred] = useState<Array<string>>([]);
 
   useEffect(() => {

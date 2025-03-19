@@ -10,6 +10,7 @@ import Wishlist from './Wishlist';
 import ThemeSwitch from './ThemeSwitch';
 import { openWishlist, selectOpen } from '@/slices/wishlist';
 import { useAppDispatch } from '@/hooks/state';
+import SearchSelect from './SearchSelect';
 
 /**
  * @description Header
@@ -54,12 +55,7 @@ const Header = (): React.ReactNode => {
       {/* Search start */}
       <aside className="header__search">
         <h2 className="search__title hidden">Search</h2>
-        <input
-          className="input-glass"
-          type="text"
-          placeholder="Search..."
-          tabIndex={1}
-        />
+        <SearchSelect />
       </aside>
       {/* Search End */}
       {/* Tools Start */}

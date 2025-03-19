@@ -1,6 +1,6 @@
 import '../env.ts';
 
 // Environment Variables - RSC usage
-const { NODE_ENV, BACKEND_URL } = process.env;
+const { NODE_ENV, NEXT_PUBLIC_BACKEND_URL } = process.env;
 
-export { NODE_ENV, BACKEND_URL };
+export { NODE_ENV, NEXT_PUBLIC_BACKEND_URL };

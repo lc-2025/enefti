@@ -19,7 +19,18 @@ const getNfts = (req: Request, res: Response, next: NextFunction): void => {
   };
 
   nftModel
-    .find({}, null, options)
+    .find(
+      req.query.search
+        ? {
+            name: {
+              $regex: req.query.search,
+              $options: 'i',
+            },
+          }
+        : {},
+      null,
+      options,
+    )
     .then((data) => {
       // Data check
       if (!data) {

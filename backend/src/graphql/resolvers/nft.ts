@@ -8,11 +8,22 @@ const resolversNft: GraphQLResolverMap<any> = {
   Query: {
     async nfts(parent, args) {
       const nfts = await nftModel
-        .find({}, null, {
-          // Query Pagination
-          skip: args.skip,
-          limit: args.limit,
-        })
+        .find(
+          args.search
+            ? {
+                name: {
+                  $regex: args.search,
+                  $options: 'i',
+                },
+              }
+            : {},
+          null,
+          {
+            // Query Pagination
+            skip: args.offset,
+            limit: args.limit,
+          },
+        )
         .exec();
 
       // Data check

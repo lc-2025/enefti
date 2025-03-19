@@ -45,6 +45,7 @@ const STATE = {
     owner: false,
   },
   CATALOGUE: {
+    offset: QUERY.PAGINATION.offset,
     limit: QUERY.PAGINATION.limit,
   },
 };

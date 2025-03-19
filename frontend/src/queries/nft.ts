@@ -1,14 +1,11 @@
 import { gql } from '@/types/graphql';
-import { disableFragmentWarnings } from 'graphql-tag';
-
-disableFragmentWarnings();
 
 // Queries - NFT
 const NFT_QUERY = {
   nfts: {
     query: gql(`
-      query Nfts($offset: Int, $limit: Int) {
-        nfts(offset: $offset, limit: $limit) {
+      query Nfts($search: String, $offset: Int, $limit: Int) {
+        nfts(search: $search, offset: $offset, limit: $limit) {
           ...NftFragmentId
           ...NftFragmentProps
         }

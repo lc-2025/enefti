@@ -13,13 +13,33 @@
   --blur: 10px;
   --button: #f3f8fb;
   --glass-bg: rgba(0, 0, 0, 0.1);
-  --glass-bg-1: rgba(0, 0, 0, 0.8);
+  --glass-bg-1: rgba(255, 255, 255, 0.8);
   --glass-border: rgba(0, 0, 0, 0.2);
   --placeholder: rgba(0, 0, 0, 0.6);
   --text-primary: #1a202c;
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 16px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--bg-gradient-start);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bg-gradient-end);
 }
 
 /* Asymmetric grid for the catalog */
@@ -95,6 +115,7 @@ body.modal {
   --bg-gradient-start: #2a1a3a;
   --bg-gradient-end: #1a2a4a;
   --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-bg-1: rgba(0, 0, 0, 0.8);
   --glass-border: rgba(255, 255, 255, 0.2);
   --placeholder: rgba(255, 255, 255, 0.6);
   --text-primary: #fff;

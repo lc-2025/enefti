@@ -44,6 +44,14 @@
         "parameters": [
           {
             "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string",
+              "description": "Search key"
+            }
+          },
+          {
+            "in": "query",
             "name": "skip",
             "schema": {
               "type": "string",

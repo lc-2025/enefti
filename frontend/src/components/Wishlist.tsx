@@ -1,11 +1,13 @@
-import React, { MouseEvent }  from 'react';
+import React, { MouseEvent } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useSelector } from 'react-redux';
-import Link from 'next/link';
 import Empty from './Empty';
 import { useAppDispatch } from '@/hooks/state';
 import useStarredNft from '@/hooks/storage';
+import { selectTheme } from '@/slices/theme';
 import { removeNft, selectStarred } from '@/slices/wishlist';
+import { THEME } from '@/utilities/constants';
+import NftList from './NftList';
 
 const Wishlist = ({
   open,
@@ -15,9 +17,11 @@ const Wishlist = ({
   handler: () => void;
 }): React.ReactNode => {
   // Hooks
+  const theme = useSelector(selectTheme);
   const starred = useSelector(selectStarred);
   const [, setStarred] = useStarredNft();
   const dispatch = useAppDispatch();
+  const { DARK } = THEME.NAME;
 
   // Handlers
   /**
@@ -28,10 +32,7 @@ const Wishlist = ({
    * @param {MouseEvent<HTMLButtonElement>} e
    * @param {string} id
    */
-  const handleRemove = (
-    e: MouseEvent<HTMLButtonElement>,
-    id: string,
-  ): void => {
+  const handleRemove = (e: MouseEvent<HTMLButtonElement>, id: string): void => {
     e.stopPropagation();
 
     dispatch(removeNft(id));
@@ -47,49 +48,12 @@ const Wishlist = ({
     >
       <h2 className="wishlist__title title mb-6 uppercase">Wishlist</h2>
       <XMarkIcon
-        className="wishlist__close absolute top-6 right-6 size-12 cursor-pointer transition duration-200 ease-linear text-white hover:opacity-75"
+        className={`wishlist__close absolute top-6 right-6 size-12 cursor-pointer transition duration-200 ease-linear hover:opacity-75 ${theme === DARK && 'text-white'}`}
         onClick={handler}
       />
       {starred && starred.length > 0 ? (
         // Starred NFTs start
-        <ul className="wishlist__collection flex flex-col">
-          {starred.map(({ id, name, image, price }, i) => (
-            // NFT start
-            <li
-              key={id}
-              className="collection__element mt-6 flex flex-wrap group justify-center p-6 transition duration-200 ease-linear odd:bg-(--bg-primary) even:bg-(--bg-primary)/75 hover:bg-(--accent-pink)/25 hover:text-white"
-            >
-              <Link
-                className="element__link flex flex-wrap items-center"
-                href={`nft/${id}`}
-                title={`${name} - Details - eNeFTi`}
-                tabIndex={100 + i}
-              >
-                {image && (
-                  <img
-                    className="link__image size-24 select-none"
-                    src={image}
-                    alt={`${name} - eNeFTi`}
-                  />
-                )}
-                <div className="link__container mr-6 ml-6 flex min-w-2xl flex-col">
-                  See Details:
-                  <span className="link__name title">{name}</span>
-                  <span className="link__price subtitle uppercase">
-                    {price!.toFixed(4)} ETH
-                  </span>
-                </div>
-              </Link>
-              <button
-                className="element__button btn btn-primary cursor-pointer uppercase"
-                onClick={(e: MouseEvent<HTMLButtonElement>) => handleRemove(e, id!)}
-              >
-                Remove
-              </button>
-            </li>
-            // NFT End
-          ))}
-        </ul>
+        <NftList nfts={starred} handler={handleRemove} />
       ) : (
         // Starred NFTs End
         <Empty />

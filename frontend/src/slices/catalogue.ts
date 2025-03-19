@@ -10,16 +10,24 @@ const catalogueSlice = createSlice({
   name: ACTION_PREFIX.CATALOGUE,
   initialState,
   reducers: {
-    updateLimit: (state, action: PayloadAction<number>) => {
-      state.limit = action.payload;
+    updateOffset: (state, action: PayloadAction<number>) => {
+      state.offset = action.payload;
     },
   },
 });
 
 // Actions
-const { updateLimit } = catalogueSlice.actions;
+const { updateOffset } = catalogueSlice.actions;
 
 // Selector
+/**
+ * @description NFTs query offset selector
+ * @author Luca Cattide
+ * @date 19/03/2025
+ * @param {RootState} state
+ */
+const selectOffset = (state: RootState) => state.catalogue.offset;
+
 /**
  * @description NFTs query limit selector
  * @author Luca Cattide
@@ -28,5 +36,5 @@ const { updateLimit } = catalogueSlice.actions;
  */
 const selectLimit = (state: RootState) => state.catalogue.limit;
 
-export { updateLimit, selectLimit };
+export { updateOffset, selectOffset, selectLimit };
 export default catalogueSlice.reducer;
