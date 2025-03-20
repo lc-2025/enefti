@@ -58,7 +58,7 @@ const NftList = ({
       {nfts.map(({ id, name, image, price }, i) => (
         // NFT start
         <li
-          key={id}
+          key={crypto.randomUUID() + id}
           className={`collection__element group flex flex-wrap justify-between p-6 transition duration-200 ease-linear odd:bg-(--bg-primary) even:bg-(--bg-primary)/75 hover:bg-(--accent-pink)/25 ${theme === DARK && 'text-white'} ${!search && 'mt-6'}`}
         >
           <Link

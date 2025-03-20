@@ -6,6 +6,7 @@ import { selectKey, selectNfts, setKey, setNfts } from '@/slices/search';
 import NFT_QUERY from '@/queries/nft';
 import { useAppDispatch, useAppSelector } from '@/hooks/state';
 import { Nft } from '@/types/graphql/graphql';
+import CustomLoading from './Loading';
 
 /**
  * @description Search list
@@ -55,8 +56,9 @@ const SearchSelect = (): React.ReactNode => {
 
   return error ? (
     <CustomError error={error} />
+  ) : loading ? (
+    <CustomLoading />
   ) : (
-    // TODO: Loading with animation
     <div className="search relative">
       <input
         className="input-glass"

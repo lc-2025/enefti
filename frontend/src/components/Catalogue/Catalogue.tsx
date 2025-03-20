@@ -96,8 +96,6 @@ const Catalogue = (): React.ReactNode => {
     }).then((fetchMoreResult) => {
       // Update current offset
       dispatch(updateOffset(offset + fetchMoreResult.data.nfts!.length));
-      // Track new NFTs on catalogue
-      updateCatalogue(fetchMoreResult.data.nfts! as Array<Nft>);
     });
   };
 

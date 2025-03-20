@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { notFound } from 'next/navigation';
 import { useSuspenseQuery } from '@apollo/client';
 import NftList from '@/components/Nft/NftList';
@@ -17,23 +16,17 @@ import TStorage from '@/types/storage';
 const CheckoutForm = (): React.ReactNode => {
   // Hooks
   const [storage] = useNftStored();
-  const { cart } = storage as TStorage;
+  const { cart, wishlist } = storage as TStorage;
   const nfts = useAppSelector(selectAdded);
   const { data, error } = useSuspenseQuery(NFT_QUERY.nfts.query, {
-    variables: { ids: cart },
-    fetchPolicy: 'cache-first',
+    variables: { ids: [...cart, ...wishlist] },
+    fetchPolicy: 'network-only',
   });
   const dispatch = useAppDispatch();
   const { WISHLIST, CART } = ACTION_PREFIX;
 
   useAppState([WISHLIST, CART], data.nfts as Array<Nft>, storage as TStorage);
-// TODO: Add wishlist initialization as well - fix query as well (no data returned on postman)
-  useEffect(() => {
-    // State check
-    if (nfts.length === 0) {
-      dispatch(addNfts(data.nfts! as Array<Nft>));
-    }
-  }, [nfts]);
+  // TODO: Add wishlist initialization as well
 
   // Handlers
   const handleSubmit = (): void => {

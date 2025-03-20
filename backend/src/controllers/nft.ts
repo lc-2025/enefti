@@ -29,8 +29,8 @@ const getNfts = (req: Request, res: Response, next: NextFunction): void => {
           }
         : req.query.ids
           ? {
-              id: {
-                $in: req.query.ids,
+              _id: {
+                $in: JSON.parse(req.query.ids as string),
               },
             }
           : {},

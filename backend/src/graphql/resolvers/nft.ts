@@ -18,7 +18,7 @@ const resolversNft: GraphQLResolverMap<any> = {
               }
             : args.ids
               ? {
-                  id: {
+                  _id: {
                     $in: args.ids,
                   },
                 }
