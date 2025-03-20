@@ -39,7 +39,7 @@ const Catalogue = (): React.ReactNode => {
   });
   const dispatch = useAppDispatch();
 
-  // Helpers
+  // Handlers
   /**
    * @description Catalogue filters handler
    * Sorts the catalogue based on filters
@@ -86,16 +86,18 @@ const Catalogue = (): React.ReactNode => {
        */
       updateQuery(previousData, { fetchMoreResult, variables: { offset } }) {
         // Slicing to preserve immutability
-        const updatedFeed = previousData.nfts!.slice(0);
+        const updatedNfts = previousData.nfts!.slice(0);
 
         return {
           ...previousData,
-          nfts: updateCache(updatedFeed, fetchMoreResult.nfts, offset!),
+          nfts: updateCache(updatedNfts, fetchMoreResult.nfts, offset!),
         };
       },
     }).then((fetchMoreResult) => {
       // Update current offset
       dispatch(updateOffset(offset + fetchMoreResult.data.nfts!.length));
+      // Track new NFTs on catalogue
+      updateCatalogue(fetchMoreResult.data.nfts! as Array<Nft>);
     });
   };
 

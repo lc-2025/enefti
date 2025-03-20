@@ -16,7 +16,13 @@ const resolversNft: GraphQLResolverMap<any> = {
                   $options: 'i',
                 },
               }
-            : {},
+            : args.ids
+              ? {
+                  id: {
+                    $in: args.ids,
+                  },
+                }
+              : {},
           null,
           {
             // Query Pagination

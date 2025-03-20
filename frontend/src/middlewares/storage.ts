@@ -12,7 +12,7 @@ import { CLASS, ACTION_PREFIX, ACTION } from '@/utilities/constants';
 const storageMiddleware: Middleware<{}, RootState> =
   (store) => (next) => (action: any) => {
     const { type, payload } = action;
-    const { WISHLIST, CART } = ACTION;
+    const {WISHLIST, CART } = ACTION;
     let actions = [WISHLIST.ADD, WISHLIST.REMOVE, CART.ADD, CART.REMOVE];
 
     // Action & API check

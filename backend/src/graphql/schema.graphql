@@ -9,7 +9,7 @@ interface INft {
 # Types
 type Query {
   # Query Pagination
-  nfts(search: String, offset: Int, limit: Int): [Nft]
+  nfts(ids: [ID!], search: String, offset: Int, limit: Int): [Nft]
   nft(id: ID!): Nft
 }
 

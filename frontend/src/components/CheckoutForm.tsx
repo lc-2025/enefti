@@ -6,44 +6,39 @@ import { useSuspenseQuery } from '@apollo/client';
 import NftList from '@/components/Nft/NftList';
 import Empty from '@/components/Empty';
 import CustomError from './CustomError';
-import { useAppSelector, useAppDispatch } from '@/hooks/state';
-import { selectLimit } from '@/slices/catalogue';
+import { useAppDispatch, useAppSelector, useAppState } from '@/hooks/state';
 import { addNfts, selectAdded } from '@/slices/cart';
 import NFT_QUERY from '@/queries/nft';
-import { ACTION_PREFIX, QUERY } from '@/utilities/constants';
+import { ACTION_PREFIX } from '@/utilities/constants';
 import useNftStored from '@/hooks/storage';
-import { setState } from '@/utilities/utils';
 import type { Nft } from '@/types/graphql/graphql';
 import TStorage from '@/types/storage';
 
 const CheckoutForm = (): React.ReactNode => {
   // Hooks
   const [storage] = useNftStored();
-  const { wishlist, cart } = storage;
-  const limit = useAppSelector(selectLimit);
+  const { cart } = storage as TStorage;
   const nfts = useAppSelector(selectAdded);
-  // TODO: query nfts by ID multiple
   const { data, error } = useSuspenseQuery(NFT_QUERY.nfts.query, {
-    variables: { ...QUERY.PAGINATION, limit },
+    variables: { ids: cart },
     fetchPolicy: 'cache-first',
   });
   const dispatch = useAppDispatch();
+  const { WISHLIST, CART } = ACTION_PREFIX;
+
+  useAppState([WISHLIST, CART], data.nfts as Array<Nft>, storage as TStorage);
+// TODO: Add wishlist initialization as well - fix query as well (no data returned on postman)
+  useEffect(() => {
+    // State check
+    if (nfts.length === 0) {
+      dispatch(addNfts(data.nfts! as Array<Nft>));
+    }
+  }, [nfts]);
 
   // Handlers
   const handleSubmit = (): void => {
     // TODO: Validation, etc.
   };
-
-  useEffect(() => {
-    if (data.nfts) {
-      setState(
-        ACTION_PREFIX.CART,
-        data.nfts as Array<Nft>,
-        storage as TStorage,
-        dispatch
-      );
-    }
-  }, [wishlist, cart]);
 
   return error ? (
     <CustomError error={error} />

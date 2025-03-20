@@ -4,7 +4,8 @@ import NftList from './Nft/NftList';
 import CustomError from './CustomError';
 import { selectKey, selectNfts, setKey, setNfts } from '@/slices/search';
 import NFT_QUERY from '@/queries/nft';
-import {useAppDispatch, useAppSelector} from '@/hooks/state';
+import { useAppDispatch, useAppSelector } from '@/hooks/state';
+import { Nft } from '@/types/graphql/graphql';
 
 /**
  * @description Search list
@@ -46,7 +47,7 @@ const SearchSelect = (): React.ReactNode => {
         // Caching queries as performance improvement
         fetchPolicy: 'no-cache',
       });
-      dispatch(setNfts(data?.nfts ?? nfts));
+      dispatch(setNfts((data?.nfts ?? nfts) as Array<Nft>));
     } else {
       dispatch(setNfts([]));
     }

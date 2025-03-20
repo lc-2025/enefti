@@ -44,6 +44,14 @@
         "parameters": [
           {
             "in": "query",
+            "name": "ids",
+            "schema": {
+              "type": "string",
+              "description": "Catalogue IDs"
+            }
+          },
+          {
+            "in": "query",
             "name": "search",
             "schema": {
               "type": "string",

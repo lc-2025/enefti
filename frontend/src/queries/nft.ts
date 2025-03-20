@@ -4,8 +4,8 @@ import { gql } from '@/types/graphql';
 const NFT_QUERY = {
   nfts: {
     query: gql(`
-      query Nfts($search: String, $offset: Int, $limit: Int) {
-        nfts(search: $search, offset: $offset, limit: $limit) {
+      query Nfts($ids: [ID!], $search: String, $offset: Int, $limit: Int) {
+        nfts(ids: $ids, search: $search, offset: $offset, limit: $limit) {
           ...NftFragmentId
           ...NftFragmentProps
         }

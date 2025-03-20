@@ -41,7 +41,7 @@ export default async function Nft({
         Details
       </h1>
       <Suspense fallback={<Skeleton />}>
-        <NftDetails nft={data.nft!} />
+        <NftDetails nft={data.nft as Nft} />
       </Suspense>
     </section>
     // NFT Details End

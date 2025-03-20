@@ -1,19 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import NftActions from '../Nft/NftActions';
 import {
   addNft as addNftWishlist,
-  addNfts as addNftsWishlist,
   removeNft as removeNftWishlist,
 } from '@/slices/wishlist';
 import {
   addNft as addNftCart,
-  addNfts as addNftsCart,
   removeNft as removeNftCart,
 } from '@/slices/cart';
 import useNftStored from '@/hooks/storage';
-import { useAppDispatch } from '@/hooks/state';
-import { checkNftStatus, setState } from '@/utilities/utils';
+import { useAppDispatch, useAppState } from '@/hooks/state';
+import checkNftStatus from '@/utilities/utils';
 import { ACTION_PREFIX } from '@/utilities/constants';
 import { Nft } from '@/types/graphql/graphql';
 import TStorage from '@/types/storage';
@@ -29,8 +27,10 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
   // Hooks
   const [storage, setStorage] = useNftStored();
   const dispatch = useAppDispatch();
-  const { wishlist, cart } = storage;
+  const { wishlist, cart } = storage as TStorage;
   const { WISHLIST, CART } = ACTION_PREFIX;
+
+  useAppState([WISHLIST, CART], nfts, storage as TStorage);
 
   // Helpers
   /**
@@ -55,8 +55,8 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
    */
   const handleStatus = (status: string, id: string): boolean => {
     const action = {
-      [WISHLIST]: wishlist ?? [],
-      [CART]: cart ?? [],
+      [WISHLIST]: wishlist,
+      [CART]: cart,
     };
 
     return checkNftStatus(id, action[status]);
@@ -118,21 +118,12 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
     };
 
     // Data check
-    if (!checkNftStatus(id, (data[action] as Array<string>) ?? [])) {
+    if (!checkNftStatus(id, (data[action] as Array<string>))) {
       callback.add[action]();
     } else {
       callback.remove[action]();
     }
   };
-
-  useEffect(() => {
-    Object.keys(ACTION_PREFIX).forEach((action) => {
-      // Existing data check
-      if (storage[action]) {
-        setState(action, nfts, storage as TStorage, dispatch);
-      }
-    });
-  }, [wishlist, cart]);
 
   return (
     // List Start
@@ -143,6 +134,7 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
           key={id}
           className="container__element nft-card flex flex-col justify-stretch"
         >
+          {/* Image Start */}
           <div className="element__image relative overflow-hidden">
             <div
               className="image__picture w-full rounded-t-2xl bg-cover bg-center bg-no-repeat pb-62"
@@ -150,6 +142,7 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
             ></div>
             <div className="image-overlay"></div>
           </div>
+          {/* Image End */}
           {/* Titles Start */}
           <hgroup className="element__titles mt-6 mb-6 pr-6 pl-6">
             <h2 className="element__name title mb-6 min-h-19 pr-6 pl-6">
