@@ -13,7 +13,7 @@ import {
 } from '@/slices/cart';
 import useNftStored from '@/hooks/storage';
 import { useAppDispatch } from '@/hooks/state';
-import checkNftStatus from '@/utilities/utils';
+import { checkNftStatus, setState } from '@/utilities/utils';
 import { ACTION_PREFIX } from '@/utilities/constants';
 import { Nft } from '@/types/graphql/graphql';
 import TStorage from '@/types/storage';
@@ -42,29 +42,6 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
    * @returns {*}  {Nft}
    */
   const getNft = (id: string): Nft => nfts.find((nft) => nft.id === id)!;
-
-  /**
-   * @description Wishlist/Cart state setter
-   * Initializes the wishlist or the cart
-   * based on starred/added ones
-   * @author Luca Cattide
-   * @date 19/03/2025
-   * @param {string} state
-   */
-  const setState = (state: string): void => {
-    const action = {
-      [WISHLIST]: (): void => {
-        dispatch(
-          addNftsWishlist(nfts.filter((nft) => wishlist.includes(nft.id))),
-        );
-      },
-      [CART]: (): void => {
-        dispatch(addNftsCart(nfts.filter((nft) => cart.includes(nft.id))));
-      },
-    };
-
-    action[state]();
-  };
 
   // Handlers
   /**
@@ -98,6 +75,11 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
       [WISHLIST]: wishlist,
       [CART]: cart,
     };
+    /**
+     * This callback approach may be further simplified
+     * by improving its abstraction
+     * - i.e. extract the body to an upper level
+     */
     const callback = {
       add: {
         [WISHLIST]: (): void => {
@@ -129,16 +111,14 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
           dispatch(removeNftCart(id));
           setStorage((state: TStorage) => ({
             ...state,
-            cart: [
-              ...state.wishlist.filter((addedId: string) => addedId !== id),
-            ],
+            cart: [...state.cart.filter((addedId: string) => addedId !== id)],
           }));
         },
       },
     };
 
     // Data check
-    if (!checkNftStatus(id, data[action] as Array<string> ?? [])) {
+    if (!checkNftStatus(id, (data[action] as Array<string>) ?? [])) {
       callback.add[action]();
     } else {
       callback.remove[action]();
@@ -146,12 +126,10 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
   };
 
   useEffect(() => {
-    const actions = [WISHLIST, CART];
-
-    actions.forEach((action) => {
+    Object.keys(ACTION_PREFIX).forEach((action) => {
       // Existing data check
       if (storage[action]) {
-        setState(action);
+        setState(action, nfts, storage as TStorage, dispatch);
       }
     });
   }, [wishlist, cart]);

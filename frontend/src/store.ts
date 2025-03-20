@@ -5,7 +5,7 @@ import wishlistReducer from './slices/wishlist';
 import filterReducer from './slices/filters';
 import catalogueReducer from './slices/catalogue';
 import cartReducer from './slices/cart';
-import wishlistMiddleware from './middlewares/wishlist';
+import storageMiddleware from './middlewares/storage';
 import filtersMiddleware from './middlewares/filters';
 
 /**
@@ -31,7 +31,7 @@ const store = () => {
   return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat([wishlistMiddleware, filtersMiddleware]),
+      getDefaultMiddleware().concat([storageMiddleware, filtersMiddleware]),
   });
 };
 

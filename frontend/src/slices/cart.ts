@@ -33,7 +33,7 @@ const { addNft, addNfts, removeNft } = cartSlice.actions;
  * @date 19/03/2025
  * @param {RootState} state
  */
-const selectNfts = (state: RootState) => state.cart.nfts;
+const selectAdded = (state: RootState) => state.cart.nfts;
 
-export { addNft, addNfts, removeNft, selectNfts };
+export { addNft, addNfts, removeNft, selectAdded };
 export default cartSlice.reducer;
