@@ -27,7 +27,7 @@ const CheckoutForm = (): React.ReactNode => {
   const [storage] = useNftStored();
   const { cart } = storage as TStorage;
   const added = useAppSelector(selectAdded);
-  const wallet = useAppSelector(selectNfts);
+  const nfts = useAppSelector(selectNfts);
   const errorWallet = useAppSelector(selectError);
   /**
    * Lazy query - Fetches stored NFTs
@@ -105,7 +105,8 @@ const CheckoutForm = (): React.ReactNode => {
   };
 
   useEffect(() => {
-    handleCart(); console.log(cart)
+    // FIXME: Cart still keeps storage old values even after buying
+    handleCart();
   }, [cart, added]);
 
   return error ? (
@@ -154,11 +155,11 @@ const CheckoutForm = (): React.ReactNode => {
         tabIndex={300}
       />
     </form>
-  ) : wallet && wallet.length > 0 ? (
-    <aside className="checkout-done">
+  ) : nfts && nfts.length > 0 ? (
+    <aside className="checkout-done flex flex-col items-center">
       <h3 className="checkout-done__title subtitle mb-6">Thank you</h3>
       <p className="checkout-done__message">
-        You have successfully purchased {wallet.length} NFTs.
+        You have successfully purchased {nfts.length} NFTs.
       </p>
     </aside>
   ) : (

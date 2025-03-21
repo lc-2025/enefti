@@ -38,19 +38,18 @@ const useNftStored = (): (TStorage | Dispatch<SetStateAction<TStorage>>)[] => {
         cart: localStorage.getItem(CART),
         wallet: localStorage.getItem(WALLET),
       };
-      // FIXME: Wallet
+
       // Data check
       if (data.wishlist || data.cart || data.wallet) {
-        console.log(data.wallet);
         Object.entries(data).forEach(([key, value]) => {
-          // Data check
-          if (value) {
-            setStorage((storage) => ({
-              ...storage,
-              [key]:
-                key === WALLET ? JSON.parse(value) : [...JSON.parse(value)],
-            }));
-          }
+          setStorage((storage) => ({
+            ...storage,
+            [key]: value
+              ? key === WALLET
+                ? JSON.parse(value)
+                : [...JSON.parse(value)]
+              : [],
+          }));
         });
       }
     }
