@@ -5,6 +5,7 @@ import wishlistReducer from './slices/wishlist';
 import filterReducer from './slices/filters';
 import catalogueReducer from './slices/catalogue';
 import cartReducer from './slices/cart';
+import walletReducer from './slices/wallet';
 import storageMiddleware from './middlewares/storage';
 import filtersMiddleware from './middlewares/filters';
 
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   filter: filterReducer,
   catalogue: catalogueReducer,
   cart: cartReducer,
+  wallet: walletReducer,
 });
 const store = () => {
   return configureStore({

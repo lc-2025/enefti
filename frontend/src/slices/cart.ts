@@ -20,13 +20,16 @@ const cartSlice = createSlice({
     removeNft: (state, action: PayloadAction<string>) => {
       state.nfts = state.nfts.filter((nft: Nft) => nft.id !== action.payload);
     },
+    removeNfts: (state) => {
+      state.nfts = STATE.CART.nfts;
+    },
   },
 });
 
 // Actions
-const { addNft, addNfts, removeNft } = cartSlice.actions;
+const { addNft, addNfts, removeNft, removeNfts } = cartSlice.actions;
 
-// Selector
+// Selectors
 /**
  * @description Search key selector
  * @author Luca Cattide
@@ -35,5 +38,5 @@ const { addNft, addNfts, removeNft } = cartSlice.actions;
  */
 const selectAdded = (state: RootState) => state.cart.nfts;
 
-export { addNft, addNfts, removeNft, selectAdded };
+export { addNft, addNfts, removeNft, removeNfts, selectAdded };
 export default cartSlice.reducer;

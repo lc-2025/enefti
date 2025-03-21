@@ -1,4 +1,5 @@
 import React, { MouseEvent, useEffect } from 'react';
+import { notFound } from 'next/navigation';
 import { useLazyQuery } from '@apollo/client';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import Empty from './Empty';
@@ -23,8 +24,13 @@ const Wishlist = ({
 }): React.ReactNode => {
   // Hooks
   const theme = useAppSelector(selectTheme);
-  const starred = useAppSelector(selectStarred);
   const [{ wishlist }, setStorage] = useNftStored();
+  const starred = useAppSelector(selectStarred);
+  /**
+   * Lazy query - Fetches stored NFTs
+   * to initialize state (data-persistance)
+   * only if missing on state
+   */
   const [getNfts, { loading, error, data }] = useLazyQuery(
     NFT_QUERY.nfts.query,
   );
@@ -32,17 +38,24 @@ const Wishlist = ({
   const { DARK } = THEME.NAME;
 
   // Handlers
+  /**
+   * @description Wishlist initialization
+   * Initializes the wishlist via DB
+   * only if data is missing in state
+   * @author Luca Cattide
+   * @date 21/03/2025
+   */
   const handleWishlist = (): void => {
     // Existing data check
-    if (!starred || starred.length === 0) {
+    if (starred && starred.length === 0 && wishlist.length > 0) {
       getNfts({
         variables: {
           ids: wishlist,
         },
         fetchPolicy: 'no-cache',
+      }).then((result) => {
+        dispatch(addNfts(result.data?.nfts as Array<Nft>));
       });
-      // FIX: This is creating duplicates only on checkout page
-      dispatch(addNfts(data?.nfts as Array<Nft>));
     }
   };
 
@@ -67,8 +80,9 @@ const Wishlist = ({
   };
 
   useEffect(() => {
+    // FIXME: When removing from wishlist, CatalogueList is not re-rendered (do not see wishlist update)
     handleWishlist();
-  }, [wishlist]);
+  }, [wishlist, starred]);
 
   return (
     // Wishlist Start
@@ -84,10 +98,11 @@ const Wishlist = ({
         <CustomError error={error} />
       ) : loading ? (
         <CustomLoading />
-      ) : (starred && starred.length > 0) ||
-        (data?.nfts && data.nfts.length > 0) ? (
+      ) : !starred && !data ? (
+        notFound()
+      ) : starred && starred.length > 0 ? (
         // Starred NFTs start
-        <NftList nfts={starred ?? data?.nfts} handler={handleRemove} />
+        <NftList nfts={starred} handler={handleRemove} />
       ) : (
         // Starred NFTs End
         <Empty />

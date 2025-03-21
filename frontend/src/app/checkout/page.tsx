@@ -1,9 +1,7 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { PreloadQuery } from '@/apolloRsc';
-import Skeleton from '@/components/Skeleton';
 import CheckoutForm from '@/components/CheckoutForm';
 import NFT_QUERY from '@/queries/nft';
-import { QUERY } from '@/utilities/constants';
 
 /**
  * @description Checkout page
@@ -19,10 +17,8 @@ export default function Checkout(): React.ReactNode {
       <h2 className="checkout__title title mt-12 mb-12 flex flex-col text-center uppercase">
         Checkout
       </h2>
-      <PreloadQuery query={NFT_QUERY.nfts.query} variables={QUERY.PAGINATION}>
-        <Suspense fallback={<Skeleton />}>
-          <CheckoutForm />
-        </Suspense>
+      <PreloadQuery query={NFT_QUERY.nfts.query}>
+        <CheckoutForm />
       </PreloadQuery>
     </section>
     // Checkout End

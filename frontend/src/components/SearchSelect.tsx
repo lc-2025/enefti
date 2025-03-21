@@ -54,11 +54,7 @@ const SearchSelect = (): React.ReactNode => {
     }
   };
 
-  return error ? (
-    <CustomError error={error} />
-  ) : loading ? (
-    <CustomLoading />
-  ) : (
+  return (
     <div className="search relative">
       <input
         className="input-glass"
@@ -68,6 +64,12 @@ const SearchSelect = (): React.ReactNode => {
         value={key}
         onChange={handleChange}
       />
+      {error ? (
+        <CustomError error={error} />
+      ) : loading && (
+        // TODO: Loading animation (float)
+        <CustomLoading />
+      )}
       {nfts && nfts.length > 0 && <NftList nfts={nfts} search={true} />}
     </div>
   );

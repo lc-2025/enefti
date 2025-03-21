@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { ACTION_PREFIX } from '@/utilities/constants';
-import { addNfts as addNftsWishlist } from '@/slices/wishlist';
-import { addNfts as addNftsCart } from '@/slices/cart';
+import { addNfts as addNftsWishlist, selectStarred } from '@/slices/wishlist';
+import { addNfts as addNftsCart, selectAdded } from '@/slices/cart';
 import type { AppDispatch, AppStore, RootState } from '../types/state';
 import type { Nft } from '@/types/graphql/graphql';
 import TStorage from '@/types/storage';
@@ -27,17 +27,39 @@ const useAppState = (
   nfts: Array<Nft>,
   storage: TStorage,
 ): void => {
-  const dispatch = useAppDispatch();
+  const starred = useAppSelector(selectStarred);
+  const added = useAppSelector(selectAdded);
   const { wishlist, cart } = storage;
+  const dispatch = useAppDispatch();
   const { WISHLIST, CART } = ACTION_PREFIX;
   const action = {
     [WISHLIST]: (): void => {
-      dispatch(
-        addNftsWishlist(nfts.filter((nft) => wishlist.includes(nft.id))),
-      );
+      // Data check
+      if (starred && starred.length === 0 && wishlist.length > 0) {
+        dispatch(
+          addNftsWishlist(
+            nfts.filter(
+              (nft) =>
+                !starred.some((nftStarred) => nftStarred.id === nft.id) &&
+                wishlist.includes(nft.id),
+            ),
+          ),
+        );
+      }
     },
     [CART]: (): void => {
-      dispatch(addNftsCart(nfts.filter((nft) => cart.includes(nft.id))));
+      // Data check
+      if (added && added.length === 0 && cart.length > 0) {
+        dispatch(
+          addNftsCart(
+            nfts.filter(
+              (nft) =>
+                !added.some((nftAdded) => nftAdded.id === nft.id) &&
+                cart.includes(nft.id),
+            ),
+          ),
+        );
+      }
     },
   };
 

@@ -58,6 +58,11 @@ const STATE = {
   CART: {
     nfts: [],
   },
+  WALLET: {
+    address: '',
+    nfts: [],
+    error: false,
+  },
 };
 const ACTION_PREFIX = {
   THEME: 'theme',
@@ -66,6 +71,7 @@ const ACTION_PREFIX = {
   FILTER: 'filter',
   CATALOGUE: 'catalogue',
   CART: 'cart',
+  WALLET: 'wallet',
 };
 const ACTION = {
   THEME: {
@@ -95,6 +101,10 @@ const ACTION = {
   CART: {
     ADD: `${ACTION_PREFIX.CART}/addNft`,
     REMOVE: `${ACTION_PREFIX.CART}/removeNft`,
+    RESET: `${ACTION_PREFIX.CART}/removeNfts`,
+  },
+  WALLET: {
+    BUY: `${ACTION_PREFIX.WALLET}/buy`,
   },
 };
 

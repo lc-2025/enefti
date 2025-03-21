@@ -4,13 +4,15 @@ import NftActions from '../Nft/NftActions';
 import {
   addNft as addNftWishlist,
   removeNft as removeNftWishlist,
+  selectStarred,
 } from '@/slices/wishlist';
 import {
   addNft as addNftCart,
   removeNft as removeNftCart,
+  selectAdded,
 } from '@/slices/cart';
 import useNftStored from '@/hooks/storage';
-import { useAppDispatch, useAppState } from '@/hooks/state';
+import { useAppDispatch, useAppSelector, useAppState } from '@/hooks/state';
 import checkNftStatus from '@/utilities/utils';
 import { ACTION_PREFIX } from '@/utilities/constants';
 import { Nft } from '@/types/graphql/graphql';
@@ -26,8 +28,10 @@ import TStorage from '@/types/storage';
 const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
   // Hooks
   const [storage, setStorage] = useNftStored();
-  const dispatch = useAppDispatch();
   const { wishlist, cart } = storage as TStorage;
+  const starred = useAppSelector(selectStarred);
+  const added = useAppSelector(selectAdded);
+  const dispatch = useAppDispatch();
   const { WISHLIST, CART } = ACTION_PREFIX;
 
   useAppState([WISHLIST, CART], nfts, storage as TStorage);
@@ -118,7 +122,7 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
     };
 
     // Data check
-    if (!checkNftStatus(id, (data[action] as Array<string>))) {
+    if (!checkNftStatus(id, data[action] as Array<string>)) {
       callback.add[action]();
     } else {
       callback.remove[action]();
@@ -165,9 +169,14 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
           <div className="element_actions mt-12 flex justify-end pr-6 pb-6 pl-6">
             <NftActions
               icons={true}
-              isStarred={handleStatus(WISHLIST, id)}
+              isStarred={
+                handleStatus(WISHLIST, id) &&
+                starred.some((nft) => nft.id === id)
+              }
               handleWishlist={() => handleAction(WISHLIST, id)}
-              isAdded={handleStatus(CART, id)}
+              isAdded={
+                handleStatus(CART, id) && added.some((nft) => nft.id === id)
+              }
               handleCart={() => handleAction(CART, id)}
               position={i}
             />

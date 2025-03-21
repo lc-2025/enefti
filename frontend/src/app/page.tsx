@@ -1,10 +1,8 @@
 import React, { Suspense } from 'react';
-import { PreloadQuery } from '@/apolloRsc';
 import Filter from '@/components/Filter';
 import Catalogue from '@/components/Catalogue/Catalogue';
 import Skeleton from '@/components/Skeleton';
-import NFT_QUERY from '@/queries/nft';
-import { QUERY, FILTER } from '@/utilities/constants';
+import { FILTER } from '@/utilities/constants';
 
 /**
  * @description Index page
@@ -37,18 +35,9 @@ export default function Home(): React.ReactNode {
           />
         </aside>
         {/* Filters End */}
-        <PreloadQuery query={NFT_QUERY.nfts.query} variables={QUERY.PAGINATION}>
-          {/*
-          The query is referenced and executed in background
-          then passed to child and consumed via `read` hook.
-          This prevents request waterfalls
-          i.e. consecutive calls performed prior to previous outline ending
-          during suspension
-         */}
-          <Suspense fallback={<Skeleton />}>
-            <Catalogue />
-          </Suspense>
-        </PreloadQuery>
+        <Suspense fallback={<Skeleton />}>
+          <Catalogue />
+        </Suspense>
       </div>
     </section>
     // Catalogue End

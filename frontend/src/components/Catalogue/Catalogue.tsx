@@ -32,6 +32,11 @@ const Catalogue = (): React.ReactNode => {
   const filterPrice = useAppSelector(selectFilterPrice);
   const filterPriceOrder = useAppSelector(selectFilterPriceOrder);
   const filterOwner = useAppSelector(selectFilterOwner);
+  /**
+   * Query - Fetches NFTs from DB
+   * to initialize state and populate the catalogue
+   * - Pagination of 10 records/call support
+   */
   const { data, error, fetchMore } = useSuspenseQuery(NFT_QUERY.nfts.query, {
     variables: { ...QUERY.PAGINATION, limit },
     // Caching queries as performance improvement
@@ -71,6 +76,8 @@ const Catalogue = (): React.ReactNode => {
 
   /**
    * @description Pagination handler
+   * Manages the DB pagination system
+   * via specific 'Load More' button
    * @author Luca Cattide
    * @date 14/03/2025
    */
@@ -106,6 +113,10 @@ const Catalogue = (): React.ReactNode => {
   ) : handleFilters().length > 0 ? (
     <>
       <CatalogueList nfts={handleFilters()} />
+      {/*
+        TODO: Get DB record count to dynamic render here
+        data.length < count &&
+      */}
       {/* Pagination Start */}
       <aside className="catalogue__more mt-16 mb-16 flex basis-full justify-center">
         <h2 className="more__title hidden">More</h2>

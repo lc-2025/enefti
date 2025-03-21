@@ -1,9 +1,3 @@
-import { addNfts as addNftsWishlist } from '@/slices/wishlist';
-import { addNfts as addNftsCart } from '@/slices/cart';
-import { ACTION_PREFIX } from './constants';
-import { Nft } from '@/types/graphql/graphql';
-import TStorage from '@/types/storage';
-
 // Utilities
 /**
  * @description Starred/Added NFT checker
