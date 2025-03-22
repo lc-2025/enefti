@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import NftActions from '../Nft/NftActions';
 import {
@@ -46,25 +46,6 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
    * @returns {*}  {Nft}
    */
   const getNft = (id: string): Nft => nfts.find((nft) => nft.id === id)!;
-
-  // Handlers
-  /**
-   * @description Starred/Added status handler
-   * Sets the action buttons UI based on the wishlist/cart
-   * @author Luca Cattide
-   * @date 17/03/2025
-   * @param {string} status
-   * @param {string} id
-   * @returns {*}  {boolean}
-   */
-  const handleStatus = (status: string, id: string): boolean => {
-    const action = {
-      [WISHLIST]: wishlist,
-      [CART]: cart,
-    };
-
-    return checkNftStatus(id, action[status]);
-  };
 
   /**
    * @description Wishlist/Cart handler
@@ -170,12 +151,12 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
             <NftActions
               icons={true}
               isStarred={
-                handleStatus(WISHLIST, id) &&
+                checkNftStatus(id, wishlist) &&
                 checkNftStatus(id, getNftIds(starred))
               }
               handleWishlist={() => handleAction(WISHLIST, id)}
               isAdded={
-                handleStatus(CART, id) && checkNftStatus(id, getNftIds(added))
+                checkNftStatus(id, cart) && checkNftStatus(id, getNftIds(added))
               }
               handleCart={() => handleAction(CART, id)}
               position={i}
