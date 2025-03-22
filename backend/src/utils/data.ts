@@ -1,3 +1,4 @@
+import * as crypto from 'node:crypto';
 import TCoin from 'src/types/api/Coin';
 import TNFT from 'src/types/models/NFT';
 
@@ -17,8 +18,11 @@ const setNft = (coin: TCoin, index: number): TNFT => ({
   description: `A unique NFT inspired by ${coin.name}.`,
   // Price in ETH
   price: coin.current_price,
-  // Wallet address
-  owner: `0x${Math.random().toString(16).slice(2, 10)}`,
+  // Wallet address (ETH) - Typically between 26-35 chars
+  owner: `0x${crypto
+    .randomUUID()
+    .replace(/-/g, '')
+    .slice(0, Math.floor(Math.random() * 32) + 26)}`,
 });
 
 export default setNft;
