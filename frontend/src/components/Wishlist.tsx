@@ -24,8 +24,8 @@ const Wishlist = ({
 }): React.ReactNode => {
   // Hooks
   const theme = useAppSelector(selectTheme);
-  const [{ wishlist }, setStorage] = useNftStored();
   const starred = useAppSelector(selectStarred);
+  const [{ wishlist }, setStorage] = useNftStored();
   /**
    * Lazy query - Fetches stored NFTs
    * to initialize state (data-persistance)
@@ -47,7 +47,7 @@ const Wishlist = ({
    */
   const handleWishlist = (): void => {
     // Existing data check
-    if (starred && starred.length === 0 && wishlist.length > 0) {
+    if (starred && starred.length === 0 && wishlist && wishlist.length > 0) {
       getNfts({
         variables: {
           ids: wishlist,
@@ -73,16 +73,16 @@ const Wishlist = ({
     dispatch(removeNft(id));
     setStorage((state: TStorage) => ({
       ...state,
-      wishlist: [
-        ...state.wishlist.filter((starredId: string) => starredId !== id),
-      ],
+      wishlist: state.wishlist
+        ? [...state.wishlist.filter((starredId: string) => starredId !== id)]
+        : state.wishlist,
     }));
   };
 
   useEffect(() => {
     // FIXME: When removing from wishlist, CatalogueList is not re-rendered (do not see wishlist update)
-    handleWishlist();
-  }, [wishlist, starred]);
+   handleWishlist();
+  }, [wishlist]);
 
   return (
     // Wishlist Start

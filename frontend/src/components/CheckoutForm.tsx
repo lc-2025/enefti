@@ -24,11 +24,11 @@ import TStorage from '@/types/storage';
  */
 const CheckoutForm = (): React.ReactNode => {
   // Hooks
-  const [storage] = useNftStored();
-  const { cart } = storage as TStorage;
   const added = useAppSelector(selectAdded);
   const nfts = useAppSelector(selectNfts);
   const errorWallet = useAppSelector(selectError);
+  const [storage] = useNftStored(added);
+  const { cart } = storage as TStorage;
   /**
    * Lazy query - Fetches stored NFTs
    * to initialize state (data-persistance)
@@ -41,18 +41,20 @@ const CheckoutForm = (): React.ReactNode => {
 
   // Helpers
   /**
-   * @description Form validation helper
+   * @description  Form validation helper
    * @author Luca Cattide
    * @date 21/03/2025
    * @param {string} address
+   * @returns {*}  {boolean}
    */
-  const validate = (address: string): void => {
+  const validate = (address: string): boolean => {
     // Standard address length: 25-35 chars
-    dispatch(
-      setError(
-        address && address.length >= 25 && address.length <= 35 ? false : true,
-      ),
-    );
+    const condition =
+      address && address.length >= 25 && address.length <= 35 ? false : true;
+
+    dispatch(setError(condition));
+
+    return condition;
   };
 
   // Handlers
@@ -65,7 +67,7 @@ const CheckoutForm = (): React.ReactNode => {
    */
   const handleCart = (): void => {
     // Existing data check
-    if (added && added.length === 0 && cart.length > 0) {
+    if (added && added.length === 0 && cart && cart.length > 0) {
       getNfts({
         variables: {
           ids: cart,
@@ -91,10 +93,8 @@ const CheckoutForm = (): React.ReactNode => {
     };
     const { value } = target.address;
 
-    validate(value);
-
     // Validation check
-    if (!errorWallet) {
+    if (!validate(value)) {
       dispatch(buy({ address: value, nfts: added }));
       dispatch(removeNfts());
 
@@ -105,7 +105,6 @@ const CheckoutForm = (): React.ReactNode => {
   };
 
   useEffect(() => {
-    // FIXME: Cart still keeps storage old values even after buying
     handleCart();
   }, [cart, added]);
 

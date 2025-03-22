@@ -53,21 +53,21 @@ const storageMiddleware: Middleware<{}, RootState> =
         };
         // Remove action check
       } else if (type === actions[1] || type === actions[3]) {
-        data[dataType!] = [
-          ...data[dataType!].filter(
-            (currentId: string) => currentId !== payload,
-          ),
-        ];
+        data[dataType!] =
+          data[dataType!].length > 1
+            ? [
+                ...data[dataType!].filter(
+                  (currentId: string) => currentId !== payload,
+                ),
+              ]
+            : null;
         // Reset action check
       } else if (type === actions[4]) {
-        data[dataType!] = [];
+        data[dataType!] = null;
       }
       // Data storage - Data existing check
-      if (data[dataType!] || data[dataType!].length > 0) {
-        localStorage.setItem(
-          dataType!,
-          JSON.stringify(data[dataType]),
-        );
+      if (data[dataType!] || (data[dataType!] && data[dataType!].length > 0)) {
+        localStorage.setItem(dataType!, JSON.stringify(data[dataType!]));
       } else {
         localStorage.removeItem(dataType!);
       }

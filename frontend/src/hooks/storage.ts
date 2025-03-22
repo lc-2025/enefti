@@ -11,10 +11,13 @@ import TStorage from '@/types/storage';
  * It gets the NFTs added to the user wishlist or cart -
  * including checkout - by their IDs from browser storage
  * @author Luca Cattide
- * @date 17/03/2025
- * @returns {*}  {Array<string>}
+ * @date 21/03/2025
+ * @param {*} [dependency]
+ * @returns {*}  {((TStorage | Dispatch<SetStateAction<TStorage>>)[])}
  */
-const useNftStored = (): (TStorage | Dispatch<SetStateAction<TStorage>>)[] => {
+const useNftStored = (
+  dependency?: any,
+): (TStorage | Dispatch<SetStateAction<TStorage>>)[] => {
   // Hooks
   /**
    * This is an example of local state
@@ -53,7 +56,7 @@ const useNftStored = (): (TStorage | Dispatch<SetStateAction<TStorage>>)[] => {
         });
       }
     }
-  }, []);
+  }, [dependency]);
 
   return [storage, setStorage];
 };
