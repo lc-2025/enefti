@@ -62,6 +62,7 @@ const CheckoutForm = (): React.ReactNode => {
    * @description Cart initialization
    * Initializes the cart via DB
    * only if data is missing in state
+   * TODO: Move into custom hook to share logic with Wishlist
    * @author Luca Cattide
    * @date 21/03/2025
    */

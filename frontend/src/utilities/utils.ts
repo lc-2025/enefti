@@ -1,4 +1,14 @@
+import {
+  addNft as addNftWishlist,
+  removeNft as removeNftWishlist,
+} from '@/slices/wishlist';
+import {
+  addNft as addNftCart,
+  removeNft as removeNftCart,
+} from '@/slices/cart';
+import { ACTION_PREFIX } from '@/utilities/constants';
 import type { Nft } from '@/types/graphql/graphql';
+import TStorage from '@/types/storage';
 
 // Utilities
 /**

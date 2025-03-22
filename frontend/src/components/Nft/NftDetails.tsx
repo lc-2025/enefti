@@ -33,7 +33,8 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
   // Hooks
   const starred = useAppSelector(selectStarred);
   const added = useAppSelector(selectAdded);
-  const [{ wishlist, cart }, setStorage] = useNftStored();
+  const [storage, setStorage] = useNftStored();
+  const { wishlist, cart } = storage as TStorage;
   const dispatch = useAppDispatch();
   const { WISHLIST, CART } = ACTION_PREFIX;
 
@@ -41,6 +42,7 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
   /**
    * @description Wishlist/Cart handler
    * Add/removes preferred/added NFTs on a dedicated list
+   * TODO: Move into custom hook to reuse in CatalogueList
    * @author Luca Cattide
    * @date 17/03/2025
    */

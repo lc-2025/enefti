@@ -42,6 +42,7 @@ const Wishlist = ({
    * @description Wishlist initialization
    * Initializes the wishlist via DB
    * only if data is missing in state
+   * TODO: Move into custom hook to share logic with CheckoutForm
    * @author Luca Cattide
    * @date 21/03/2025
    */

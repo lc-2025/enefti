@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import NftActions from '../Nft/NftActions';
 import {
@@ -50,63 +50,48 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
   /**
    * @description Wishlist/Cart handler
    * Add/removes preferred/added NFTs on a dedicated list
+   * TODO: Move into custom hook to reuse in NftDetails
    * @author Luca Cattide
    * @date 17/03/2025
-   * @param {string} action
-   * @param {string} id
    */
-  const handleAction = (action: string, id: string): void => {
+  const handleData = (type: string, id: string): void => {
     const data = {
-      [WISHLIST]: wishlist,
-      [CART]: cart,
-    };
-    /**
-     * This callback approach may be further simplified
-     * by improving its abstraction
-     * - i.e. extract the body to an upper level
-     */
-    const callback = {
-      add: {
-        [WISHLIST]: (): void => {
-          dispatch(addNftWishlist(getNft(id)));
-          setStorage((state: TStorage) => ({
-            ...state,
-            wishlist: [...state.wishlist, id],
-          }));
-        },
-        [CART]: (): void => {
-          dispatch(addNftCart(getNft(id)));
-          setStorage((state: TStorage) => ({
-            ...state,
-            cart: [...state.cart, id],
-          }));
+      [WISHLIST]: {
+        state: starred,
+        storage: wishlist,
+        dispatch: {
+          add: addNftWishlist,
+          remove: removeNftWishlist,
         },
       },
-      remove: {
-        [WISHLIST]: (): void => {
-          dispatch(removeNftWishlist(id));
-          setStorage((state: TStorage) => ({
-            ...state,
-            wishlist: [
-              ...state.wishlist.filter((starredId: string) => starredId !== id),
-            ],
-          }));
-        },
-        [CART]: (): void => {
-          dispatch(removeNftCart(id));
-          setStorage((state: TStorage) => ({
-            ...state,
-            cart: [...state.cart.filter((addedId: string) => addedId !== id)],
-          }));
+      [CART]: {
+        state: added,
+        storage: cart,
+        dispatch: {
+          add: addNftCart,
+          remove: removeNftCart,
         },
       },
     };
 
     // Data check
-    if (!checkNftStatus(id, data[action] as Array<string>)) {
-      callback.add[action]();
+    if (
+      !checkNftStatus(id, getNftIds(data[type].state)) &&
+      !checkNftStatus(id, data[type].storage)
+    ) {
+      dispatch(data[type].dispatch.add(getNft(id)));
+      setStorage((state: TStorage) => ({
+        ...state,
+        [type]: [...state[type], id],
+      }));
     } else {
-      callback.remove[action]();
+      dispatch(data[type].dispatch.remove(id));
+      setStorage((state: TStorage) => ({
+        ...state,
+        [type]: [
+          ...state[type].filter((existingId: string) => existingId !== id),
+        ],
+      }));
     }
   };
 
@@ -154,11 +139,11 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
                 checkNftStatus(id, wishlist) &&
                 checkNftStatus(id, getNftIds(starred))
               }
-              handleWishlist={() => handleAction(WISHLIST, id)}
+              handleWishlist={() => handleData(WISHLIST, id)}
               isAdded={
                 checkNftStatus(id, cart) && checkNftStatus(id, getNftIds(added))
               }
-              handleCart={() => handleAction(CART, id)}
+              handleCart={() => handleData(CART, id)}
               position={i}
             />
           </div>
