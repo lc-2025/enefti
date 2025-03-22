@@ -13,7 +13,7 @@ import {
 } from '@/slices/cart';
 import useNftStored from '@/hooks/storage';
 import { useAppDispatch, useAppSelector, useAppState } from '@/hooks/state';
-import checkNftStatus from '@/utilities/utils';
+import { checkNftStatus, getNftIds } from '@/utilities/utils';
 import { ACTION_PREFIX } from '@/utilities/constants';
 import { Nft } from '@/types/graphql/graphql';
 import TStorage from '@/types/storage';
@@ -27,10 +27,10 @@ import TStorage from '@/types/storage';
  */
 const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
   // Hooks
-  const [storage, setStorage] = useNftStored();
-  const { wishlist, cart } = storage as TStorage;
   const starred = useAppSelector(selectStarred);
   const added = useAppSelector(selectAdded);
+  const [storage, setStorage] = useNftStored();
+  const { wishlist, cart } = storage as TStorage;
   const dispatch = useAppDispatch();
   const { WISHLIST, CART } = ACTION_PREFIX;
 
@@ -171,11 +171,11 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
               icons={true}
               isStarred={
                 handleStatus(WISHLIST, id) &&
-                starred.some((nft) => nft.id === id)
+                checkNftStatus(id, getNftIds(starred))
               }
               handleWishlist={() => handleAction(WISHLIST, id)}
               isAdded={
-                handleStatus(CART, id) && added.some((nft) => nft.id === id)
+                handleStatus(CART, id) && checkNftStatus(id, getNftIds(added))
               }
               handleCart={() => handleAction(CART, id)}
               position={i}

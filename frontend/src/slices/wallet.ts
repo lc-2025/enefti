@@ -16,8 +16,12 @@ const walletSlice = createSlice({
     buy: (state, action: PayloadAction<Partial<TWallet>>) => {
       const { address, nfts } = action.payload;
 
+      /**
+       * With the same address add new purchases to the wallet
+       * Otherwise start a new one
+       */
+      state.nfts = state.address === address ? state.nfts.concat(nfts!) : nfts!;
       state.address = address!;
-      state.nfts = nfts!;
     },
     setError: (state, action: PayloadAction<boolean>) => {
       state.error = action.payload;

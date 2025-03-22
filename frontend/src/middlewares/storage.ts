@@ -26,13 +26,13 @@ const storageMiddleware: Middleware<{}, RootState> =
     // Action & API check
     if (actions.includes(type) && window.localStorage) {
       const data = {
-        [ACTION_PREFIX.WISHLIST]: null,
-        [ACTION_PREFIX.CART]: null,
-        [ACTION_PREFIX.WALLET]: null,
+        [ACTION_PREFIX.WISHLIST]: null as any,
+        [ACTION_PREFIX.CART]: null as any,
+        [ACTION_PREFIX.WALLET]: null as any,
       };
       const dataType = actions
-        .find((action) => action.includes(type))
-        ?.split('/')[0];
+        .find((action) => action.includes(type))!
+        .split('/')[0];
 
       Object.keys(data).forEach((key) => {
         data[key] = JSON.parse(localStorage.getItem(key)!);
@@ -40,36 +40,43 @@ const storageMiddleware: Middleware<{}, RootState> =
 
       // Data initialization - Add action check
       if (type === actions[0] || type === actions[2]) {
+        const currentIds = data[dataType];
         const { id } = payload;
 
-        data[dataType!] =
-          data[dataType!] && !data[dataType!].includes(id)
-            ? [...data[dataType!], id]
-            : [id];
+        data[dataType] =
+          currentIds && !currentIds.includes(id) ? [...currentIds, id] : [id];
       } else if (type === actions[5]) {
-        data[dataType!] = {
+        const currentWallet = data[dataType];
+        const nfts = payload.nfts.map((nft: Nft) => nft.id);
+
+        data[dataType] = {
           ...payload,
-          nfts: payload.nfts.map((nft: Nft) => nft.id),
+          nfts:
+            currentWallet && currentWallet.address === payload.address
+              ? [...currentWallet.nfts, ...nfts]
+              : nfts,
         };
         // Remove action check
       } else if (type === actions[1] || type === actions[3]) {
-        data[dataType!] =
-          data[dataType!].length > 1
+        const currentIds = data[dataType];
+
+        data[dataType] =
+          currentIds && currentIds.length > 1
             ? [
-                ...data[dataType!].filter(
+                ...currentIds.filter(
                   (currentId: string) => currentId !== payload,
                 ),
               ]
             : null;
         // Reset action check
       } else if (type === actions[4]) {
-        data[dataType!] = null;
+        data[dataType] = null;
       }
       // Data storage - Data existing check
-      if (data[dataType!] || (data[dataType!] && data[dataType!].length > 0)) {
-        localStorage.setItem(dataType!, JSON.stringify(data[dataType!]));
+      if (data[dataType] || (data[dataType] && data[dataType].length > 0)) {
+        localStorage.setItem(dataType, JSON.stringify(data[dataType]));
       } else {
-        localStorage.removeItem(dataType!);
+        localStorage.removeItem(dataType);
       }
     } else if (type === WISHLIST.OPEN) {
       const { MODAL } = CLASS;

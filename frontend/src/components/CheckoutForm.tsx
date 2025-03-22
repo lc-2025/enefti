@@ -27,7 +27,7 @@ const CheckoutForm = (): React.ReactNode => {
   const added = useAppSelector(selectAdded);
   const nfts = useAppSelector(selectNfts);
   const errorWallet = useAppSelector(selectError);
-  const [storage] = useNftStored(added);
+  const [storage] = useNftStored();
   const { cart } = storage as TStorage;
   /**
    * Lazy query - Fetches stored NFTs
@@ -106,7 +106,7 @@ const CheckoutForm = (): React.ReactNode => {
 
   useEffect(() => {
     handleCart();
-  }, [cart, added]);
+  }, [cart]);
 
   return error ? (
     <CustomError error={error} />
@@ -158,7 +158,7 @@ const CheckoutForm = (): React.ReactNode => {
     <aside className="checkout-done flex flex-col items-center">
       <h3 className="checkout-done__title subtitle mb-6">Thank you</h3>
       <p className="checkout-done__message">
-        You have successfully purchased {nfts.length} NFTs.
+        Your purchase has benn completed successfully.
       </p>
     </aside>
   ) : (

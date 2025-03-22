@@ -1,13 +1,22 @@
 'use client';
 
-import React, {useEffect} from 'react';
+import React from 'react';
 import Link from 'next/link';
 import NftActions from './NftActions';
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
-import { addNft, removeNft, selectStarred } from '@/slices/wishlist';
+import {
+  addNft as addNftWishlist,
+  removeNft as removeNftWishlist,
+  selectStarred,
+} from '@/slices/wishlist';
+import {
+  addNft as addNftCart,
+  removeNft as removeNftCart,
+  selectAdded,
+} from '@/slices/cart';
 import { useAppDispatch, useAppSelector } from '@/hooks/state';
 import useNftStored from '@/hooks/storage';
-import checkNftStatus from '@/utilities/utils';
+import { checkNftStatus, getNftIds } from '@/utilities/utils';
 import type { Nft } from '@/types/graphql/graphql';
 import TStorage from '@/types/storage';
 import { ACTION_PREFIX } from '@/utilities/constants';
@@ -23,21 +32,10 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
   const { id, name, description, image, owner, price } = nft;
   // Hooks
   const starred = useAppSelector(selectStarred);
-  const [{ wishlist }, setStorage] = useNftStored();
+  const added = useAppSelector(selectAdded);
+  const [{ wishlist, cart }, setStorage] = useNftStored();
   const dispatch = useAppDispatch();
-  const { WISHLIST } = ACTION_PREFIX;
-
-  // Helpers
-  /**
-   * @description NFT IDs getter
-   * Returns a list of NFT IDs
-   * @author Luca Cattide
-   * @date 22/03/2025
-   * @param {Partial<Nft>[]} nfts
-   * @returns {*}  {Array<string>}
-   */
-  const getNftIds = (nfts: Partial<Nft>[]): Array<string> =>
-    nfts.map((nft) => nft.id!);
+  const { WISHLIST, CART } = ACTION_PREFIX;
 
   // Handlers
   /**
@@ -52,18 +50,18 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
         state: starred,
         storage: wishlist,
         dispatch: {
-          add: addNft,
-          remove: removeNft,
+          add: addNftWishlist,
+          remove: removeNftWishlist,
         },
       },
-      /* [CART]: {
+      [CART]: {
         state: added,
         storage: cart,
         dispatch: {
           add: addNftCart,
           remove: removeNftCart,
         },
-      }, */
+      },
     };
 
     // Data check
@@ -86,8 +84,6 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
       }));
     }
   };
-
-  useEffect(() => {console.log(starred, wishlist)})
 
   return (
     // NFT Details Start
@@ -122,6 +118,10 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
             checkNftStatus(id, getNftIds(starred))
           }
           handleWishlist={() => handleData(WISHLIST)}
+          isAdded={
+            checkNftStatus(id, cart) || checkNftStatus(id, getNftIds(added))
+          }
+          handleCart={() => handleData(CART)}
         />
       </div>
     </div>
