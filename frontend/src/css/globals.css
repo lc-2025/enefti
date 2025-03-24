@@ -167,6 +167,17 @@ body.modal {
   opacity: 0.7;
 }
 
+/* Loading */
+.loading {
+  animation: 2s infinite alternate loading;
+}
+
+.loading--icon {
+  animation: 2s infinite loading--icon;
+  right: 1.2rem;
+  top: 1.9rem;
+}
+
 /* Logo */
 .logo {
   /* Image-Replacement technique */
@@ -219,5 +230,26 @@ body.modal {
 
   .title {
     font-size: 1.5rem;
+  }
+}
+
+/* Animations */
+@keyframes loading {
+  from {
+    color: var(--accent-pink);
+  }
+
+  to {
+    color: var(--accent-purple);
+  }
+}
+
+@keyframes loading--icon {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }

@@ -67,8 +67,7 @@ const SearchSelect = (): React.ReactNode => {
       {error ? (
         <CustomError error={error} />
       ) : loading && (
-        // TODO: Loading animation (float)
-        <CustomLoading />
+        <CustomLoading icon={true} />
       )}
       {nfts && nfts.length > 0 && <NftList nfts={nfts} search={true} />}
     </div>
