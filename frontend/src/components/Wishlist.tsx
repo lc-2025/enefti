@@ -1,20 +1,31 @@
-import React, { MouseEvent, useEffect } from 'react';
+import React, { MouseEvent } from 'react';
 import { notFound } from 'next/navigation';
-import { useLazyQuery } from '@apollo/client';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import Empty from './Empty';
 import NftList from './Nft/NftList';
 import CustomError from './CustomError';
 import { useAppDispatch, useAppSelector } from '@/hooks/state';
 import useNftStored from '@/hooks/storage';
+import useNftSaved from '@/hooks/database';
 import { selectTheme } from '@/slices/theme';
-import { addNfts, removeNft, selectStarred } from '@/slices/wishlist';
-import { THEME } from '@/utilities/constants';
-import NFT_QUERY from '@/queries/nft';
+import { removeNft, selectStarred } from '@/slices/wishlist';
+import { ACTION_PREFIX, THEME } from '@/utilities/constants';
 import TStorage from '@/types/storage';
-import { Nft } from '@/types/graphql/graphql';
 import CustomLoading from './Loading';
 
+/**
+ * @description Wishlist
+ * @author Luca Cattide
+ * @date 24/03/2025
+ * @param {{
+ *   open: boolean;
+ *   handler: () => void;
+ * }} {
+ *   open,
+ *   handler,
+ * }
+ * @returns {*}  {React.ReactNode}
+ */
 const Wishlist = ({
   open,
   handler,
@@ -22,44 +33,16 @@ const Wishlist = ({
   open: boolean;
   handler: () => void;
 }): React.ReactNode => {
+  const { WISHLIST } = ACTION_PREFIX;
   // Hooks
   const theme = useAppSelector(selectTheme);
   const starred = useAppSelector(selectStarred);
-  const [{ wishlist }, setStorage] = useNftStored();
-  /**
-   * Lazy query - Fetches stored NFTs
-   * to initialize state (data-persistance)
-   * only if missing on state
-   */
-  const [getNfts, { loading, error, data }] = useLazyQuery(
-    NFT_QUERY.nfts.query,
-  );
+  const [, setStorage] = useNftStored();
+  const { loading, data, error } = useNftSaved(WISHLIST);
   const dispatch = useAppDispatch();
   const { DARK } = THEME.NAME;
 
   // Handlers
-  /**
-   * @description Wishlist initialization
-   * Initializes the wishlist via DB
-   * only if data is missing in state
-   * TODO: Move into custom hook to share logic with CheckoutForm
-   * @author Luca Cattide
-   * @date 21/03/2025
-   */
-  const handleWishlist = (): void => {
-    // Existing data check
-    if (starred && starred.length === 0 && wishlist && wishlist.length > 0) {
-      getNfts({
-        variables: {
-          ids: wishlist,
-        },
-        fetchPolicy: 'no-cache',
-      }).then((result) => {
-        dispatch(addNfts(result.data?.nfts as Array<Nft>));
-      });
-    }
-  };
-
   /**
    * @description Wishlist NFT remove handler
    * Removes the selected NFT from the wishlist
@@ -79,11 +62,6 @@ const Wishlist = ({
         : state.wishlist,
     }));
   };
-
-  useEffect(() => {
-    // FIXME: When removing from wishlist, CatalogueList is not re-rendered (do not see wishlist update)
-   handleWishlist();
-  }, [wishlist]);
 
   return (
     // Wishlist Start

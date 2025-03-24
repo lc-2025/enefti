@@ -1,20 +1,17 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import { notFound } from 'next/navigation';
-import { useLazyQuery } from '@apollo/client';
 import NftList from '@/components/Nft/NftList';
 import Empty from '@/components/Empty';
 import CustomError from './CustomError';
 import CustomLoading from './Loading';
 import { useAppSelector, useAppDispatch } from '@/hooks/state';
-import { addNfts, removeNfts, selectAdded } from '@/slices/cart';
+import { removeNfts, selectAdded } from '@/slices/cart';
 import { buy, setError, selectError, selectNfts } from '@/slices/wallet';
-import NFT_QUERY from '@/queries/nft';
-import useNftStored from '@/hooks/storage';
-import type { Nft } from '@/types/graphql/graphql';
-import TStorage from '@/types/storage';
+import useNftSaved from '@/hooks/database';
+import { ACTION_PREFIX } from '@/utilities/constants';
 
 /**
  * @description Checkout form
@@ -23,20 +20,12 @@ import TStorage from '@/types/storage';
  * @returns {*}  {React.ReactNode}
  */
 const CheckoutForm = (): React.ReactNode => {
+  const { CART } = ACTION_PREFIX;
   // Hooks
   const added = useAppSelector(selectAdded);
   const nfts = useAppSelector(selectNfts);
   const errorWallet = useAppSelector(selectError);
-  const [storage] = useNftStored();
-  const { cart } = storage as TStorage;
-  /**
-   * Lazy query - Fetches stored NFTs
-   * to initialize state (data-persistance)
-   * only if missing on state
-   */
-  const [getNfts, { loading, data, error }] = useLazyQuery(
-    NFT_QUERY.nfts.query,
-  );
+  const { loading, data, error } = useNftSaved(CART);
   const dispatch = useAppDispatch();
 
   // Helpers
@@ -58,28 +47,6 @@ const CheckoutForm = (): React.ReactNode => {
   };
 
   // Handlers
-  /**
-   * @description Cart initialization
-   * Initializes the cart via DB
-   * only if data is missing in state
-   * TODO: Move into custom hook to share logic with Wishlist
-   * @author Luca Cattide
-   * @date 21/03/2025
-   */
-  const handleCart = (): void => {
-    // Existing data check
-    if (added && added.length === 0 && cart && cart.length > 0) {
-      getNfts({
-        variables: {
-          ids: cart,
-        },
-        fetchPolicy: 'no-cache',
-      }).then((result) => {
-        dispatch(addNfts(result.data?.nfts as Array<Nft>));
-      });
-    }
-  };
-
   /**
    * @description Form submission handler
    * @author Luca Cattide
@@ -104,10 +71,6 @@ const CheckoutForm = (): React.ReactNode => {
       ).reset();
     }
   };
-
-  useEffect(() => {
-    handleCart();
-  }, [cart]);
 
   return error ? (
     <CustomError error={error} />
