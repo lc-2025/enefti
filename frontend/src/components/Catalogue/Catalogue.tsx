@@ -6,10 +6,14 @@ import { useSuspenseQuery } from '@apollo/client';
 import CatalogueList from '@/components/Catalogue/CatalogueList';
 import Empty from '../Empty';
 import CustomError from '../CustomError';
-import updateCache from '@/utilities/graphql';
 import NFT_QUERY from '@/queries/nft';
 import { useAppDispatch, useAppSelector } from '@/hooks/state';
-import { selectOffset, selectLimit, updateOffset, updateLimit } from '@/slices/catalogue';
+import {
+  selectOffset,
+  selectLimit,
+  updateOffset,
+  updateLimit,
+} from '@/slices/catalogue';
 import {
   selectFilterOwner,
   selectFilterPrice,
@@ -95,7 +99,7 @@ const Catalogue = (): React.ReactNode => {
     }).then((fetchMoreResult) => {
       // Update current offset/limit
       dispatch(updateOffset(currentLength));
-      dispatch(updateLimit(currentLength + fetchMoreResult.data.nfts!.length))
+      dispatch(updateLimit(currentLength + fetchMoreResult.data.nfts!.length));
     });
   };
 
@@ -105,25 +109,25 @@ const Catalogue = (): React.ReactNode => {
     notFound()
   ) : handleFilters().length > 0 ? (
     <>
-      <CatalogueList nfts={handleFilters()} />
+      <Suspense fallback={<Skeleton />}>
+        <CatalogueList nfts={handleFilters()} />
+      </Suspense>
       {/*
         TODO: Get DB record count to dynamic render here
         data.length < count &&
       */}
-      <Suspense fallback={<Skeleton />}>
-        {/* Pagination Start */}
-        <aside className="catalogue__more mt-16 mb-16 flex basis-full justify-center">
-          <h2 className="more__title hidden">More</h2>
-          <button
-            className="more__button btn btn-secondary cursor-pointer uppercase select-none"
-            onClick={handleMore}
-            tabIndex={data.nfts!.length + 1}
-          >
-            Load more
-          </button>
-        </aside>
-        {/* Pagination End */}
-      </Suspense>
+      {/* Pagination Start */}
+      <aside className="catalogue__more mt-16 mb-16 flex basis-full justify-center">
+        <h2 className="more__title hidden">More</h2>
+        <button
+          className="more__button btn btn-secondary cursor-pointer uppercase select-none"
+          onClick={handleMore}
+          tabIndex={data.nfts!.length + 1}
+        >
+          Load more
+        </button>
+      </aside>
+      {/* Pagination End */}
     </>
   ) : (
     <Empty />
