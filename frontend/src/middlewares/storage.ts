@@ -53,7 +53,13 @@ const storageMiddleware: Middleware<{}, RootState> =
           ...payload,
           nfts:
             currentWallet && currentWallet.address === payload.address
-              ? [...currentWallet.nfts, ...nfts]
+              ? [
+                  ...currentWallet.nfts,
+                  // Strictly ensure to avoid duplicates on state change
+                  ...nfts.filter((id: string) =>
+                    currentWallet.nfts.includes((nft: Nft) => nft.id !== id),
+                  ),
+                ]
               : nfts,
         };
         // Remove action check
@@ -72,7 +78,7 @@ const storageMiddleware: Middleware<{}, RootState> =
       } else if (type === actions[4]) {
         data[dataType] = null;
       }
-      // Data storage - Data existing check
+      // Data storage - Existing check
       if (data[dataType] || (data[dataType] && data[dataType].length > 0)) {
         localStorage.setItem(dataType, JSON.stringify(data[dataType]));
       } else {

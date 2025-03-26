@@ -18,6 +18,7 @@ import {
 import { QUERY } from '@/utilities/constants';
 import { Price } from '@/types/reducers/filters';
 import type { Nft } from '@/types/graphql/graphql';
+import { selectAddress } from '@/slices/wallet';
 
 /**
  * @description  NFTs Catalogue
@@ -29,6 +30,7 @@ const Catalogue = (): React.ReactNode => {
   // Hooks
   const offset = useAppSelector(selectOffset);
   const limit = useAppSelector(selectLimit);
+  const address = useAppSelector(selectAddress);
   const filterPrice = useAppSelector(selectFilterPrice);
   const filterPriceOrder = useAppSelector(selectFilterPriceOrder);
   const filterOwner = useAppSelector(selectFilterOwner);
@@ -67,8 +69,7 @@ const Catalogue = (): React.ReactNode => {
     }
     // Owner filter check
     if (filterOwner) {
-      // TODO: Update with user address after checkout implementation
-      catalogue = [...catalogue.filter((nft) => nft.owner === '')];
+      catalogue = [...catalogue.filter((nft) => nft.owner === address)];
     }
 
     return catalogue;

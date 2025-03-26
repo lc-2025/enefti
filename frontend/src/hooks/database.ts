@@ -57,7 +57,7 @@ const useNftSaved = (type: string): TQuery => {
    * @author Luca Cattide
    * @date 21/03/2025
    */
-  const handleData = (): void => { console.log(starred, wishlist)
+  const handleData = (): void => {
     // Existing data check
     if (dataType[type].condition) {
       getNfts({

@@ -32,9 +32,9 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
   const [storage, setStorage] = useNftStored();
   const { wishlist, cart } = storage as TStorage;
   const dispatch = useAppDispatch();
-  const { WISHLIST, CART } = ACTION_PREFIX;
+  const { WISHLIST, CART, WALLET } = ACTION_PREFIX;
 
-  useAppState([WISHLIST, CART], nfts, storage as TStorage);
+  useAppState([WISHLIST, CART, WALLET], nfts, storage as TStorage);
 
   // Helpers
   /**
