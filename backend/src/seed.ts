@@ -28,11 +28,10 @@ const seed = async (): Promise<void> => {
   axios
     .get(ROUTES.API.COINGECKO)
     .then(async (response) => {
-      const coins = response.data as Array<TCoin>;
-      const nfts = coins.map((coin, i) => setNft(coin, i));
-
       // Populate DB
-      await NFT.insertMany(nfts);
+      await NFT.insertMany(
+        (response.data as Array<TCoin>).map((coin, i) => setNft(coin, i)),
+      );
 
       console.log(MESSAGE.SEED_DONE);
     })
