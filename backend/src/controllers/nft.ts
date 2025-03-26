@@ -37,14 +37,15 @@ const getNfts = (req: Request, res: Response, next: NextFunction): void => {
       null,
       options,
     )
-    .then((data) => {
+    .exec()
+    .then(async (data) => {
       // Data check
       if (!data) {
         // Async error handling via custom error middleware
         next({ message: MESSAGE.EMPTY });
       }
 
-      res.send(data);
+      res.send({ data, count: await nftModel.countDocuments().exec() });
     })
     .catch((error) => next(error));
 };

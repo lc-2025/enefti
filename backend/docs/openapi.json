@@ -37,7 +37,9 @@
     },
     "/api/nfts": {
       "get": {
-        "tags": ["api"],
+        "tags": [
+          "api"
+        ],
         "summary": "NFTs getter",
         "description": "Returns all the NFTs",
         "operationId": "getNfts",
@@ -81,10 +83,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Nft"
-                  }
+                  "$ref": "#/components/schemas/Nfts"
                 }
               }
             }
@@ -100,7 +99,9 @@
     },
     "/api/nft": {
       "get": {
-        "tags": ["api"],
+        "tags": [
+          "api"
+        ],
         "summary": "NFT getter",
         "description": "Returns a specific NFT by ID",
         "operationId": "getNft",
@@ -138,7 +139,9 @@
         }
       },
       "patch": {
-        "tags": ["api"],
+        "tags": [
+          "api"
+        ],
         "summary": "NFT patcher",
         "description": "Updates the NFT owner according to its last purchase",
         "operationId": "patchNft",
@@ -197,8 +200,27 @@
   },
   "components": {
     "schemas": {
+      "Nfts": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Nft"
+            }
+          },
+          "count": {
+            "type": "number",
+            "description": "Total NFTs",
+            "example": 100
+          }
+        }
+      },
       "Nft": {
-        "required": ["id", "name"],
+        "required": [
+          "id",
+          "name"
+        ],
         "type": "object",
         "properties": {
           "id": {
