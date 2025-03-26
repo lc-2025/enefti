@@ -58,6 +58,7 @@ const Header = (): React.ReactNode => {
       </aside>
       {/* Search End */}
       {/* Tools Start */}
+      {/* TODO: Bought BFTs viewer needed - reuse NftList */}
       <aside className="header__tools group flex items-center">
         <h2 className="tools__name hidden">Tools</h2>
         {/* Wishlist Start */}

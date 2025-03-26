@@ -128,6 +128,7 @@ const Catalogue = (): React.ReactNode => {
         </button>
       </aside>
       {/* Pagination End */}
+      {/* TODO: Add a back to top too */}
     </>
   ) : (
     <Empty />
