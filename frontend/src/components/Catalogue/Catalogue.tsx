@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { useSuspenseQuery } from '@apollo/client';
 import CatalogueList from '@/components/Catalogue/CatalogueList';
@@ -9,7 +9,7 @@ import CustomError from '../CustomError';
 import updateCache from '@/utilities/graphql';
 import NFT_QUERY from '@/queries/nft';
 import { useAppDispatch, useAppSelector } from '@/hooks/state';
-import { selectOffset, selectLimit, updateOffset } from '@/slices/catalogue';
+import { selectOffset, selectLimit, updateOffset, updateLimit } from '@/slices/catalogue';
 import {
   selectFilterOwner,
   selectFilterPrice,
@@ -19,6 +19,7 @@ import { QUERY } from '@/utilities/constants';
 import { Price } from '@/types/reducers/filters';
 import type { Nft } from '@/types/graphql/graphql';
 import { selectAddress } from '@/slices/wallet';
+import Skeleton from '../Skeleton';
 
 /**
  * @description  NFTs Catalogue
@@ -83,27 +84,18 @@ const Catalogue = (): React.ReactNode => {
    * @date 14/03/2025
    */
   const handleMore = (): void => {
+    const length = data.nfts!.length;
+    const currentLength = offset >= length ? offset : offset + length;
+
     fetchMore({
       variables: {
-        offset: offset > 0 ? offset : offset + data.nfts!.length,
+        offset: currentLength,
         limit,
       },
-      /**
-       * Update cache by concatenating the incoming list items
-       * with the existing ones
-       */
-      updateQuery(previousData, { fetchMoreResult, variables: { offset } }) {
-        // Slicing to preserve immutability
-        const updatedNfts = previousData.nfts!.slice(0);
-
-        return {
-          ...previousData,
-          nfts: updateCache(updatedNfts, fetchMoreResult.nfts, offset!),
-        };
-      },
     }).then((fetchMoreResult) => {
-      // Update current offset
-      dispatch(updateOffset(offset + fetchMoreResult.data.nfts!.length));
+      // Update current offset/limit
+      dispatch(updateOffset(currentLength));
+      dispatch(updateLimit(currentLength + fetchMoreResult.data.nfts!.length))
     });
   };
 
@@ -118,18 +110,20 @@ const Catalogue = (): React.ReactNode => {
         TODO: Get DB record count to dynamic render here
         data.length < count &&
       */}
-      {/* Pagination Start */}
-      <aside className="catalogue__more mt-16 mb-16 flex basis-full justify-center">
-        <h2 className="more__title hidden">More</h2>
-        <button
-          className="more__button btn btn-secondary cursor-pointer uppercase select-none"
-          onClick={handleMore}
-          tabIndex={data.nfts!.length + 1}
-        >
-          Load more
-        </button>
-      </aside>
-      {/* Pagination End */}
+      <Suspense fallback={<Skeleton />}>
+        {/* Pagination Start */}
+        <aside className="catalogue__more mt-16 mb-16 flex basis-full justify-center">
+          <h2 className="more__title hidden">More</h2>
+          <button
+            className="more__button btn btn-secondary cursor-pointer uppercase select-none"
+            onClick={handleMore}
+            tabIndex={data.nfts!.length + 1}
+          >
+            Load more
+          </button>
+        </aside>
+        {/* Pagination End */}
+      </Suspense>
     </>
   ) : (
     <Empty />

@@ -1,7 +1,6 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import Filter from '@/components/Filter';
 import Catalogue from '@/components/Catalogue/Catalogue';
-import Skeleton from '@/components/Skeleton';
 import { FILTER } from '@/utilities/constants';
 
 /**
@@ -35,9 +34,7 @@ export default function Home(): React.ReactNode {
           />
         </aside>
         {/* Filters End */}
-        <Suspense fallback={<Skeleton />}>
-          <Catalogue />
-        </Suspense>
+        <Catalogue />
       </div>
     </section>
     // Catalogue End

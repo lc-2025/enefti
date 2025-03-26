@@ -13,11 +13,14 @@ const catalogueSlice = createSlice({
     updateOffset: (state, action: PayloadAction<number>) => {
       state.offset = action.payload;
     },
+    updateLimit: (state, action: PayloadAction<number>) => {
+      state.limit = action.payload;
+    }
   },
 });
 
 // Actions
-const { updateOffset } = catalogueSlice.actions;
+const { updateOffset, updateLimit } = catalogueSlice.actions;
 
 // Selector
 /**
@@ -36,5 +39,5 @@ const selectOffset = (state: RootState) => state.catalogue.offset;
  */
 const selectLimit = (state: RootState) => state.catalogue.limit;
 
-export { updateOffset, selectOffset, selectLimit };
+export { updateOffset, updateLimit, selectOffset, selectLimit };
 export default catalogueSlice.reducer;

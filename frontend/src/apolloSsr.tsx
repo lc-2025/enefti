@@ -2,15 +2,15 @@
 
 import {
   HttpLink,
-  FieldReadFunction,
   FieldMergeFunction,
+  FieldReadFunction,
 } from '@apollo/client';
-import { offsetLimitPagination } from '@apollo/client/utilities';
 import {
   ApolloNextAppProvider,
   ApolloClient,
   InMemoryCache,
 } from '@apollo/experimental-nextjs-app-support';
+import { offsetLimitPagination } from '@apollo/client/utilities';
 import updateCache from './utilities/graphql';
 
 /**
@@ -43,8 +43,40 @@ const makeClient = (): ApolloClient<unknown> => {
         Query: {
           fields: {
             nfts: {
+              // Arguments to exclude to not influence returned cached results
+              ...offsetLimitPagination(['ids', 'search']),
               // Pagination policy
-              ...offsetLimitPagination(),
+              // A read function should always return undefined if existing is
+              // undefined. Returning undefined signals that the field is
+              // missing from the cache, which instructs Apollo Client to
+              // fetch its value from your GraphQL server.
+              read(
+                existing,
+                {
+                  args: {
+                    // Default to returning the entire cached list,
+                    // if offset and limit are not provided.
+                    offset = 0,
+                    limit = 10,
+                  } = {},
+                },
+              ): FieldReadFunction {
+                // If we ask for a page outside the bounds of the existing array,
+                // page.length will be 0, and we should return undefined instead of
+                // the empty array.
+                return existing && existing.slice(offset, offset + limit);
+              },
+              // Arguments responsible of returned cached results
+              //keyArgs: ['offset', 'limit'],
+              // Concatenate the incoming list items with
+              // the existing list items.
+              merge(
+                existing,
+                incoming,
+                { args: { offset = 0, limit = 10 } },
+              ): FieldMergeFunction {
+                return updateCache(existing, incoming, offset, limit);
+              },
             },
           },
         },

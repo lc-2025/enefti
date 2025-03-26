@@ -96,7 +96,8 @@ const ACTION = {
     },
   },
   CATALOGUE: {
-    UPDATE: `${ACTION_PREFIX.CATALOGUE}/updateOffset`,
+    UPDATE_OFFSET: `${ACTION_PREFIX.CATALOGUE}/updateOffset`,
+    UPDATE_LIMIT: `${ACTION_PREFIX.CATALOGUE}/updateOffset`,
   },
   CART: {
     ADD: `${ACTION_PREFIX.CART}/addNft`,

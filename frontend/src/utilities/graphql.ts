@@ -12,12 +12,14 @@ const updateCache = (
   fieldExisting: any,
   fieldIncoming: any,
   offset: number,
+  limit: number,
 ): any => {
   // Slicing to preserve cache immutability
   const merged = fieldExisting ? fieldExisting.slice(0) : [];
+  const end = offset + Math.min(limit, fieldIncoming.length);
 
-  for (let i = 0; i < fieldIncoming.length; ++i) {
-    merged[offset + i] = fieldIncoming[i];
+  for (let i = offset; i < end; ++i) {
+    merged[i] = fieldIncoming[i - offset];
   }
 
   return merged;
