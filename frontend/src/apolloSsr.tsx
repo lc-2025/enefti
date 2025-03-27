@@ -64,6 +64,7 @@ const makeClient = (): ApolloClient<unknown> => {
                 // If we ask for a page outside the bounds of the existing array,
                 // page.length will be 0, and we should return undefined instead of
                 // the empty array.
+                // FIXME: Not slicing on fetchMore
                 return existing && existing.slice(offset, offset + limit);
               },
               // Arguments responsible of returned cached results
@@ -75,6 +76,7 @@ const makeClient = (): ApolloClient<unknown> => {
                 incoming,
                 { args: { offset = 0, limit = 10 } },
               ): FieldMergeFunction {
+                // FIXME: Not slicing on fetchMore
                 return updateCache(existing, incoming, offset, limit);
               },
             },

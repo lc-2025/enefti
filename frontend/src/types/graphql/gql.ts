@@ -15,13 +15,13 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 type Documents = {
     "\n    fragment NftFragmentId on Nft {\n      id\n    }\n  ": typeof types.NftFragmentIdFragmentDoc,
-    "\n    fragment NftFragmentProps on Nft {\n      name\n      image\n      description\n      price\n      owner\n    }\n  ": typeof types.NftFragmentPropsFragmentDoc,
+    "\n    fragment NftFragmentProps on Nft {\n      name\n      image\n      description\n      price\n      owner\n      count\n    }\n  ": typeof types.NftFragmentPropsFragmentDoc,
     "\n      query Nfts($ids: [ID!], $search: String, $offset: Int, $limit: Int) {\n        nfts(ids: $ids, search: $search, offset: $offset, limit: $limit) {\n          ...NftFragmentId\n          ...NftFragmentProps\n        }\n      }\n    ": typeof types.NftsDocument,
     "\n      query Nft($id: ID!) {\n        nft(id: $id) {\n          ...NftFragmentId\n          ...NftFragmentProps\n        }\n      }\n    ": typeof types.NftDocument,
 };
 const documents: Documents = {
     "\n    fragment NftFragmentId on Nft {\n      id\n    }\n  ": types.NftFragmentIdFragmentDoc,
-    "\n    fragment NftFragmentProps on Nft {\n      name\n      image\n      description\n      price\n      owner\n    }\n  ": types.NftFragmentPropsFragmentDoc,
+    "\n    fragment NftFragmentProps on Nft {\n      name\n      image\n      description\n      price\n      owner\n      count\n    }\n  ": types.NftFragmentPropsFragmentDoc,
     "\n      query Nfts($ids: [ID!], $search: String, $offset: Int, $limit: Int) {\n        nfts(ids: $ids, search: $search, offset: $offset, limit: $limit) {\n          ...NftFragmentId\n          ...NftFragmentProps\n        }\n      }\n    ": types.NftsDocument,
     "\n      query Nft($id: ID!) {\n        nft(id: $id) {\n          ...NftFragmentId\n          ...NftFragmentProps\n        }\n      }\n    ": types.NftDocument,
 };
@@ -47,7 +47,7 @@ export function gql(source: "\n    fragment NftFragmentId on Nft {\n      id\n  
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n    fragment NftFragmentProps on Nft {\n      name\n      image\n      description\n      price\n      owner\n    }\n  "): (typeof documents)["\n    fragment NftFragmentProps on Nft {\n      name\n      image\n      description\n      price\n      owner\n    }\n  "];
+export function gql(source: "\n    fragment NftFragmentProps on Nft {\n      name\n      image\n      description\n      price\n      owner\n      count\n    }\n  "): (typeof documents)["\n    fragment NftFragmentProps on Nft {\n      name\n      image\n      description\n      price\n      owner\n      count\n    }\n  "];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

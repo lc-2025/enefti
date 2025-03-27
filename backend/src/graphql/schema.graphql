@@ -24,4 +24,5 @@ type Nft implements INft {
   description: String
   price: Float
   owner: String
+  count: Int
 }

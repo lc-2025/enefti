@@ -7,29 +7,33 @@ import { MESSAGE } from '../../utils/constants';
 const resolversNft: GraphQLResolverMap<any> = {
   Query: {
     async nfts(parent, args) {
+      const count = await nftModel.countDocuments().exec();
       const nfts = await nftModel
-        .find(
-          args.search
-            ? {
-                name: {
-                  $regex: args.search,
-                  $options: 'i',
-                },
-              }
-            : args.ids
+        .aggregate([
+          {
+            $match: args.search
               ? {
-                  _id: {
-                    $in: args.ids,
+                  name: {
+                    $regex: args.search,
+                    $options: 'i',
                   },
                 }
-              : {},
-          null,
-          {
-            // Query Pagination
-            skip: args.offset,
-            limit: args.limit,
+              : args.ids
+                ? {
+                    _id: {
+                      $in: args.ids,
+                    },
+                  }
+                : {},
           },
-        )
+          { $skip: args.skip ?? 0 },
+          { $limit: args.limit ?? count },
+          {
+            $addFields: {
+              count,
+            },
+          },
+        ])
         .exec();
 
       // Data check
@@ -37,7 +41,7 @@ const resolversNft: GraphQLResolverMap<any> = {
         setError(MESSAGE.EMPTY, '404');
       }
 
-      return nfts;
+      return nfts.map((nft) => ({ ...nft, id: nft._id }));
     },
     async nft(parent, args) {
       // Requirements check

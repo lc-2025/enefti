@@ -97,6 +97,7 @@ const Catalogue = (): React.ReactNode => {
         limit,
       },
     }).then((fetchMoreResult) => {
+      // FIXME: Not slicing previous results
       // Update current offset/limit
       dispatch(updateOffset(currentLength));
       dispatch(updateLimit(currentLength + fetchMoreResult.data.nfts!.length));
@@ -112,22 +113,23 @@ const Catalogue = (): React.ReactNode => {
       <Suspense fallback={<Skeleton />}>
         <CatalogueList nfts={handleFilters()} />
       </Suspense>
-      {/*
-        TODO: Get DB record count to dynamic render here
-        data.length < count &&
-      */}
-      {/* Pagination Start */}
-      <aside className="catalogue__more mt-16 mb-16 flex basis-full justify-center">
-        <h2 className="more__title hidden">More</h2>
-        <button
-          className="more__button btn btn-secondary cursor-pointer uppercase select-none"
-          onClick={handleMore}
-          tabIndex={data.nfts!.length + 1}
-        >
-          Load more
-        </button>
-      </aside>
-      {/* Pagination End */}
+      {
+        // Paginate until the last set
+        offset < data.nfts![0]!.count - 10 && (
+          // Pagination Start
+          <aside className="catalogue__more mt-16 mb-16 flex basis-full justify-center">
+            <h2 className="more__title hidden">More</h2>
+            <button
+              className="more__button btn btn-secondary cursor-pointer uppercase select-none"
+              onClick={handleMore}
+              tabIndex={data.nfts!.length + 1}
+            >
+              Load more
+            </button>
+          </aside>
+        )
+        // Pagination End
+      }
       {/* TODO: Add a back to top too */}
     </>
   ) : (

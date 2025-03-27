@@ -14,6 +14,7 @@ const NFT_FRAGMENT = {
       description
       price
       owner
+      count
     }
   `),
 };

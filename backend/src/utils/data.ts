@@ -1,6 +1,6 @@
 import * as crypto from 'node:crypto';
-import TCoin from 'src/types/api/Coin';
-import TNFT from 'src/types/models/NFT';
+import TCoin from '../types/api/Coin';
+import TNFT from '../types/models/NFT';
 
 // Utilities
 /**

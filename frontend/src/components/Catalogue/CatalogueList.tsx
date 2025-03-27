@@ -101,7 +101,7 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
       {nfts.map(({ id, name, image, price }, i) => (
         // Element Start
         <div
-          key={id}
+          key={crypto.randomUUID() + id}
           className="container__element nft-card flex flex-col justify-stretch"
         >
           {/* Image Start */}
