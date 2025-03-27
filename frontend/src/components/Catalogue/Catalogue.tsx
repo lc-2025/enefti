@@ -24,6 +24,7 @@ import { Price } from '@/types/reducers/filters';
 import type { Nft } from '@/types/graphql/graphql';
 import { selectAddress } from '@/slices/wallet';
 import Skeleton from '../Skeleton';
+import Back from '../Back';
 
 /**
  * @description  NFTs Catalogue
@@ -130,7 +131,7 @@ const Catalogue = (): React.ReactNode => {
         )
         // Pagination End
       }
-      {/* TODO: Add a back to top too */}
+      <Back />
     </>
   ) : (
     <Empty />
