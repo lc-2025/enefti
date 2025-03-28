@@ -2,7 +2,7 @@ import { GraphQLResolverMap } from '@apollo/subgraph/dist/schema-helper';
 import { Types } from 'mongoose';
 import nftModel from '../../models/NFT';
 import setFilter from '../../utils/api';
-import {setError, setResponse} from '../../utils/graphql';
+import { setError, setResponse } from '../../utils/graphql';
 import { MESSAGE } from '../../utils/constants';
 
 // GraphQL - NFT Resolvers

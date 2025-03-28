@@ -7,4 +7,4 @@ type TQueryFilter = {
   _id: TQueryRange;
 };
 
-export default TQueryFilter
+export default TQueryFilter;
