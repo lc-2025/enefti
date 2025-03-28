@@ -96,7 +96,6 @@ const CheckoutForm = (): React.ReactNode => {
       {/* Summaary Start */}
       <div className="form__summary">
         <h3 className="summary__title subtitle text-center">Summary</h3>
-        {/* TODO: Add remove here too */}
         <NftList nfts={added} />
       </div>
       {/* Summary End */}
