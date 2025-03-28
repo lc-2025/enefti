@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import themeReducer from './slices/theme';
+import toolsReducer from './slices/tools';
 import searchReducer from './slices/search';
 import wishlistReducer from './slices/wishlist';
 import filterReducer from './slices/filters';
@@ -22,6 +23,7 @@ import filtersMiddleware from './middlewares/filters';
  */
 const rootReducer = combineReducers({
   theme: themeReducer,
+  tools: toolsReducer,
   search: searchReducer,
   wishlist: wishlistReducer,
   filter: filterReducer,

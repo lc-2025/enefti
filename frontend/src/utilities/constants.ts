@@ -11,6 +11,11 @@ const THEME = {
     DARK: 'dark',
   },
 };
+const TOOLS = {
+  BACK: {
+    ACTION: 'scroll',
+  },
+};
 const CLASS = {
   MODAL: 'modal',
 };
@@ -35,6 +40,9 @@ const FILTER = {
 const STATE = {
   THEME: {
     selected: THEME.NAME.LIGHT,
+  },
+  TOOLS: {
+    back: false,
   },
   SEARCH: {
     key: '',
@@ -66,6 +74,7 @@ const STATE = {
 };
 const ACTION_PREFIX = {
   THEME: 'theme',
+  TOOLS: 'tools',
   SEARCH: 'search',
   WISHLIST: 'wishlist',
   FILTER: 'filter',
@@ -76,6 +85,9 @@ const ACTION_PREFIX = {
 const ACTION = {
   THEME: {
     SELECT: `${ACTION_PREFIX.WISHLIST}/setTheme`,
+  },
+  TOOLS: {
+    SET: `${ACTION_PREFIX.TOOLS}/setBack`,
   },
   SEARCH: {
     NFTS: `${ACTION_PREFIX.SEARCH}/setNfts`,
@@ -109,4 +121,14 @@ const ACTION = {
   },
 };
 
-export { WINDOW, THEME, CLASS, QUERY, FILTER, STATE, ACTION_PREFIX, ACTION };
+export {
+  WINDOW,
+  THEME,
+  TOOLS,
+  CLASS,
+  QUERY,
+  FILTER,
+  STATE,
+  ACTION_PREFIX,
+  ACTION,
+};
