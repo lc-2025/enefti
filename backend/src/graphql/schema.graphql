@@ -1,24 +1,23 @@
 # GraphQL Schema
 # Interfaces
 interface INft {
-  id: ID!
+  id: ID
   name: String!
   price: Float
 }
 
 # Types
 type Query {
-  # Query Pagination
   nfts(ids: [ID!], search: String, offset: Int, limit: Int): [Nft]
   nft(id: ID!): Nft
 }
 
 type Mutation {
-  updateNft(id: ID!, owner: String!): Nft
+  updateNfts(ids: [ID!]!, owner: String!): [Nft]
 }
 
 type Nft implements INft {
-  id: ID!
+  id: ID
   name: String!
   image: String
   description: String

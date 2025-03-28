@@ -46,8 +46,11 @@
             "in": "query",
             "name": "ids",
             "schema": {
-              "type": "string",
-              "description": "Catalogue IDs"
+              "type": "array",
+              "description": "Catalogue IDs",
+              "items": {
+                "type": "string"
+              }
             }
           },
           {
@@ -93,60 +96,23 @@
             "description": "Internal server error"
           }
         }
-      }
-    },
-    "/api/nft": {
-      "get": {
-        "tags": ["api"],
-        "summary": "NFT getter",
-        "description": "Returns a specific NFT by ID",
-        "operationId": "getNft",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "description": "NFT ID"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "NFT",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Nft"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Missing data: user input"
-          },
-          "404": {
-            "description": "No existing data"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
       },
       "patch": {
         "tags": ["api"],
-        "summary": "NFT patcher",
-        "description": "Updates the NFT owner according to its last purchase",
-        "operationId": "patchNft",
+        "summary": "NFTs patcher",
+        "description": "Updates the NFTs owner according to the last purchase",
+        "operationId": "patchNfts",
         "parameters": [
           {
             "in": "query",
-            "name": "id",
+            "name": "ids",
             "required": true,
             "schema": {
-              "type": "string",
-              "description": "NFT ID"
+              "type": "array",
+              "description": "NFT IDs",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -168,6 +134,46 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "NFTs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Nfts"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing data: user input"
+          },
+          "404": {
+            "description": "No existing data"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/nft": {
+      "get": {
+        "tags": ["api"],
+        "summary": "NFT getter",
+        "description": "Returns a specific NFT by ID",
+        "operationId": "getNft",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "NFT ID"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "NFT",

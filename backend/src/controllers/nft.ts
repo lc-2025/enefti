@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import nftModel from '../models/NFT';
 import { MESSAGE } from '../utils/constants';
 
+// TODO: Create utilities to merge duplicated code
 /**
  * @description NFTs getter
  * Returns all the NFTs
@@ -58,19 +59,13 @@ const getNfts = (req: Request, res: Response, next: NextFunction): void => {
  * @param {Request} req
  * @param {Response} res
  * @param {NextFunction} next
- * @returns {*}  {Promise<void>}
+ * @returns {*}  {void}
  */
-const getNft = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-): Promise<void> => {
+const getNft = (req: Request, res: Response, next: NextFunction): void => {
   // Requirements check
   if (req.query.id) {
-    const { id } = req.query;
-
     nftModel
-      .findById(id)
+      .findById(req.query.id)
       .exec()
       .then((data) => {
         // Data check
@@ -95,8 +90,8 @@ const getNft = async (
 };
 
 /**
- * @description NFT patcher
- * Updates the NFT owner according to its last purchase
+ * @description NFTs patcher
+ * Updates the NFTs owner according to the last purchase
  * @author Luca Cattide
  * @date 10/03/2025
  * @param {Request} req
@@ -104,21 +99,35 @@ const getNft = async (
  * @param {NextFunction} next
  * @returns {*}  {Promise<void>}
  */
-const patchNft = async (
+const patchNfts = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   // Requirements check
-  if (req.query.id && req.body.owner) {
-    const { id } = req.query;
-    const { owner } = req.body;
+  if (req.query.ids && req.body.owner) {
+    const { ids } = req.query;
+    const { body } = req;
+    const filter = {
+      _id: {
+        $in: JSON.parse(ids as string),
+      },
+    };
+    const nftsUpdated = await nftModel
+      // Updates and returns the records with new values
+      .updateMany(filter, { owner: body.owner }, { new: true })
+      .exec();
+
+    // Data check
+    if (!nftsUpdated) {
+      // Async error handling via custom error middleware
+      next({ message: MESSAGE.SERVER });
+    }
 
     nftModel
-      // Updates and returns the record with new values
-      .findOneAndUpdate({ _id: id }, { owner }, { new: true })
+      .find(filter)
       .exec()
-      .then((data) => {
+      .then(async (data) => {
         // Data check
         if (!data) {
           // Async error handling via custom error middleware
@@ -126,8 +135,7 @@ const patchNft = async (
         }
 
         res.send(data);
-      })
-      .catch((error) => next(error));
+      });
   } else {
     res.status(400).send({
       message: `${MESSAGE.MISSING} user input.`,
@@ -135,4 +143,4 @@ const patchNft = async (
   }
 };
 
-export { getNfts, getNft, patchNft };
+export { getNfts, getNft, patchNfts };

@@ -3,7 +3,7 @@ import { useDispatch, useSelector, useStore } from 'react-redux';
 import { ACTION_PREFIX } from '@/utilities/constants';
 import { addNfts as addNftsWishlist, selectStarred } from '@/slices/wishlist';
 import { addNfts as addNftsCart, selectAdded } from '@/slices/cart';
-import { buy, selectNfts } from '@/slices/wallet';
+import { buy, selectPurchased } from '@/slices/wallet';
 import type { AppDispatch, AppStore, RootState } from '../types/state';
 import type { Nft } from '@/types/graphql/graphql';
 import TStorage from '@/types/storage';
@@ -30,7 +30,7 @@ const useAppState = (
 ): void => {
   const starred = useAppSelector(selectStarred);
   const added = useAppSelector(selectAdded);
-  const nftsWallet = useAppSelector(selectNfts);
+  const purchased = useAppSelector(selectPurchased);
   const { wishlist, cart, wallet } = storage;
   const dispatch = useAppDispatch();
   const { WISHLIST, CART, WALLET } = ACTION_PREFIX;
@@ -65,14 +65,17 @@ const useAppState = (
     },
     [WALLET]: (): void => {
       // Data check
-      if (nftsWallet && nftsWallet.length === 0 && wallet.nfts!.length > 0) {
+      if (purchased && purchased.length === 0 && wallet.nfts!.length > 0) {
+        const nftsWallet = wallet.nfts as unknown as Array<string>;
+
         dispatch(
           buy({
             address: wallet.address,
             nfts: nfts.filter(
               (nft) =>
-                !nftsWallet.some((nftWallet) => nftWallet.id === nft.id) &&
-                wallet.address === nft.owner,
+                !purchased.some((purchased) => purchased.id === nft.id) &&
+                wallet.address === nft.owner &&
+                nftsWallet?.includes(nft.id),
             ),
           }),
         );

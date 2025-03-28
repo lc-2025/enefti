@@ -21,6 +21,7 @@ const MESSAGE = {
   SEED_DUMP: 'DB dumped. Populating with fresh data...',
   SEED_DONE: 'DB populated. Closing connection...',
   INPUT: 'BAD_USER_INPUT',
+  SERVER: 'Internal server error',
 };
 const EVENT = {
   ERROR: 'error',

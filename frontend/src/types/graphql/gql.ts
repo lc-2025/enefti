@@ -17,12 +17,14 @@ type Documents = {
     "\n    fragment NftFragmentId on Nft {\n      id\n    }\n  ": typeof types.NftFragmentIdFragmentDoc,
     "\n    fragment NftFragmentProps on Nft {\n      name\n      image\n      description\n      price\n      owner\n      count\n    }\n  ": typeof types.NftFragmentPropsFragmentDoc,
     "\n      query Nfts($ids: [ID!], $search: String, $offset: Int, $limit: Int) {\n        nfts(ids: $ids, search: $search, offset: $offset, limit: $limit) {\n          ...NftFragmentId\n          ...NftFragmentProps\n        }\n      }\n    ": typeof types.NftsDocument,
+    "\n      mutation UpdateNfts($ids: [ID!]!, $owner: String!) {\n        updateNfts(ids: $ids, owner: $owner) {\n          ...NftFragmentId\n          ...NftFragmentProps\n        }\n      }\n    ": typeof types.UpdateNftsDocument,
     "\n      query Nft($id: ID!) {\n        nft(id: $id) {\n          ...NftFragmentId\n          ...NftFragmentProps\n        }\n      }\n    ": typeof types.NftDocument,
 };
 const documents: Documents = {
     "\n    fragment NftFragmentId on Nft {\n      id\n    }\n  ": types.NftFragmentIdFragmentDoc,
     "\n    fragment NftFragmentProps on Nft {\n      name\n      image\n      description\n      price\n      owner\n      count\n    }\n  ": types.NftFragmentPropsFragmentDoc,
     "\n      query Nfts($ids: [ID!], $search: String, $offset: Int, $limit: Int) {\n        nfts(ids: $ids, search: $search, offset: $offset, limit: $limit) {\n          ...NftFragmentId\n          ...NftFragmentProps\n        }\n      }\n    ": types.NftsDocument,
+    "\n      mutation UpdateNfts($ids: [ID!]!, $owner: String!) {\n        updateNfts(ids: $ids, owner: $owner) {\n          ...NftFragmentId\n          ...NftFragmentProps\n        }\n      }\n    ": types.UpdateNftsDocument,
     "\n      query Nft($id: ID!) {\n        nft(id: $id) {\n          ...NftFragmentId\n          ...NftFragmentProps\n        }\n      }\n    ": types.NftDocument,
 };
 
@@ -52,6 +54,10 @@ export function gql(source: "\n    fragment NftFragmentProps on Nft {\n      nam
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n      query Nfts($ids: [ID!], $search: String, $offset: Int, $limit: Int) {\n        nfts(ids: $ids, search: $search, offset: $offset, limit: $limit) {\n          ...NftFragmentId\n          ...NftFragmentProps\n        }\n      }\n    "): (typeof documents)["\n      query Nfts($ids: [ID!], $search: String, $offset: Int, $limit: Int) {\n        nfts(ids: $ids, search: $search, offset: $offset, limit: $limit) {\n          ...NftFragmentId\n          ...NftFragmentProps\n        }\n      }\n    "];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n      mutation UpdateNfts($ids: [ID!]!, $owner: String!) {\n        updateNfts(ids: $ids, owner: $owner) {\n          ...NftFragmentId\n          ...NftFragmentProps\n        }\n      }\n    "): (typeof documents)["\n      mutation UpdateNfts($ids: [ID!]!, $owner: String!) {\n        updateNfts(ids: $ids, owner: $owner) {\n          ...NftFragmentId\n          ...NftFragmentProps\n        }\n      }\n    "];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

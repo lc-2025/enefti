@@ -1,8 +1,10 @@
 import { GraphQLResolverMap } from '@apollo/subgraph/dist/schema-helper';
+import { Types } from 'mongoose';
 import nftModel from '../../models/NFT';
 import setError from '../../utils/graphql';
 import { MESSAGE } from '../../utils/constants';
 
+// TODO: Create utilities to merge duplicated code
 // GraphQL - NFT Resolvers
 const resolversNft: GraphQLResolverMap<any> = {
   Query: {
@@ -21,7 +23,7 @@ const resolversNft: GraphQLResolverMap<any> = {
               : args.ids
                 ? {
                     _id: {
-                      $in: args.ids,
+                      $in: args.ids.map((id: string) => new Types.ObjectId(id)),
                     },
                   }
                 : {},
@@ -60,23 +62,33 @@ const resolversNft: GraphQLResolverMap<any> = {
     },
   },
   Mutation: {
-    async updateNft(parent, args) {
+    async updateNfts(parent, args) {
       // Requirements check
-      if (!args.id || !args.owner) {
+      if (!args.ids || !args.owner) {
         setError(MESSAGE.INPUT, '400', 'id / owner');
       }
 
-      const { id, owner } = args;
-      const nft = await nftModel
-        .findOneAndUpdate({ _id: id }, { owner }, { new: true })
-        .exec();
+      const { ids, owner } = args;
+      const filter = {
+        _id: {
+          $in: ids,
+        },
+      };
+      const nftsUpdated = await nftModel.updateMany(filter, { owner }).exec();
+
+      // Update check
+      if (!nftsUpdated) {
+        setError(MESSAGE.SERVER, '500');
+      }
+
+      const nfts = await nftModel.find(filter).lean().exec();
 
       // Data check
-      if (!nft) {
+      if (!nfts) {
         setError(MESSAGE.EMPTY, '404');
       }
 
-      return nft;
+      return nfts.map((nft) => ({ ...nft, id: nft._id }));
     },
   },
 };

@@ -9,9 +9,11 @@ import CustomError from './CustomError';
 import CustomLoading from './Loading';
 import { useAppSelector, useAppDispatch } from '@/hooks/state';
 import { removeNfts, selectAdded } from '@/slices/cart';
-import { buy, setError, selectError, selectNfts } from '@/slices/wallet';
+import { buy, setError, selectError, selectPurchased } from '@/slices/wallet';
 import useNftSaved from '@/hooks/database';
 import { ACTION_PREFIX } from '@/utilities/constants';
+import { useMutation } from '@apollo/client';
+import NFT_QUERY from '@/queries/nft';
 
 /**
  * @description Checkout form
@@ -23,9 +25,10 @@ const CheckoutForm = (): React.ReactNode => {
   const { CART } = ACTION_PREFIX;
   // Hooks
   const added = useAppSelector(selectAdded);
-  const nfts = useAppSelector(selectNfts);
+  const purchased = useAppSelector(selectPurchased);
   const errorWallet = useAppSelector(selectError);
   const { loading, data, error } = useNftSaved(CART);
+  const [updateNfts] = useMutation(NFT_QUERY.nfts.mutation);
   const dispatch = useAppDispatch();
 
   // Helpers
@@ -65,6 +68,12 @@ const CheckoutForm = (): React.ReactNode => {
     if (!validate(value)) {
       dispatch(buy({ address: value, nfts: added }));
       dispatch(removeNfts());
+      updateNfts({
+        variables: {
+          ids: added.map((nft) => nft.id),
+          owner: value,
+        },
+      });
 
       (
         document.getElementsByClassName('checkout__form')[0] as HTMLFormElement
@@ -118,7 +127,7 @@ const CheckoutForm = (): React.ReactNode => {
         tabIndex={300}
       />
     </form>
-  ) : nfts && nfts.length > 0 ? (
+  ) : purchased && purchased.length > 0 ? (
     <aside className="checkout-done flex flex-col items-center">
       <h3 className="checkout-done__title subtitle mb-6">Thank you</h3>
       <p className="checkout-done__message">

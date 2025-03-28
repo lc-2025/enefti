@@ -11,6 +11,14 @@ const NFT_QUERY = {
         }
       }
     `),
+    mutation: gql(`
+      mutation UpdateNfts($ids: [ID!]!, $owner: String!) {
+        updateNfts(ids: $ids, owner: $owner) {
+          ...NftFragmentId
+          ...NftFragmentProps
+        }
+      }
+    `),
   },
   nft: {
     query: gql(`

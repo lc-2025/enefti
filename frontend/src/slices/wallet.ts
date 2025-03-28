@@ -47,7 +47,7 @@ const selectAddress = (state: RootState) => state.wallet.address;
  * @date 19/03/2025
  * @param {RootState} state
  */
-const selectNfts = (state: RootState) => state.wallet.nfts;
+const selectPurchased = (state: RootState) => state.wallet.nfts;
 
 /**
  * @description Wallet error selector
@@ -57,5 +57,5 @@ const selectNfts = (state: RootState) => state.wallet.nfts;
  */
 const selectError = (state: RootState) => state.wallet.error;
 
-export { addBuyer, buy, setError, selectAddress, selectNfts, selectError };
+export { addBuyer, buy, setError, selectAddress, selectPurchased, selectError };
 export default walletSlice.reducer;
