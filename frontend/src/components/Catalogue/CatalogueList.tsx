@@ -1,19 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import NftActions from '../Nft/NftActions';
-import {
-  addNft as addNftWishlist,
-  removeNft as removeNftWishlist,
-  selectStarred,
-} from '@/slices/wishlist';
-import {
-  addNft as addNftCart,
-  removeNft as removeNftCart,
-  selectAdded,
-} from '@/slices/cart';
+import { selectStarred } from '@/slices/wishlist';
+import { selectAdded } from '@/slices/cart';
 import { selectPurchased } from '@/slices/wallet';
 import useNftStored from '@/hooks/storage';
-import { useAppDispatch, useAppSelector, useAppState } from '@/hooks/state';
+import useNftActions from '@/hooks/actions';
+import { useAppSelector, useAppState } from '@/hooks/state';
 import { checkNftStatus, getNftIds } from '@/utilities/utils';
 import { ACTION_PREFIX } from '@/utilities/constants';
 import { Nft } from '@/types/graphql/graphql';
@@ -31,71 +24,13 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
   const starred = useAppSelector(selectStarred);
   const added = useAppSelector(selectAdded);
   const purchased = useAppSelector(selectPurchased);
-  const [storage, setStorage] = useNftStored();
+  const [storage] = useNftStored();
   const { wishlist, cart } = storage as TStorage;
-  const dispatch = useAppDispatch();
   const { WISHLIST, CART, WALLET } = ACTION_PREFIX;
 
   useAppState([WISHLIST, CART, WALLET], nfts, storage as TStorage);
 
-  // Helpers
-  /**
-   * @description NFT getter
-   * Returns a fetched NFT by ID
-   * @author Luca Cattide
-   * @date 17/03/2025
-   * @param {string} id
-   * @returns {*}  {Nft}
-   */
-  const getNft = (id: string): Nft => nfts.find((nft) => nft.id === id)!;
-
-  /**
-   * @description Wishlist/Cart handler
-   * Add/removes preferred/added NFTs on a dedicated list
-   * TODO: Move into custom hook to reuse in NftDetails
-   * @author Luca Cattide
-   * @date 17/03/2025
-   */
-  const handleData = (type: string, id: string): void => {
-    const data = {
-      [WISHLIST]: {
-        state: starred,
-        storage: wishlist,
-        dispatch: {
-          add: addNftWishlist,
-          remove: removeNftWishlist,
-        },
-      },
-      [CART]: {
-        state: added,
-        storage: cart,
-        dispatch: {
-          add: addNftCart,
-          remove: removeNftCart,
-        },
-      },
-    };
-
-    // Data check
-    if (
-      !checkNftStatus(id, getNftIds(data[type].state)) &&
-      !checkNftStatus(id, data[type].storage)
-    ) {
-      dispatch(data[type].dispatch.add(getNft(id)));
-      setStorage((state: TStorage) => ({
-        ...state,
-        [type]: [...state[type], id],
-      }));
-    } else {
-      dispatch(data[type].dispatch.remove(id));
-      setStorage((state: TStorage) => ({
-        ...state,
-        [type]: [
-          ...state[type].filter((existingId: string) => existingId !== id),
-        ],
-      }));
-    }
-  };
+  const handleData = useNftActions(nfts);
 
   return (
     // List Start
