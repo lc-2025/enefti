@@ -24,7 +24,10 @@ const Back = (): React.ReactNode => {
    * @date 27/03/2025
    */
   const handleScroll = (): void => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
     dispatch(setBack(false));
   };
 
@@ -47,7 +50,7 @@ const Back = (): React.ReactNode => {
   return (
     /* Back to top Start */
     <aside
-      className={`back fixed right-6 bottom-6 z-40 cursor-pointer p-6 btn btn-secondary ${!back && 'pointer-events-none opacity-0'}`}
+      className={`back btn btn-secondary fixed right-6 bottom-6 z-40 cursor-pointer p-6 ${!back && 'pointer-events-none opacity-0'}`}
       onClick={handleScroll}
     >
       <h2 className="back__title hidden">Back to top</h2>
