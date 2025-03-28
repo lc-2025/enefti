@@ -47,7 +47,7 @@ const NftActions = ({
     <>
       {/* Wishlist Start */}
       <button
-        className="element__button btn btn-secondary flex cursor-pointer items-center justify-center uppercase"
+        className="element__button btn btn-primary flex cursor-pointer items-center justify-center uppercase"
         onClick={handleWishlist}
         tabIndex={11 + index}
       >

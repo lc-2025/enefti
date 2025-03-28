@@ -71,6 +71,7 @@ body.modal {
   padding: 1.6rem;
   transition:
     background 0.3s ease,
+    opacity 0.1s ease,
     transform 0.2s ease;
 }
 

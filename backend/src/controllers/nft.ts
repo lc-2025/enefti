@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import nftModel from '../models/NFT';
+import setFilter from '../utils/api';
 import { MESSAGE } from '../utils/constants';
 
-// TODO: Create utilities to merge duplicated code
 /**
  * @description NFTs getter
  * Returns all the NFTs
@@ -29,11 +29,7 @@ const getNfts = (req: Request, res: Response, next: NextFunction): void => {
             },
           }
         : req.query.ids
-          ? {
-              _id: {
-                $in: JSON.parse(req.query.ids as string),
-              },
-            }
+          ? setFilter(req.query.ids as string, true)
           : {},
       null,
       options,
@@ -108,11 +104,7 @@ const patchNfts = async (
   if (req.query.ids && req.body.owner) {
     const { ids } = req.query;
     const { body } = req;
-    const filter = {
-      _id: {
-        $in: JSON.parse(ids as string),
-      },
-    };
+    const filter = setFilter(ids as string, true);
     const nftsUpdated = await nftModel
       // Updates and returns the records with new values
       .updateMany(filter, { owner: body.owner }, { new: true })

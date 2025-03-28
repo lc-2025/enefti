@@ -1,5 +1,6 @@
 import { GraphQLError } from 'graphql';
 
+
 // GraphQL Utilities
 // Helpers
 /**
@@ -16,4 +17,13 @@ const setError = (message: string, code: string, arg?: string): void => {
   });
 };
 
-export default setError;
+/**
+ * @description Response data setter
+ * Sets the data shape of hydrated query/mutation results
+ * @author Luca Cattide
+ * @date 28/03/2025
+ * @param {Array<any>} data
+ */
+const setResponse = (data: Array<any>) => data.map((record) => ({...record, id: record._id}))
+
+export {setError, setResponse};

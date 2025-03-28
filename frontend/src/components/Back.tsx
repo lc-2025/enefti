@@ -47,7 +47,7 @@ const Back = (): React.ReactNode => {
   return (
     /* Back to top Start */
     <aside
-      className={`back group fixed right-6 bottom-6 z-40 cursor-pointer rounded-full bg-(--accent-cyan) p-6 font-bold text-(--text-primary) transition duration-200 ease-linear hover:bg-(--accent-purple) hover:text-white ${!back && 'pointer-events-none opacity-0'}`}
+      className={`back fixed right-6 bottom-6 z-40 cursor-pointer p-6 btn btn-secondary ${!back && 'pointer-events-none opacity-0'}`}
       onClick={handleScroll}
     >
       <h2 className="back__title hidden">Back to top</h2>
