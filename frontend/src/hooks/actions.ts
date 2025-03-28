@@ -83,7 +83,11 @@ const useNftActions = (nfts: Array<Nft>) => {
     }
   };
 
-  return handleData;
+  return {
+    wishlist,
+    cart,
+    handleData
+  };
 };
 
 export default useNftActions;

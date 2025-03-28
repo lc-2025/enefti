@@ -5,7 +5,7 @@ import { THEME } from '@/utilities/constants';
 import { setKey, setNfts } from '@/slices/search';
 import { selectOpen, openWishlist } from '@/slices/wishlist';
 import type { Nft } from '@/types/graphql/graphql';
-import {useAppDispatch, useAppSelector} from '@/hooks/state';
+import { useAppDispatch, useAppSelector } from '@/hooks/state';
 
 /**
  * @description NFTs list
@@ -87,7 +87,7 @@ const NftList = ({
           </Link>
           {handler && (
             <button
-              className="element__button btn btn-primary cursor-pointer ml-12 uppercase"
+              className="element__button btn btn-primary ml-12 cursor-pointer uppercase"
               onClick={(e: MouseEvent<HTMLButtonElement>) => handler(e, id!)}
             >
               Remove

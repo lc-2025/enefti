@@ -65,7 +65,12 @@ const useAppState = (
     },
     [WALLET]: (): void => {
       // Data check
-      if (purchased && purchased.length === 0 && wallet.nfts!.length > 0) {
+      if (
+        purchased &&
+        purchased.length === 0 &&
+        wallet.nfts &&
+        wallet.nfts.length > 0
+      ) {
         const nftsWallet = wallet.nfts as unknown as Array<string>;
 
         dispatch(

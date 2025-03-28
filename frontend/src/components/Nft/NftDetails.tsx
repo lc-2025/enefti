@@ -7,12 +7,10 @@ import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
 import { selectStarred } from '@/slices/wishlist';
 import { selectAdded } from '@/slices/cart';
 import { useAppSelector } from '@/hooks/state';
-import useNftStored from '@/hooks/storage';
-import { checkNftStatus, getNftIds } from '@/utilities/utils';
-import type { Nft } from '@/types/graphql/graphql';
-import TStorage from '@/types/storage';
-import { ACTION_PREFIX } from '@/utilities/constants';
 import useNftActions from '@/hooks/actions';
+import { checkNftStatus, getNftIds } from '@/utilities/utils';
+import { ACTION_PREFIX } from '@/utilities/constants';
+import type { Nft } from '@/types/graphql/graphql';
 
 /**
  * @description NFT details
@@ -26,10 +24,8 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
   // Hooks
   const starred = useAppSelector(selectStarred);
   const added = useAppSelector(selectAdded);
-  const [storage] = useNftStored();
-  const { wishlist, cart } = storage as TStorage;
   const { WISHLIST, CART } = ACTION_PREFIX;
-  const handleData = useNftActions([nft]);
+  const { wishlist, cart, handleData } = useNftActions([nft]);
 
   return (
     // NFT Details Start

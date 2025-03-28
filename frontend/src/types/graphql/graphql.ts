@@ -17,7 +17,7 @@ export type Scalars = {
 };
 
 export type INft = {
-  id: Scalars['ID']['output'];
+  id?: Maybe<Scalars['ID']['output']>;
   name: Scalars['String']['output'];
   price?: Maybe<Scalars['Float']['output']>;
 };
@@ -37,7 +37,7 @@ export type Nft = INft & {
   __typename?: 'Nft';
   count?: Maybe<Scalars['Int']['output']>;
   description?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
+  id?: Maybe<Scalars['ID']['output']>;
   image?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   owner?: Maybe<Scalars['String']['output']>;
@@ -63,7 +63,7 @@ export type QueryNftsArgs = {
   search?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type NftFragmentIdFragment = { __typename?: 'Nft', id: string } & { ' $fragmentName'?: 'NftFragmentIdFragment' };
+export type NftFragmentIdFragment = { __typename?: 'Nft', id?: string | null } & { ' $fragmentName'?: 'NftFragmentIdFragment' };
 
 export type NftFragmentPropsFragment = { __typename?: 'Nft', name: string, image?: string | null, description?: string | null, price?: number | null, owner?: string | null, count?: number | null } & { ' $fragmentName'?: 'NftFragmentPropsFragment' };
 
