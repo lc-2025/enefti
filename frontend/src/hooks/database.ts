@@ -6,16 +6,19 @@ import { selectAdded } from '@/slices/cart';
 import useNftStored from './storage';
 import { addNfts as addNftsWishlist } from '@/slices/wishlist';
 import { addNfts as addNftsCart } from '@/slices/cart';
+import { selectPurchased } from '@/slices/wallet';
+import { buy } from '@/slices/wallet';
 import NFT_QUERY from '@/queries/nft';
 import { ACTION_PREFIX } from '@/utilities/constants';
+import { isWalletValid } from '@/utilities/utils';
+import TQuery from '@/types/database';
 import type TStorage from '@/types/storage';
 import type { Nft } from '@/types/graphql/graphql';
-import TQuery from '@/types/database';
 
 // Custom Hooks - Database
 /**
- * @description NFTs on Wishlist/Cart
- * It gets the NFTs added to the user wishlist or cart
+ * @description NFTs on Wishlist/Cart/Wallet
+ * It gets the NFTs added to the user wishlist, cart or wallet
  * by their IDs from database
  * @author Luca Cattide
  * @date 21/03/2025
@@ -25,9 +28,10 @@ const useNftSaved = (type: string): TQuery => {
   // Hooks
   const starred = useAppSelector(selectStarred);
   const added = useAppSelector(selectAdded);
+  const purchased = useAppSelector(selectPurchased);
   const [storage] = useNftStored();
-  const { wishlist, cart } = storage as TStorage;
-  const { WISHLIST, CART } = ACTION_PREFIX;
+  const { wishlist, cart, wallet } = storage as TStorage;
+  const { WISHLIST, CART, WALLET } = ACTION_PREFIX;
   const dataType = {
     [WISHLIST]: {
       condition:
@@ -37,6 +41,10 @@ const useNftSaved = (type: string): TQuery => {
     [CART]: {
       condition: added && added.length === 0 && cart && cart.length > 0,
       data: cart,
+    },
+    [WALLET]: {
+      condition: isWalletValid(purchased, wallet),
+      data: wallet.nfts,
     },
   };
   /**
@@ -62,7 +70,7 @@ const useNftSaved = (type: string): TQuery => {
     if (dataType[type].condition) {
       getNfts({
         variables: {
-          ids: dataType[type].data,
+          ids: dataType[type].data as Array<string>,
         },
         fetchPolicy: 'no-cache',
       }).then((result) => {
@@ -70,6 +78,7 @@ const useNftSaved = (type: string): TQuery => {
         const action = {
           [WISHLIST]: addNftsWishlist(data),
           [CART]: addNftsCart(data),
+          [WALLET]: buy({ address: wallet.address, nfts: data }),
         };
 
         dispatch(action[type]);
@@ -79,7 +88,7 @@ const useNftSaved = (type: string): TQuery => {
 
   useEffect(() => {
     handleData();
-  }, [wishlist, cart]);
+  }, [wishlist, cart, wallet]);
 
   return { loading, data, error };
 };

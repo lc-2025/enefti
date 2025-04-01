@@ -6,9 +6,10 @@ import NftActions from './NftActions';
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
 import { selectStarred } from '@/slices/wishlist';
 import { selectAdded } from '@/slices/cart';
+import { selectPurchased } from '@/slices/wallet';
 import { useAppSelector } from '@/hooks/state';
 import useNftActions from '@/hooks/actions';
-import { checkNftStatus, getNftIds } from '@/utilities/utils';
+import { checkNftStatus, getNftIds, isPurchased } from '@/utilities/utils';
 import { ACTION_PREFIX } from '@/utilities/constants';
 import type { Nft } from '@/types/graphql/graphql';
 
@@ -24,6 +25,7 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
   // Hooks
   const starred = useAppSelector(selectStarred);
   const added = useAppSelector(selectAdded);
+  const purchased = useAppSelector(selectPurchased);
   const { WISHLIST, CART } = ACTION_PREFIX;
   const { wishlist, cart, handleData } = useNftActions([nft]);
 
@@ -47,24 +49,31 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
       )}
       <h2 className="nft__name title mt-12 mb-6">{name}</h2>
       <p className="nft__description mb-6">{description}</p>
-      <span className="nft__owner font">Owned by: {owner}</span>
+      <span className="nft__owner font">
+        {isPurchased(purchased, id as string)
+          ? 'Owned by you'
+          : `Owned by: ${owner}`}
+      </span>
       <span className="nft__price subtitle mt-6 mb-12 uppercase">
         {/* Ether has 18 standard decimals */}
         {price?.toFixed(18)} ETH
       </span>
       <div className="ntf__actions flex">
-        <NftActions
-          icons={false}
-          isStarred={
-            checkNftStatus(id, wishlist) &&
-            checkNftStatus(id, getNftIds(starred))
-          }
-          handleWishlist={() => handleData(WISHLIST, id)}
-          isAdded={
-            checkNftStatus(id, cart) || checkNftStatus(id, getNftIds(added))
-          }
-          handleCart={() => handleData(CART, id)}
-        />
+        {!isPurchased([nft], id as string) && (
+          <NftActions
+            icons={false}
+            isStarred={
+              checkNftStatus(id as string, wishlist) &&
+              checkNftStatus(id as string, getNftIds(starred))
+            }
+            handleWishlist={() => handleData(WISHLIST, id as string)}
+            isAdded={
+              checkNftStatus(id as string, cart) ||
+              checkNftStatus(id as string, getNftIds(added))
+            }
+            handleCart={() => handleData(CART, id as string)}
+          />
+        )}
       </div>
     </div>
     // NFT Details End

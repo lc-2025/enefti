@@ -1,5 +1,5 @@
 import React from 'react';
-import Filter from '@/components/Filter';
+import Filter from '@/components/Catalogue/Filter';
 import Catalogue from '@/components/Catalogue/Catalogue';
 import { FILTER } from '@/utilities/constants';
 

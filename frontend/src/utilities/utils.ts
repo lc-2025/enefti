@@ -1,14 +1,5 @@
-import {
-  addNft as addNftWishlist,
-  removeNft as removeNftWishlist,
-} from '@/slices/wishlist';
-import {
-  addNft as addNftCart,
-  removeNft as removeNftCart,
-} from '@/slices/cart';
-import { ACTION_PREFIX } from '@/utilities/constants';
+import TWallet from '@/types/reducers/wallet';
 import type { Nft } from '@/types/graphql/graphql';
-import TStorage from '@/types/storage';
 
 // Utilities
 /**
@@ -35,4 +26,32 @@ const checkNftStatus = (id: string, ids: Array<string>): boolean =>
 const getNftIds = (nfts: Partial<Nft>[]): Array<string> =>
   nfts.map((nft) => nft.id!);
 
-export { checkNftStatus, getNftIds };
+/**
+ * @description Wallet validator
+ * Checks if the wallet is valid
+ * - Current user purchased something
+ * @author Luca Cattide
+ * @date 01/04/2025
+ * @param {Array<Nft>} purchased
+ * @param {Partial<TWallet>} wallet
+ * @returns {*}  {boolean}
+ */
+const isWalletValid = (
+  purchased: Array<Nft>,
+  wallet: Partial<TWallet>,
+): boolean =>
+  purchased && purchased.length === 0 && wallet.nfts! && wallet.nfts.length > 0;
+
+/**
+ * @description Purchase checker
+ * Verifies if the NFTs in the list have been purchased
+ * @author Luca Cattide
+ * @date 01/04/2025
+ * @param {Array<Nft>} purchased
+ * @param {string} id
+ * @returns {*}  {boolean}
+ */
+const isPurchased = (purchased: Array<Nft>, id: string): boolean =>
+  purchased.some((nft) => nft.id === id);
+
+export { checkNftStatus, getNftIds, isWalletValid, isPurchased };

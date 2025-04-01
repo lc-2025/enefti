@@ -4,6 +4,7 @@ import { ACTION_PREFIX } from '@/utilities/constants';
 import { addNfts as addNftsWishlist, selectStarred } from '@/slices/wishlist';
 import { addNfts as addNftsCart, selectAdded } from '@/slices/cart';
 import { buy, selectPurchased } from '@/slices/wallet';
+import { isWalletValid } from '@/utilities/utils';
 import type { AppDispatch, AppStore, RootState } from '../types/state';
 import type { Nft } from '@/types/graphql/graphql';
 import TStorage from '@/types/storage';
@@ -43,7 +44,7 @@ const useAppState = (
             nfts.filter(
               (nft) =>
                 !starred.some((nftStarred) => nftStarred.id === nft.id) &&
-                wishlist.includes(nft.id),
+                wishlist.includes(nft.id as string),
             ),
           ),
         );
@@ -57,7 +58,7 @@ const useAppState = (
             nfts.filter(
               (nft) =>
                 !added.some((nftAdded) => nftAdded.id === nft.id) &&
-                cart.includes(nft.id),
+                cart.includes(nft.id as string),
             ),
           ),
         );
@@ -65,12 +66,7 @@ const useAppState = (
     },
     [WALLET]: (): void => {
       // Data check
-      if (
-        purchased &&
-        purchased.length === 0 &&
-        wallet.nfts &&
-        wallet.nfts.length > 0
-      ) {
+      if (isWalletValid(purchased, wallet)) {
         const nftsWallet = wallet.nfts as unknown as Array<string>;
 
         dispatch(
@@ -80,7 +76,7 @@ const useAppState = (
               (nft) =>
                 !purchased.some((purchased) => purchased.id === nft.id) &&
                 wallet.address === nft.owner &&
-                nftsWallet?.includes(nft.id),
+                nftsWallet?.includes(nft.id as string),
             ),
           }),
         );

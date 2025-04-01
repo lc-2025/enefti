@@ -1,6 +1,6 @@
 import React from 'react';
 import { PreloadQuery } from '@/apolloRsc';
-import CheckoutForm from '@/components/CheckoutForm';
+import CheckoutForm from '@/components/Checkout/CheckoutForm';
 import NFT_QUERY from '@/queries/nft';
 
 /**

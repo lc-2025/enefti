@@ -5,8 +5,8 @@ import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import { notFound } from 'next/navigation';
 import NftList from '@/components/Nft/NftList';
 import Empty from '@/components/Empty';
-import CustomError from './CustomError';
-import CustomLoading from './Loading';
+import CustomError from '../CustomError';
+import CustomLoading from '../Loading';
 import { useAppSelector, useAppDispatch } from '@/hooks/state';
 import { removeNfts, selectAdded } from '@/slices/cart';
 import { buy, setError, selectError, selectPurchased } from '@/slices/wallet';
@@ -22,12 +22,11 @@ import NFT_QUERY from '@/queries/nft';
  * @returns {*}  {React.ReactNode}
  */
 const CheckoutForm = (): React.ReactNode => {
-  const { CART } = ACTION_PREFIX;
   // Hooks
   const added = useAppSelector(selectAdded);
   const purchased = useAppSelector(selectPurchased);
   const errorWallet = useAppSelector(selectError);
-  const { loading, data, error } = useNftSaved(CART);
+  const { loading, data, error } = useNftSaved(ACTION_PREFIX.CART);
   const [updateNfts] = useMutation(NFT_QUERY.nfts.mutation);
   const dispatch = useAppDispatch();
 
@@ -70,7 +69,7 @@ const CheckoutForm = (): React.ReactNode => {
       dispatch(removeNfts());
       updateNfts({
         variables: {
-          ids: added.map((nft) => nft.id),
+          ids: added.map((nft) => nft.id as string),
           owner: value,
         },
       });

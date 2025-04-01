@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { query } from '@/apolloRsc';
-import Skeleton from '@/components/Skeleton';
+import Skeleton from '@/components/Layout/Skeleton';
 import NftDetails from '@/components/Nft/NftDetails';
 import CustomError from '@/components/CustomError';
 import NFT_QUERY from '@/queries/nft';

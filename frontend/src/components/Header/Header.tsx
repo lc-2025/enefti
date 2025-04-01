@@ -3,13 +3,23 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { StarIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
-import { ShoppingBagIcon as ShoppingBagIconSolid } from '@heroicons/react/24/solid';
+import {
+  StarIcon,
+  ShoppingCartIcon,
+  ShoppingBagIcon,
+} from '@heroicons/react/24/outline';
+import {
+  ShoppingCartIcon as ShoppingCartIconSolid,
+  ShoppingBagIcon as ShoppingBagIconSolid,
+} from '@heroicons/react/24/solid';
 import Wishlist from './Wishlist';
 import ThemeSwitch from './ThemeSwitch';
 import { openWishlist, selectOpen } from '@/slices/wishlist';
 import { useAppDispatch, useAppSelector } from '@/hooks/state';
 import SearchSelect from './SearchSelect';
+import useNftStored from '@/hooks/storage';
+import { selectPurchased } from '@/slices/wallet';
+import TStorage from '@/types/storage';
 
 /**
  * @description Header
@@ -21,6 +31,9 @@ const Header = (): React.ReactNode => {
   // Hooks
   const pathname = usePathname();
   const open = useAppSelector(selectOpen);
+  const purchased = useAppSelector(selectPurchased);
+  const [storage] = useNftStored(purchased);
+  const { wallet } = storage as TStorage;
   const dispatch = useAppDispatch();
 
   // Handlers
@@ -58,7 +71,6 @@ const Header = (): React.ReactNode => {
       </aside>
       {/* Search End */}
       {/* Tools Start */}
-      {/* TODO: Purchased NFTs viewer? - reuse NftList */}
       <aside className="header__tools group flex items-center">
         <h2 className="tools__name hidden">Tools</h2>
         {/* Wishlist Start */}
@@ -70,6 +82,7 @@ const Header = (): React.ReactNode => {
           <Wishlist open={open} handler={handleOpen} />
         </div>
         {/* Wishlist End */}
+        {/* Checkout Start */}
         <Link
           className="tools__checkout"
           href="/checkout"
@@ -77,11 +90,29 @@ const Header = (): React.ReactNode => {
           tabIndex={2}
         >
           {pathname === '/checkout' ? (
-            <ShoppingBagIconSolid className="checkout__icon mr-12 size-12 transition duration-200 ease-linear hover:opacity-75" />
+            <ShoppingCartIconSolid className="checkout__icon mr-12 size-12 transition duration-200 ease-linear hover:opacity-75" />
           ) : (
-            <ShoppingBagIcon className="checkout__icon mr-12 size-12 transition duration-200 ease-linear hover:opacity-75" />
+            <ShoppingCartIcon className="checkout__icon mr-12 size-12 transition duration-200 ease-linear hover:opacity-75" />
           )}
         </Link>
+        {/* Checkout End */}
+        {(((purchased && purchased.length > 0) &&
+          (wallet.nfts && wallet.nfts!.length > 0)) && (
+            // Purchases Start
+            <Link
+              className="tools__purchases"
+              href="/purchases"
+              title="Go to your purchases - eNefti"
+              tabIndex={2}
+            >
+              {pathname === '/purchases' ? (
+                <ShoppingBagIconSolid className="purchases__icon mr-12 size-12 transition duration-200 ease-linear hover:opacity-75" />
+              ) : (
+                <ShoppingBagIcon className="purchases__icon mr-12 size-12 transition duration-200 ease-linear hover:opacity-75" />
+              )}
+            </Link>
+            // Purchases End
+          ))}
         <ThemeSwitch />
       </aside>
       {/* Tools End */}

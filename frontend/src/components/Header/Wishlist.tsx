@@ -1,9 +1,9 @@
 import React, { MouseEvent } from 'react';
 import { notFound } from 'next/navigation';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import Empty from './Empty';
-import NftList from './Nft/NftList';
-import CustomError from './CustomError';
+import Empty from '../Empty';
+import NftList from '../Nft/NftList';
+import CustomError from '../CustomError';
 import { useAppDispatch, useAppSelector } from '@/hooks/state';
 import useNftStored from '@/hooks/storage';
 import useNftSaved from '@/hooks/database';
@@ -11,7 +11,7 @@ import { selectTheme } from '@/slices/theme';
 import { removeNft, selectStarred } from '@/slices/wishlist';
 import { ACTION_PREFIX, THEME } from '@/utilities/constants';
 import TStorage from '@/types/storage';
-import CustomLoading from './Loading';
+import CustomLoading from '../Loading';
 
 /**
  * @description Wishlist
@@ -34,13 +34,13 @@ const Wishlist = ({
   handler: () => void;
 }): React.ReactNode => {
   const { WISHLIST } = ACTION_PREFIX;
+    const { DARK } = THEME.NAME;
   // Hooks
   const theme = useAppSelector(selectTheme);
   const starred = useAppSelector(selectStarred);
   const [, setStorage] = useNftStored();
   const { loading, data, error } = useNftSaved(WISHLIST);
   const dispatch = useAppDispatch();
-  const { DARK } = THEME.NAME;
 
   // Handlers
   /**

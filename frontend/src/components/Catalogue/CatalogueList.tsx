@@ -7,7 +7,7 @@ import { selectPurchased } from '@/slices/wallet';
 import useNftStored from '@/hooks/storage';
 import useNftActions from '@/hooks/actions';
 import { useAppSelector, useAppState } from '@/hooks/state';
-import { checkNftStatus, getNftIds } from '@/utilities/utils';
+import { checkNftStatus, getNftIds, isPurchased } from '@/utilities/utils';
 import { ACTION_PREFIX } from '@/utilities/constants';
 import { Nft } from '@/types/graphql/graphql';
 import TStorage from '@/types/storage';
@@ -67,28 +67,24 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
           >
             Details
           </Link>
-          {
-            !purchased.some((nft) => nft.id === id) && (
-              // Actions Start
-              <div className="element_actions mt-12 flex justify-end pr-6 pb-6 pl-6">
-                <NftActions
-                  icons={true}
-                  isStarred={
-                    checkNftStatus(id, wishlist) &&
-                    checkNftStatus(id, getNftIds(starred))
-                  }
-                  handleWishlist={() => handleData(WISHLIST, id)}
-                  isAdded={
-                    checkNftStatus(id, cart) &&
-                    checkNftStatus(id, getNftIds(added))
-                  }
-                  handleCart={() => handleData(CART, id)}
-                  position={i}
-                />
-              </div>
-            )
-            // Actions End
-          }
+          <div
+            className={`element_actions mt-12 flex justify-end pr-6 pb-6 pl-6 ${isPurchased(purchased, id as string) && 'pointer-events-none invisible select-none'}`}
+          >
+            <NftActions
+              icons={true}
+              isStarred={
+                checkNftStatus(id as string, wishlist) &&
+                checkNftStatus(id as string, getNftIds(starred))
+              }
+              handleWishlist={() => handleData(WISHLIST, id as string)}
+              isAdded={
+                checkNftStatus(id as string, cart) &&
+                checkNftStatus(id as string, getNftIds(added))
+              }
+              handleCart={() => handleData(CART, id as string)}
+              position={i}
+            />
+          </div>
         </div>
         // Element End
       ))}

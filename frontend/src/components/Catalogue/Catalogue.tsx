@@ -23,8 +23,8 @@ import { QUERY } from '@/utilities/constants';
 import { Price } from '@/types/reducers/filters';
 import type { Nft } from '@/types/graphql/graphql';
 import { selectAddress } from '@/slices/wallet';
-import Skeleton from '../Skeleton';
-import Back from '../Back';
+import Skeleton from '../Layout/Skeleton';
+import Back from '../Layout/Back';
 
 /**
  * @description  NFTs Catalogue
