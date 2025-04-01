@@ -27,7 +27,7 @@ const PurchasesSummary = (): React.ReactNode => {
       <h2 className="checkout__title title mt-12 mb-12 flex flex-col text-center uppercase">
         Your Purchases
       </h2>
-      <NftList nfts={purchased} />
+      <NftList nfts={purchased} modal={false} />
     </section>
   ) : (
     // Purchases End

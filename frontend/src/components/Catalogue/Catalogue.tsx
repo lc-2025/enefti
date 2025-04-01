@@ -4,6 +4,8 @@ import React, { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { useSuspenseQuery } from '@apollo/client';
 import CatalogueList from '@/components/Catalogue/CatalogueList';
+import Skeleton from '../Layout/Skeleton';
+import Back from '../Layout/Back';
 import Empty from '../Empty';
 import CustomError from '../CustomError';
 import NFT_QUERY from '@/queries/nft';
@@ -19,12 +21,10 @@ import {
   selectFilterPrice,
   selectFilterPriceOrder,
 } from '@/slices/filters';
+import { selectAddress } from '@/slices/wallet';
 import { QUERY } from '@/utilities/constants';
 import { Price } from '@/types/reducers/filters';
 import type { Nft } from '@/types/graphql/graphql';
-import { selectAddress } from '@/slices/wallet';
-import Skeleton from '../Layout/Skeleton';
-import Back from '../Layout/Back';
 
 /**
  * @description  NFTs Catalogue

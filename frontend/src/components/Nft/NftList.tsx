@@ -13,11 +13,13 @@ import { useAppDispatch, useAppSelector } from '@/hooks/state';
  * @date 19/03/2025
  * @param {{
  *   nfts: Array<Partial<Nft>>;
- *   search: boolean;
+ *   search?: boolean;
+ *   modal?: boolean;
  *   handler?: (e: MouseEvent<HTMLButtonElement>, id: string) => void;
  * }} {
  *   nfts,
  *   search = false,
+ *   modal = true,
  *   handler,
  * }
  * @returns {*}  {React.ReactNode}
@@ -26,10 +28,12 @@ import { useAppDispatch, useAppSelector } from '@/hooks/state';
 const NftList = ({
   nfts,
   search = false,
+  modal = true,
   handler,
 }: {
   nfts: Array<Partial<Nft>>;
   search?: boolean;
+  modal?: boolean
   handler?: (e: MouseEvent<HTMLButtonElement>, id: string) => void;
 }): React.ReactNode => {
   // Hooks
@@ -46,7 +50,7 @@ const NftList = ({
    */
   const handleList = (): void => {
     // Batching natively abvailable from React v18
-    dispatch(search ? setNfts([]) : openWishlist(!open));
+    dispatch(search ? setNfts([]) : openWishlist(modal ? !open : false));
     dispatch(setKey(''));
   };
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import { useLazyQuery } from '@apollo/client';
-import NftList from '../Nft/NftList';
-import CustomError from '../CustomError';
+import NftList from './Nft/NftList';
+import CustomError from './CustomError';
 import { selectKey, selectNfts, setKey, setNfts } from '@/slices/search';
 import NFT_QUERY from '@/queries/nft';
 import { useAppDispatch, useAppSelector } from '@/hooks/state';
 import { Nft } from '@/types/graphql/graphql';
-import CustomLoading from '../Loading';
+import CustomLoading from './Loading';
 
 /**
  * @description Search list

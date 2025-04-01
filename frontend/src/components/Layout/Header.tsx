@@ -12,11 +12,11 @@ import {
   ShoppingCartIcon as ShoppingCartIconSolid,
   ShoppingBagIcon as ShoppingBagIconSolid,
 } from '@heroicons/react/24/solid';
-import Wishlist from './Wishlist';
-import ThemeSwitch from './ThemeSwitch';
+import Wishlist from '../Wishlist';
+import ThemeSwitch from '../ThemeSwitch';
 import { openWishlist, selectOpen } from '@/slices/wishlist';
 import { useAppDispatch, useAppSelector } from '@/hooks/state';
-import SearchSelect from './SearchSelect';
+import SearchSelect from '../SearchSelect';
 import useNftStored from '@/hooks/storage';
 import { selectPurchased } from '@/slices/wallet';
 import TStorage from '@/types/storage';

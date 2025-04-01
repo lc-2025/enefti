@@ -1,7 +1,7 @@
 import React from 'react';
 import StoreProvider from '@/components/StoreProvider';
 import { Poppins } from 'next/font/google';
-import Header from '@/components/Header/Header';
+import Header from '@/components/Layout/Header';
 import { ApolloWrapper } from '@/apolloSsr';
 import Footer from '@/components/Layout/Footer';
 import type { Metadata, Viewport } from 'next';
