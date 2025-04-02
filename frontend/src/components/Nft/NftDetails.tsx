@@ -95,7 +95,7 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
         {price?.toFixed(18)} ETH
       </motion.span>
       <div className="ntf__actions flex">
-        {!isPurchased([nft], id as string) && (
+        {!isPurchased(purchased, id as string) && (
           <NftActions
             icons={false}
             isStarred={
