@@ -120,6 +120,26 @@ const ACTION = {
     BUY: `${ACTION_PREFIX.WALLET}/buy`,
   },
 };
+const ANIMATION = {
+  HEADER: {
+    INITIAL: { opacity: 0, y: '-100%' },
+    ANIMATE: { opacity: 1, y: '0' },
+    TRANSITION: { type: 'tween' },
+  },
+  MODAL: {
+    OPTIONS: { duration: 0.2 },
+  },
+  NFT: {
+    LIST: {
+      ANIMATE: {
+        height: 'auto',
+      },
+      OPTIONS: {
+        duration: 0.1,
+      },
+    },
+  },
+};
 
 export {
   WINDOW,
@@ -131,4 +151,5 @@ export {
   STATE,
   ACTION_PREFIX,
   ACTION,
+  ANIMATION,
 };

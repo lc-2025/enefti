@@ -1,11 +1,13 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, useEffect } from 'react';
 import Link from 'next/link';
+import { useAnimate } from 'motion/react';
 import { selectTheme } from '@/slices/theme';
 import { THEME } from '@/utilities/constants';
 import { setKey, setNfts } from '@/slices/search';
 import { selectOpen, openWishlist } from '@/slices/wishlist';
-import type { Nft } from '@/types/graphql/graphql';
 import { useAppDispatch, useAppSelector } from '@/hooks/state';
+import { ANIMATION } from '@/utilities/constants';
+import type { Nft } from '@/types/graphql/graphql';
 
 /**
  * @description NFTs list
@@ -33,16 +35,32 @@ const NftList = ({
 }: {
   nfts: Array<Partial<Nft>>;
   search?: boolean;
-  modal?: boolean
+  modal?: boolean;
   handler?: (e: MouseEvent<HTMLButtonElement>, id: string) => void;
 }): React.ReactNode => {
+  const { DARK } = THEME.NAME;
+  const { ANIMATE, OPTIONS } = ANIMATION.NFT.LIST;
   // Hooks
   const theme = useAppSelector(selectTheme);
   const open = useAppSelector(selectOpen);
   const dispatch = useAppDispatch();
-  const { DARK } = THEME.NAME;
+  const [scope, animate] = useAnimate();
 
   // Handlers
+  /**
+   * @description Animation handler
+   * Manages programmatically the component starting animation
+   * based on the section
+   * @author Luca Cattide
+   * @date 02/04/2025
+   */
+  const handleAnimation = (): void => {
+    // Section check
+    if (search) {
+      animate(scope.current, ANIMATE, OPTIONS);
+    }
+  };
+
   /**
    * @description NFTs list visibility handler
    * @author Luca Cattide
@@ -54,10 +72,15 @@ const NftList = ({
     dispatch(setKey(''));
   };
 
+  useEffect(() => {
+    handleAnimation();
+  }, [search]);
+
   return (
     // List Start
     <ul
-      className={`wishlist__collection flex max-h-2/3 flex-col overflow-x-hidden overflow-y-auto ${search ? 'fixed z-40 border-2 bg-(--bg-primary)' : 'pr-6'}`}
+      ref={scope}
+      className={`wishlist__collection flex max-h-2/3 flex-col overflow-x-hidden overflow-y-auto ${search ? 'fixed z-40 h-0 border-2 bg-(--bg-primary)' : 'pr-6'}`}
     >
       {nfts.map(({ id, name, image, price }, i) => (
         // NFT start

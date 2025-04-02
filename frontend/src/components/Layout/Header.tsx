@@ -12,6 +12,7 @@ import {
   ShoppingCartIcon as ShoppingCartIconSolid,
   ShoppingBagIcon as ShoppingBagIconSolid,
 } from '@heroicons/react/24/solid';
+import { motion } from 'motion/react';
 import Wishlist from '../Wishlist';
 import ThemeSwitch from '../ThemeSwitch';
 import { openWishlist, selectOpen } from '@/slices/wishlist';
@@ -19,6 +20,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/state';
 import SearchSelect from '../SearchSelect';
 import useNftStored from '@/hooks/storage';
 import { selectPurchased } from '@/slices/wallet';
+import { ANIMATION } from '@/utilities/constants';
 import TStorage from '@/types/storage';
 
 /**
@@ -28,6 +30,8 @@ import TStorage from '@/types/storage';
  * @returns {*}  {React.ReactNode}
  */
 const Header = (): React.ReactNode => {
+  const { HEADER } = ANIMATION;
+  const { INITIAL, ANIMATE, TRANSITION } = HEADER;
   // Hooks
   const pathname = usePathname();
   const open = useAppSelector(selectOpen);
@@ -59,19 +63,37 @@ const Header = (): React.ReactNode => {
           them directly.
           Furthermore, through image-replacement technique, the logo is also indexable via its title
         */}
-        <aside className="header__logo logo relative h-auto w-full overflow-hidden bg-left-top bg-no-repeat select-none">
+        <motion.aside
+          variants={HEADER}
+          initial={INITIAL}
+          animate={ANIMATE}
+          transition={TRANSITION}
+          className="header__logo logo relative h-auto w-full overflow-hidden bg-left-top bg-no-repeat select-none"
+        >
           <h2 className="logo__title absolute right-full">eNeFTi</h2>
-        </aside>
+        </motion.aside>
       </Link>
       {/* Logo End */}
       {/* Search start */}
-      <aside className="header__search">
+      <motion.aside
+        variants={HEADER}
+        initial={INITIAL}
+        animate={ANIMATE}
+        transition={{ ...TRANSITION, delay: 0.2 }}
+        className="header__search"
+      >
         <h2 className="search__title hidden">Search</h2>
         <SearchSelect />
-      </aside>
+      </motion.aside>
       {/* Search End */}
       {/* Tools Start */}
-      <aside className="header__tools group flex items-center">
+      <motion.aside
+        variants={HEADER}
+        initial={INITIAL}
+        animate={ANIMATE}
+        transition={{ ...TRANSITION, delay: 0.4 }}
+        className="header__tools group flex items-center"
+      >
         <h2 className="tools__name hidden">Tools</h2>
         {/* Wishlist Start */}
         <div className="tools__wishlist mr-12 flex items-center">
@@ -96,8 +118,10 @@ const Header = (): React.ReactNode => {
           )}
         </Link>
         {/* Checkout End */}
-        {(((purchased && purchased.length > 0) &&
-          (wallet.nfts && wallet.nfts!.length > 0)) && (
+        {purchased &&
+          purchased.length > 0 &&
+          wallet.nfts &&
+          wallet.nfts!.length > 0 && (
             // Purchases Start
             <Link
               className="tools__purchases"
@@ -112,9 +136,9 @@ const Header = (): React.ReactNode => {
               )}
             </Link>
             // Purchases End
-          ))}
+          )}
         <ThemeSwitch />
-      </aside>
+      </motion.aside>
       {/* Tools End */}
     </header>
     // Header End
