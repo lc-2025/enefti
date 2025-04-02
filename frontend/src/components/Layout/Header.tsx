@@ -31,7 +31,7 @@ import TStorage from '@/types/storage';
  */
 const Header = (): React.ReactNode => {
   const { HEADER } = ANIMATION;
-  const { INITIAL, ANIMATE, TRANSITION } = HEADER;
+  const { TRANSITION } = HEADER;
   // Hooks
   const pathname = usePathname();
   const open = useAppSelector(selectOpen);
@@ -65,8 +65,8 @@ const Header = (): React.ReactNode => {
         */}
         <motion.aside
           variants={HEADER}
-          initial={INITIAL}
-          animate={ANIMATE}
+          initial="INITIAL"
+          animate="ANIMATE"
           transition={TRANSITION}
           className="header__logo logo relative h-auto w-full overflow-hidden bg-left-top bg-no-repeat select-none"
         >
@@ -77,8 +77,8 @@ const Header = (): React.ReactNode => {
       {/* Search start */}
       <motion.aside
         variants={HEADER}
-        initial={INITIAL}
-        animate={ANIMATE}
+        initial="INITIAL"
+        animate="ANIMATE"
         transition={{ ...TRANSITION, delay: 0.2 }}
         className="header__search"
       >
@@ -89,8 +89,8 @@ const Header = (): React.ReactNode => {
       {/* Tools Start */}
       <motion.aside
         variants={HEADER}
-        initial={INITIAL}
-        animate={ANIMATE}
+        initial="INITIAL"
+        animate="ANIMATE"
         transition={{ ...TRANSITION, delay: 0.4 }}
         className="header__tools group flex items-center"
       >

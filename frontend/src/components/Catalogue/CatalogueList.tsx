@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { motion } from 'motion/react';
 import NftActions from '../Nft/NftActions';
 import { selectStarred } from '@/slices/wishlist';
 import { selectAdded } from '@/slices/cart';
@@ -8,7 +9,7 @@ import useNftStored from '@/hooks/storage';
 import useNftActions from '@/hooks/actions';
 import { useAppSelector, useAppState } from '@/hooks/state';
 import { checkNftStatus, getNftIds, isPurchased } from '@/utilities/utils';
-import { ACTION_PREFIX } from '@/utilities/constants';
+import { ACTION_PREFIX, ANIMATION } from '@/utilities/constants';
 import { Nft } from '@/types/graphql/graphql';
 import TStorage from '@/types/storage';
 
@@ -20,12 +21,15 @@ import TStorage from '@/types/storage';
  * @returns {*}  {React.ReactNode}
  */
 const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
+  const { HEADER, FILTER, NFT } = ANIMATION;
+  const { CATALOGUE } = NFT;
+  const { ELEMENT } = CATALOGUE;
+  const { WISHLIST, CART, WALLET } = ACTION_PREFIX;
   // Hooks
   const starred = useAppSelector(selectStarred);
   const added = useAppSelector(selectAdded);
   const purchased = useAppSelector(selectPurchased);
   const [storage] = useNftStored();
-  const { WISHLIST, CART, WALLET } = ACTION_PREFIX;
 
   useAppState([WISHLIST, CART, WALLET], nfts, storage as TStorage);
 
@@ -33,10 +37,21 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
 
   return (
     // List Start
-    <div className="catalogue__container asymmetric-grid mx-auto w-5/6">
+    <motion.div
+      variants={CATALOGUE}
+      initial="INITIAL"
+      animate="ANIMATE"
+      transition={{
+        ...HEADER.TRANSITION,
+        ...FILTER.TRANSITION,
+      }}
+      className="catalogue__container asymmetric-grid mx-auto w-5/6"
+    >
       {nfts.map(({ id, name, image, price }, i) => (
         // Element Start
-        <div
+        <motion.div
+          variants={ELEMENT}
+          custom={i}
           key={crypto.randomUUID() + id}
           className="container__element nft-card flex flex-col justify-stretch"
         >
@@ -85,10 +100,10 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
               position={i}
             />
           </div>
-        </div>
+        </motion.div>
         // Element End
       ))}
-    </div>
+    </motion.div>
     // List End
   );
 };

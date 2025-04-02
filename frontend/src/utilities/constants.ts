@@ -123,13 +123,39 @@ const ACTION = {
 const ANIMATION = {
   HEADER: {
     INITIAL: { opacity: 0, y: '-100%' },
-    ANIMATE: { opacity: 1, y: '0' },
+    ANIMATE: { opacity: 1, y: 0 },
     TRANSITION: { type: 'tween' },
   },
   MODAL: {
     OPTIONS: { duration: 0.2 },
   },
+  FILTER: {
+    INITIAL: { opacity: 0, y: '100%' },
+    ANIMATE: { opacity: 1, y: 0 },
+    TRANSITION: { delay: 0.8 },
+  },
   NFT: {
+    CATALOGUE: {
+      INITIAL: { scale: 0 },
+      ANIMATE: { scale: 1, origin: 'center' },
+      ELEMENT: {
+        INITIAL: (i: number) => ({
+          scale: 0,
+          transition: {
+            when: 'beforeChildren',
+            delayChildren: i * 0.2,
+          },
+        }),
+        ANIMATE: (i: number) => ({
+          scale: 1,
+          origin: 'center',
+          transition: {
+            when: 'afterChildren',
+            delayChildren: i * 0.2,
+          },
+        }),
+      },
+    },
     LIST: {
       ANIMATE: {
         height: 'auto',
@@ -137,6 +163,36 @@ const ANIMATION = {
       OPTIONS: {
         duration: 0.1,
       },
+    },
+    DETAILS: {
+      IMAGE: {
+        INITIAL: {
+          opacity: 0,
+          scale: -1,
+        },
+        ANIMATE: {
+          opacity: 1,
+          scale: 1,
+        },
+        TRANSITION: {
+          type: 'spring',
+        },
+      },
+      TITLE: {
+        TRANSITION: {
+          delay: 0.2,
+        },
+      },
+      DESCRIPTION: {
+        TRANSITION: {
+          delay: 0.4,
+        },
+      },
+      OWNER: {
+        TRANSITION: {
+          delay: 0.6
+        }
+      }
     },
   },
 };

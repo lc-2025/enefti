@@ -10,6 +10,7 @@ import {
   Description,
 } from '@headlessui/react';
 import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { motion } from 'motion/react';
 import { useAppDispatch, useAppSelector } from '@/hooks/state';
 import {
   selectFilterOwner,
@@ -20,6 +21,7 @@ import {
 } from '@/slices/filters';
 import { FILTER } from '@/utilities/constants';
 import TFilter from '@/types/components/Filter';
+import { ANIMATION } from '@/utilities/constants';
 import { TFilterProps } from '@/types/reducers/filters';
 
 /**
@@ -46,6 +48,8 @@ const Filter = ({
   filters: Array<TFilter>;
   type: string;
 }): React.ReactNode => {
+  const { HEADER } = ANIMATION;
+  const { TRANSITION } = HEADER;
   // Hooks
   const filterPrice = useAppSelector(selectFilterPrice);
   const filterOwner = useAppSelector(selectFilterOwner);
@@ -80,7 +84,13 @@ const Filter = ({
   return (
     // Filter Start
     <div className="filters__container mb-12 w-full">
-      <div className="container__filter w-full">
+      <motion.div
+        variants={ANIMATION.FILTER}
+        initial="INITIAL"
+        animate="ANIMATE"
+        transition={{ ...TRANSITION, ...ANIMATION.FILTER.TRANSITION }}
+        className="container__filter w-full"
+      >
         <h2 className="filter__title subtitle mb-6">{title}</h2>
         {type === FILTER.TYPE.RADIO ? (
           <>
@@ -131,7 +141,9 @@ const Filter = ({
             <Field key={name} className="filter__container">
               <Label className="container__label group relative flex cursor-pointer items-center justify-between bg-white/5 p-6 shadow-md transition hover:opacity-75 data-[checked]:bg-white/10">
                 <div className="label__container flex flex-col">
-                  <span className="container__text mb-6 font-semibold">{name}</span>
+                  <span className="container__text mb-6 font-semibold">
+                    {name}
+                  </span>
                   <Description className="container__description">
                     {criteria}
                   </Description>
@@ -147,7 +159,7 @@ const Filter = ({
             </Field>
           ))
         )}
-      </div>
+      </motion.div>
     </div>
     // Filter End
   );

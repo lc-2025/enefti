@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { motion } from 'motion/react';
 import NftActions from './NftActions';
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
 import { selectStarred } from '@/slices/wishlist';
@@ -10,7 +11,7 @@ import { selectPurchased } from '@/slices/wallet';
 import { useAppSelector } from '@/hooks/state';
 import useNftActions from '@/hooks/actions';
 import { checkNftStatus, getNftIds, isPurchased } from '@/utilities/utils';
-import { ACTION_PREFIX } from '@/utilities/constants';
+import { ACTION_PREFIX, ANIMATION } from '@/utilities/constants';
 import type { Nft } from '@/types/graphql/graphql';
 
 /**
@@ -21,6 +22,9 @@ import type { Nft } from '@/types/graphql/graphql';
  * @returns {*}  {React.ReactNode}
  */
 const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
+  const { FILTER } = ANIMATION;
+  const { DETAILS } = ANIMATION.NFT;
+  const { IMAGE, TITLE, DESCRIPTION, OWNER } = DETAILS;
   const { id, name, description, image, owner, price } = nft;
   // Hooks
   const starred = useAppSelector(selectStarred);
@@ -41,23 +45,55 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
         Back to the Catalogue
       </Link>
       {image && (
-        <img
+        <motion.img
+          variants={IMAGE}
+          initial="INITIAL"
+          animate="ANIMATE"
+          transition={IMAGE.TRANSITION}
           className="nft__image h-auto w-full select-none"
           src={image}
           alt={`${name} - eNeFTi`}
         />
       )}
-      <h2 className="nft__name title mt-12 mb-6">{name}</h2>
-      <p className="nft__description mb-6">{description}</p>
-      <span className="nft__owner font">
+      <motion.h2
+        variants={FILTER}
+        initial="INITIAL"
+        animate="ANIMATE"
+        transition={TITLE.TRANSITION}
+        className="nft__name title mt-12 mb-6"
+      >
+        {name}
+      </motion.h2>
+      <motion.p
+        variants={FILTER}
+        initial="INITIAL"
+        animate="ANIMATE"
+        transition={DESCRIPTION.TRANSITION}
+        className="nft__description mb-6"
+      >
+        {description}
+      </motion.p>
+      <motion.span
+        variants={FILTER}
+        initial="INITIAL"
+        animate="ANIMATE"
+        transition={OWNER.TRANSITION}
+        className="nft__owner font"
+      >
         {isPurchased(purchased, id as string)
           ? 'Owned by you'
           : `Owned by: ${owner}`}
-      </span>
-      <span className="nft__price subtitle mt-6 mb-12 uppercase">
+      </motion.span>
+      <motion.span
+        variants={FILTER}
+        initial="INITIAL"
+        animate="ANIMATE"
+        transition={FILTER.TRANSITION}
+        className="nft__price subtitle mt-6 mb-12 uppercase"
+      >
         {/* Ether has 18 standard decimals */}
         {price?.toFixed(18)} ETH
-      </span>
+      </motion.span>
       <div className="ntf__actions flex">
         {!isPurchased([nft], id as string) && (
           <NftActions
