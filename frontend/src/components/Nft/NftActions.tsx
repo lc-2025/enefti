@@ -4,6 +4,8 @@ import {
   ShoppingCartIcon as ShoppingCartIconSolid,
   StarIcon as StarIconSolid,
 } from '@heroicons/react/24/solid';
+import { motion } from 'motion/react';
+import { ANIMATION } from '@/utilities/constants';
 
 /**
  * @description NFT actions

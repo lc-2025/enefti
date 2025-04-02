@@ -1,3 +1,5 @@
+import { Transition } from '@headlessui/react';
+
 // Constants
 const WINDOW = {
   MEDIA: {
@@ -135,27 +137,6 @@ const ANIMATION = {
     TRANSITION: { delay: 0.8 },
   },
   NFT: {
-    CATALOGUE: {
-      INITIAL: { scale: 0 },
-      ANIMATE: { scale: 1, origin: 'center' },
-      ELEMENT: {
-        INITIAL: (i: number) => ({
-          scale: 0,
-          transition: {
-            when: 'beforeChildren',
-            delayChildren: i * 0.2,
-          },
-        }),
-        ANIMATE: (i: number) => ({
-          scale: 1,
-          origin: 'center',
-          transition: {
-            when: 'afterChildren',
-            delayChildren: i * 0.2,
-          },
-        }),
-      },
-    },
     LIST: {
       ANIMATE: {
         height: 'auto',
@@ -190,9 +171,9 @@ const ANIMATION = {
       },
       OWNER: {
         TRANSITION: {
-          delay: 0.6
-        }
-      }
+          delay: 0.6,
+        },
+      },
     },
   },
 };
