@@ -35,7 +35,7 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
 
   return (
     // NFT Details Start
-    <div className="nft mx-auto flex w-1/3 flex-col items-center">
+    <div className="nft mx-auto flex w-6/6 sm:w-2/3 lg:w-1/3 flex-col items-center pl-6 pr-6">
       <Link
         className="nft__backlink link mb-12 flex items-center"
         href="/"
@@ -94,7 +94,7 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
         {/* Ether has 18 standard decimals */}
         {price?.toFixed(18)} ETH
       </motion.span>
-      <div className="ntf__actions flex">
+      <div className="ntf__actions flex flex-col sm:flex-row">
         {!isPurchased(purchased, id as string) && (
           <NftActions
             icons={false}

@@ -49,7 +49,7 @@ const NftActions = ({
     <>
       {/* Wishlist Start */}
       <button
-        className="element__button btn btn-primary flex cursor-pointer items-center justify-center uppercase"
+        className="element__button btn btn-primary mt-12 flex cursor-pointer items-center justify-center uppercase sm:mt-0"
         onClick={handleWishlist}
         tabIndex={11 + index}
       >
@@ -72,7 +72,7 @@ const NftActions = ({
       {/* Wishlist End */}
       {/* Cart Start */}
       <button
-        className="element__button btn btn-primary ml-6 flex cursor-pointer items-center justify-center uppercase"
+        className="element__button btn btn-primary ml-6 mt-12 flex cursor-pointer items-center justify-center uppercase sm:mt-0"
         onClick={handleCart}
         tabIndex={12 + index}
       >

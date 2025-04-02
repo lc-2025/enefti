@@ -34,7 +34,7 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
   return (
     // List Start
     <ul
-      className="catalogue__container asymmetric-grid mx-auto w-5/6"
+      className="catalogue__container asymmetric-grid mx-auto w-6/6 lg:w-5/6"
     >
       {nfts.map(({ id, name, image, price }, i) => (
         // Element Start
@@ -53,7 +53,7 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
           {/* Image End */}
           {/* Titles Start */}
           <hgroup className="element__titles mt-6 mb-6 pr-6 pl-6">
-            <h2 className="element__name title mb-6 min-h-19 pr-6 pl-6">
+            <h2 className="element__name title mb-6 min-h-19">
               {name}
             </h2>
             <h3 className="element__price subtitle pl-6 text-right uppercase">

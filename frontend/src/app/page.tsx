@@ -18,10 +18,10 @@ export default function Home(): React.ReactNode {
       <h1 className="catalogue__title title mt-12 mb-12 text-center uppercase">
         Catalogue
       </h1>
-      <div className="catalogue__container flex flex-wrap">
+      <div className="catalogue__container flex flex-col lg:flex-row lg:flex-wrap">
         {/* Filters Start */}
-        <aside className="catalogue__filters w-1/6 pr-6 pb-6 pl-6">
-          <h2 className="filters__title title mb-12 uppercase">Filters</h2>
+        <aside className="catalogue__filters mx-auto w-6/6 lg:w-1/6 pr-6 pb-6 pl-6">
+          <h2 className="filters__title title mb-12 text-center lg:text-left uppercase">Filters</h2>
           <Filter
             title="By Price"
             filters={FILTER.PRICES}

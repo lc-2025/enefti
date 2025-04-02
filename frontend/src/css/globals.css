@@ -184,7 +184,7 @@ body.modal {
   /* Image-Replacement technique */
   background-image: url('../img/logo.svg');
   background-size: 100%;
-  min-width: 241px;
+  min-width: 243px;
   padding: 0 0 4.6rem;
 }
 
@@ -219,7 +219,20 @@ body.modal {
   line-height: 1.2;
 }
 
+/* Wishlist */
+.wishlist__collection {
+  right: auto;
+  width: auto;
+}
+
 /* Responsive */
+@media (max-width: 576px) {
+  .wishlist__collection {
+    right: 0;
+    width: calc(100% - 3rem);
+  }
+}
+
 @media (max-width: 640px) {
   .asymmetric-grid {
     grid-template-columns: 1fr;
@@ -231,6 +244,14 @@ body.modal {
 
   .title {
     font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo {
+    background-image: url('../img/logo-2.svg');
+    min-width: 43px;
+    max-width: 43px;
   }
 }
 

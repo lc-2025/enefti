@@ -53,7 +53,7 @@ const Header = (): React.ReactNode => {
 
   return (
     // Header Start
-    <header className="header flex items-center justify-between p-6">
+    <header className="header flex flex-wrap sm:flex-nowrap items-center justify-between p-6">
       <h2 className="header__title hidden">Header</h2>
       {/* Logo Start */}
       <Link href="/" title="Back to the Home Page - eNeFTi" tabIndex={0}>
@@ -80,7 +80,7 @@ const Header = (): React.ReactNode => {
         initial="INITIAL"
         animate="ANIMATE"
         transition={{ ...TRANSITION, delay: 0.2 }}
-        className="header__search"
+        className="header__search ml-12 sm:mr-12 lg:mr-0 lg:ml-0"
       >
         <h2 className="search__title hidden">Search</h2>
         <SearchSelect />
@@ -92,7 +92,7 @@ const Header = (): React.ReactNode => {
         initial="INITIAL"
         animate="ANIMATE"
         transition={{ ...TRANSITION, delay: 0.4 }}
-        className="header__tools group flex items-center"
+        className="header__tools group flex items-center basis-full sm:basis-0 mt-12 sm:mt-0 justify-center"
       >
         <h2 className="tools__name hidden">Tools</h2>
         {/* Wishlist Start */}
