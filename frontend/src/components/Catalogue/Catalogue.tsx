@@ -98,7 +98,6 @@ const Catalogue = (): React.ReactNode => {
         limit,
       },
     }).then((fetchMoreResult) => {
-      // FIXME: Not slicing previous results
       // Update current offset/limit
       dispatch(updateOffset(currentLength));
       dispatch(updateLimit(currentLength + fetchMoreResult.data.nfts!.length));
@@ -116,7 +115,7 @@ const Catalogue = (): React.ReactNode => {
       </Suspense>
       {
         // Paginate until the last set
-        offset < data.nfts![0]!.count - 10 && (
+        limit < data.nfts![0]!.count && (
           // Pagination Start
           <aside className="catalogue__more mt-16 mb-16 flex basis-full justify-center">
             <h2 className="more__title hidden">More</h2>

@@ -26,7 +26,7 @@ const resolversNft: GraphQLResolverMap<any> = {
                   )
                 : {},
           },
-          { $skip: args.skip ?? 0 },
+          { $skip: args.offset ?? 0 },
           { $limit: args.limit ?? count },
           {
             $addFields: {
