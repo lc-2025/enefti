@@ -21,7 +21,7 @@ import {
 } from '@/slices/filters';
 import { FILTER } from '@/utilities/constants';
 import TFilter from '@/types/components/Filter';
-import { ANIMATION } from '@/utilities/constants';
+import { ANIMATION, TEST } from '@/utilities/constants';
 import { TFilterProps } from '@/types/reducers/filters';
 
 /**
@@ -50,6 +50,7 @@ const Filter = ({
 }): React.ReactNode => {
   const { HEADER } = ANIMATION;
   const { TRANSITION } = HEADER;
+  const {CATALOGUE_FILTER} = TEST.ID
   // Hooks
   const filterPrice = useAppSelector(selectFilterPrice);
   const filterOwner = useAppSelector(selectFilterOwner);
@@ -102,11 +103,12 @@ const Filter = ({
               className="filter__field space-y-6"
               tabIndex={4}
             >
-              {filters.map((filter) => (
+              {filters.map((filter, i) => (
                 <Radio
                   key={filter.name}
                   value={filter}
                   className="filter__option group relative flex cursor-pointer rounded-lg bg-white/5 p-6 shadow-md transition hover:opacity-75 focus:outline-none data-[checked]:bg-white/10 data-[focus]:outline-1 data-[focus]:outline-white"
+                  data-testid={`${CATALOGUE_FILTER}-${i}`}
                 >
                   <div className="option__container flex w-full items-center justify-between">
                     <div className="container__label">
@@ -152,6 +154,7 @@ const Filter = ({
                   checked={filterOwner}
                   onChange={handleFilter}
                   className="container__field group size-6 rounded-md p-1 ring-inset focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white"
+                  data-testid={CATALOGUE_FILTER}
                 >
                   <CheckCircleIcon className="field__icon size-6 fill-(--accent-pink) opacity-0 transition group-data-[checked]:opacity-100" />
                 </Checkbox>

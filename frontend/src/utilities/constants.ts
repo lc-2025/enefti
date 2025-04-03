@@ -1,6 +1,6 @@
-import { Transition } from '@headlessui/react';
+import NFT_QUERY from '@/queries/nft';
 
-// Constants
+// Utilities - Constants
 const WINDOW = {
   MEDIA: {
     THEME: '(prefers-color-scheme: dark)',
@@ -177,6 +177,61 @@ const ANIMATION = {
     },
   },
 };
+const NFTS = [
+  {
+    id: '123456789',
+    name: 'Foo',
+    description: 'bar',
+    image: '',
+    price: 0.0001,
+    owner: '0x00a1',
+    count: 2,
+  },
+  {
+    id: '12345678910',
+    name: 'Zoo',
+    description: 'lel',
+    image: '',
+    price: 0.0002,
+    owner: '0x00a2',
+    count: 2,
+  },
+];
+const TEST = {
+  ID: {
+    MORE: 'more',
+    CATALOGUE_LIST: 'catalogue-list',
+    CATALOGUE_FILTER: 'catalogue-filter',
+    LIST_ELEMENT: 'list-element',
+    ELEMENT_PRICE: 'element-price',
+    ICON: {
+      WISHLIST: 'icon-wishlist',
+      CART: 'icon-cart',
+    },
+    BUTTON: {
+      WISHLIST: 'button-wishlist',
+      CART: 'button-cart',
+    },
+    NFT: 'nft-details',
+  },
+  REQUEST: {
+    QUERY: {
+      NFTS: {
+        request: {
+          query: NFT_QUERY.nfts.query,
+          variables: {
+            "search": NFTS[0].name
+          },
+        },
+        result: {
+          data: {
+            nfts: NFTS.map((nft) => ({ __typename: 'Nfts', ...nft })),
+          },
+        },
+      },
+    },
+  },
+};
 
 export {
   WINDOW,
@@ -189,4 +244,6 @@ export {
   ACTION_PREFIX,
   ACTION,
   ANIMATION,
+  NFTS,
+  TEST,
 };

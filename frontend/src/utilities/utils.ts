@@ -1,7 +1,7 @@
 import TWallet from '@/types/reducers/wallet';
 import type { Nft } from '@/types/graphql/graphql';
 
-// Utilities
+// Utilities - General
 /**
  * @description Starred/Added NFT checker
  * It verifies if an NFT is present in the user

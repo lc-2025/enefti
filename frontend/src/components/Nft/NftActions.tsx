@@ -4,8 +4,7 @@ import {
   ShoppingCartIcon as ShoppingCartIconSolid,
   StarIcon as StarIconSolid,
 } from '@heroicons/react/24/solid';
-import { motion } from 'motion/react';
-import { ANIMATION } from '@/utilities/constants';
+import { TEST } from '@/utilities/constants';
 
 /**
  * @description NFT actions
@@ -44,6 +43,7 @@ const NftActions = ({
   position?: number;
 }): React.ReactNode => {
   const index = position ?? 0;
+  const { ICON, BUTTON } = TEST.ID;
 
   return (
     <>
@@ -52,6 +52,7 @@ const NftActions = ({
         className="element__button btn btn-primary mt-12 flex cursor-pointer items-center justify-center uppercase sm:mt-0"
         onClick={handleWishlist}
         tabIndex={11 + index}
+        data-testid={BUTTON.WISHLIST}
       >
         {!icons ? (
           isStarred ? (
@@ -62,7 +63,10 @@ const NftActions = ({
         ) : (
           <span className="button__icon">
             {isStarred ? (
-              <StarIconSolid className="white size-9" />
+              <StarIconSolid
+                className="white size-9"
+                data-testid={ICON.WISHLIST}
+              />
             ) : (
               <StarIcon className="white size-9" />
             )}
@@ -72,9 +76,10 @@ const NftActions = ({
       {/* Wishlist End */}
       {/* Cart Start */}
       <button
-        className="element__button btn btn-primary ml-6 mt-12 flex cursor-pointer items-center justify-center uppercase sm:mt-0"
+        className="element__button btn btn-primary mt-12 ml-6 flex cursor-pointer items-center justify-center uppercase sm:mt-0"
         onClick={handleCart}
         tabIndex={12 + index}
+        data-testid={BUTTON.CART}
       >
         {!icons ? (
           !isAdded ? (
@@ -85,7 +90,7 @@ const NftActions = ({
         ) : (
           <span className="button__icon">
             {isAdded ? (
-              <ShoppingCartIconSolid className="white size-9" />
+              <ShoppingCartIconSolid className="white size-9" data-testid={ICON.CART} />
             ) : (
               <ShoppingCartIcon className="white size-9" />
             )}

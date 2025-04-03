@@ -2,7 +2,7 @@ import React, { MouseEvent, useEffect } from 'react';
 import Link from 'next/link';
 import { useAnimate } from 'motion/react';
 import { selectTheme } from '@/slices/theme';
-import { THEME } from '@/utilities/constants';
+import { TEST, THEME } from '@/utilities/constants';
 import { setKey, setNfts } from '@/slices/search';
 import { selectOpen, openWishlist } from '@/slices/wishlist';
 import { useAppDispatch, useAppSelector } from '@/hooks/state';
@@ -87,6 +87,7 @@ const NftList = ({
         <li
           key={crypto.randomUUID() + id}
           className={`collection__element group flex flex-col sm:flex-row sm:flex-wrap justify-between p-6 transition duration-200 ease-linear odd:bg-(--bg-primary) even:bg-(--bg-primary)/75 hover:bg-(--accent-pink)/25 ${theme === DARK && 'text-white'} ${!search && 'mt-6'}`}
+
         >
           <Link
             className="element__link flex flex-nowrap items-center"
@@ -104,7 +105,7 @@ const NftList = ({
             )}
             <div className="link__container sm:mr-6 ml-6 flex flex-col">
               {!search && 'See Details:'}
-              <span className="link__name title">{name}</span>
+              <span className="link__name title" data-testid={TEST.ID.LIST_ELEMENT}>{name}</span>
               {!search && (
                 <span className="link__price subtitle uppercase">
                   {price!.toFixed(4)} ETH

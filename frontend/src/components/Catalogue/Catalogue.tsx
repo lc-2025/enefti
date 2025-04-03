@@ -22,7 +22,7 @@ import {
   selectFilterPriceOrder,
 } from '@/slices/filters';
 import { selectAddress } from '@/slices/wallet';
-import { QUERY } from '@/utilities/constants';
+import { QUERY, TEST } from '@/utilities/constants';
 import { Price } from '@/types/reducers/filters';
 import type { Nft } from '@/types/graphql/graphql';
 
@@ -117,7 +117,7 @@ const Catalogue = (): React.ReactNode => {
         // Paginate until the last set
         limit < data.nfts![0]!.count && (
           // Pagination Start
-          <aside className="catalogue__more mt-16 mb-16 flex basis-full justify-center">
+          <aside className="catalogue__more mt-16 mb-16 flex basis-full justify-center" data-testid={TEST.ID.MORE}>
             <h2 className="more__title hidden">More</h2>
             <button
               className="more__button btn btn-secondary cursor-pointer uppercase select-none"

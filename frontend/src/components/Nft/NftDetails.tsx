@@ -11,7 +11,7 @@ import { selectPurchased } from '@/slices/wallet';
 import { useAppSelector } from '@/hooks/state';
 import useNftActions from '@/hooks/actions';
 import { checkNftStatus, getNftIds, isPurchased } from '@/utilities/utils';
-import { ACTION_PREFIX, ANIMATION } from '@/utilities/constants';
+import { ACTION_PREFIX, ANIMATION, TEST } from '@/utilities/constants';
 import type { Nft } from '@/types/graphql/graphql';
 
 /**
@@ -35,7 +35,10 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
 
   return (
     // NFT Details Start
-    <div className="nft mx-auto flex w-6/6 sm:w-2/3 lg:w-1/3 flex-col items-center pl-6 pr-6">
+    <div
+      className="nft mx-auto flex w-6/6 flex-col items-center pr-6 pl-6 sm:w-2/3 lg:w-1/3"
+      data-testid={TEST.ID.NFT}
+    >
       <Link
         className="nft__backlink link mb-12 flex items-center"
         href="/"

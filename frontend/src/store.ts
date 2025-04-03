@@ -9,6 +9,7 @@ import cartReducer from './slices/cart';
 import walletReducer from './slices/wallet';
 import storageMiddleware from './middlewares/storage';
 import filtersMiddleware from './middlewares/filters';
+import { RootState } from './types/state';
 
 /**
  * State Management - Store
@@ -31,11 +32,12 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   wallet: walletReducer,
 });
-const store = () => {
+const store = (preloadedState?: Partial<RootState>) => {
   return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat([storageMiddleware, filtersMiddleware]),
+    preloadedState,
   });
 };
 

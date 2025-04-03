@@ -8,7 +8,7 @@ import useNftStored from '@/hooks/storage';
 import useNftActions from '@/hooks/actions';
 import { useAppSelector, useAppState } from '@/hooks/state';
 import { checkNftStatus, getNftIds, isPurchased } from '@/utilities/utils';
-import { ACTION_PREFIX } from '@/utilities/constants';
+import { ACTION_PREFIX, TEST } from '@/utilities/constants';
 import { Nft } from '@/types/graphql/graphql';
 import TStorage from '@/types/storage';
 
@@ -21,6 +21,7 @@ import TStorage from '@/types/storage';
  */
 const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
   const { WISHLIST, CART, WALLET } = ACTION_PREFIX;
+  const {CATALOGUE_LIST, LIST_ELEMENT, ELEMENT_PRICE} = TEST.ID
   // Hooks
   const starred = useAppSelector(selectStarred);
   const added = useAppSelector(selectAdded);
@@ -35,12 +36,14 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
     // List Start
     <ul
       className="catalogue__container asymmetric-grid mx-auto w-6/6 lg:w-5/6"
+      data-testid={CATALOGUE_LIST}
     >
       {nfts.map(({ id, name, image, price }, i) => (
         // Element Start
         <li
           key={crypto.randomUUID() + id}
           className="container__element nft-card flex flex-col justify-stretch"
+          data-testid={`${LIST_ELEMENT}-${id}`}
         >
           {/* Image Start */}
           <div className="element__image relative overflow-hidden">
@@ -53,10 +56,8 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
           {/* Image End */}
           {/* Titles Start */}
           <hgroup className="element__titles mt-6 mb-6 pr-6 pl-6">
-            <h2 className="element__name title mb-6 min-h-19">
-              {name}
-            </h2>
-            <h3 className="element__price subtitle pl-6 text-right uppercase">
+            <h2 className="element__name title mb-6 min-h-19">{name}</h2>
+            <h3 className="element__price subtitle pl-6 text-right uppercase" data-testid={`${ELEMENT_PRICE}-${i}`}>
               {price!.toFixed(4)} ETH
             </h3>
           </hgroup>
