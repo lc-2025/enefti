@@ -1,7 +1,9 @@
 import React from 'react';
+import { PreloadQuery } from '@/apolloRsc';
 import Filter from '@/components/Filter';
 import Catalogue from '@/components/Catalogue/Catalogue';
-import { FILTER } from '@/utilities/constants';
+import NFT_QUERY from '@/queries/nft';
+import { FILTER, QUERY } from '@/utilities/constants';
 
 /**
  * @description Index page
@@ -20,8 +22,10 @@ export default function Home(): React.ReactNode {
       </h1>
       <div className="catalogue__container flex flex-col lg:flex-row lg:flex-wrap">
         {/* Filters Start */}
-        <aside className="catalogue__filters mx-auto w-6/6 lg:w-1/6 pr-6 pb-6 pl-6">
-          <h2 className="filters__title title mb-12 text-center lg:text-left uppercase">Filters</h2>
+        <aside className="catalogue__filters mx-auto w-6/6 pr-6 pb-6 pl-6 lg:w-1/6">
+          <h2 className="filters__title title mb-12 text-center uppercase lg:text-left">
+            Filters
+          </h2>
           <Filter
             title="By Price"
             filters={FILTER.PRICES}
@@ -34,7 +38,16 @@ export default function Home(): React.ReactNode {
           />
         </aside>
         {/* Filters End */}
-        <Catalogue />
+        {/*
+          The query is referenced and executed in background
+          then passed to child and consumed via `read` hook.
+          This prevents request waterfalls
+          i.e. consecutive calls performed prior to previous outline ending
+          during suspension
+         */}
+        <PreloadQuery query={NFT_QUERY.nfts.query} variables={QUERY.PAGINATION}>
+          <Catalogue />
+        </PreloadQuery>
       </div>
     </section>
     // Catalogue End
