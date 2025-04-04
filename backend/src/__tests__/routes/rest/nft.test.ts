@@ -37,7 +37,7 @@ describe('NFT API Unit Test - REST', () => {
         .expect('Content-Type', /json/)
         .expect(200);
 
-      expect(response.body.length).toBeGreaterThan(0);
+      expect(response.body.data.length).toBeGreaterThan(0);
     },
     TIMEOUT,
   );
@@ -59,8 +59,8 @@ describe('NFT API Unit Test - REST', () => {
     'Updates a specific NFT owner by ID',
     async () => {
       response = await request(app)
-        .patch(`${ROUTES.API.BASE_PATHNAME}${ROUTES.API.NFT.GET}`)
-        .query({ id: ID })
+        .patch(`${ROUTES.API.BASE_PATHNAME}${ROUTES.API.NFT.GET_ALL}`)
+        .query({ ids: [ID] })
         .send({ owner: TEST.OWNER })
         .expect('Content-Type', /json/)
         .expect(200);
