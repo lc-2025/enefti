@@ -66,7 +66,7 @@ describe('NFT API Unit Test - GraphQL', () => {
         .expect(200);
       expect(response.body).not.toBeNull();
 
-      const { id, owner } = response.body.data.updateNft;
+      const { id, owner } = response.body.data.updateNfts[0];
 
       expect(id).toBe(ID);
       expect(owner).toBe(owner);

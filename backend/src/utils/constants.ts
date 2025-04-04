@@ -72,8 +72,8 @@ const TEST = {
     },
     NFT_UPDATE: {
       query: `
-        mutation UpdateNft {
-          updateNft(id: "${ID}", owner: "${OWNER}") {
+        mutation UpdateNfts {
+          updateNfts(ids: ["${ID}"], owner: "${OWNER}") {
             id
             owner
           }

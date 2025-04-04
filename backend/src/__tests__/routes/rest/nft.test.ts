@@ -60,14 +60,14 @@ describe('NFT API Unit Test - REST', () => {
     async () => {
       response = await request(app)
         .patch(`${ROUTES.API.BASE_PATHNAME}${ROUTES.API.NFT.GET_ALL}`)
-        .query({ ids: [ID] })
+        .query({ ids: JSON.stringify([ID]) })
         .send({ owner: TEST.OWNER })
         .expect('Content-Type', /json/)
         .expect(200);
 
       expect(response.body).not.toBeNull();
 
-      const { _id, owner } = response.body;
+      const { _id, owner } = response.body[0];
 
       expect(_id).toBe(ID);
       expect(owner).toBe(owner);
