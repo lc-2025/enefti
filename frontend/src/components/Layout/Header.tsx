@@ -32,6 +32,7 @@ import TStorage from '@/types/storage';
 const Header = (): React.ReactNode => {
   const { HEADER } = ANIMATION;
   const { TRANSITION } = HEADER;
+  const { WISHLIST_BUTTON, CHECKOUT_BUTTON, LOGO, PURCHASES_BUTTON } = TEST.ID;
   // Hooks
   const pathname = usePathname();
   const open = useAppSelector(selectOpen);
@@ -53,10 +54,15 @@ const Header = (): React.ReactNode => {
 
   return (
     // Header Start
-    <header className="header flex flex-wrap sm:flex-nowrap items-center justify-between p-6">
+    <header className="header flex flex-wrap items-center justify-between p-6 sm:flex-nowrap">
       <h2 className="header__title hidden">Header</h2>
       {/* Logo Start */}
-      <Link href="/" title="Back to the Home Page - eNeFTi" tabIndex={0}>
+      <Link
+        href="/"
+        title="Back to the Home Page - eNeFTi"
+        tabIndex={0}
+        data-testid={LOGO}
+      >
         {/*
           Template images background technique
           Event though they might somehow downloaded, users cannot select/copy/right-click
@@ -92,7 +98,7 @@ const Header = (): React.ReactNode => {
         initial="INITIAL"
         animate="ANIMATE"
         transition={{ ...TRANSITION, delay: 0.4 }}
-        className="header__tools group flex items-center basis-full sm:basis-0 mt-12 sm:mt-0 justify-center"
+        className="header__tools group mt-12 flex basis-full items-center justify-center sm:mt-0 sm:basis-0"
       >
         <h2 className="tools__name hidden">Tools</h2>
         {/* Wishlist Start */}
@@ -100,7 +106,7 @@ const Header = (): React.ReactNode => {
           <StarIcon
             className="wishlist__icon size-12 cursor-pointer transition duration-200 ease-linear hover:opacity-75"
             onClick={handleOpen}
-            data-testid={TEST.ID.WISHLIST_BUTTON.OPEN}
+            data-testid={WISHLIST_BUTTON.OPEN}
           />
           <Wishlist open={open} handler={handleOpen} />
         </div>
@@ -111,6 +117,7 @@ const Header = (): React.ReactNode => {
           href="/checkout"
           title="Go to checkout - eNefti"
           tabIndex={2}
+          data-testid={CHECKOUT_BUTTON}
         >
           {pathname === '/checkout' ? (
             <ShoppingCartIconSolid className="checkout__icon mr-12 size-12 transition duration-200 ease-linear hover:opacity-75" />
@@ -129,6 +136,7 @@ const Header = (): React.ReactNode => {
               href="/purchases"
               title="Go to your purchases - eNefti"
               tabIndex={2}
+              data-testid={PURCHASES_BUTTON}
             >
               {pathname === '/purchases' ? (
                 <ShoppingBagIconSolid className="purchases__icon mr-12 size-12 transition duration-200 ease-linear hover:opacity-75" />

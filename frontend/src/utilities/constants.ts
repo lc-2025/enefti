@@ -199,6 +199,7 @@ const NFTS = [
 ];
 const TEST = {
   ID: {
+    LOGO: 'logo',
     MORE: 'more',
     CATALOGUE_LIST: 'catalogue-list',
     CATALOGUE_FILTER: 'catalogue-filter',
@@ -218,6 +219,14 @@ const TEST = {
       OPEN: 'wishlist-open',
       CLOSE: 'wishlist-close',
     },
+    CHECKOUT_BUTTON: 'checkout-button',
+    BUY: {
+      BUTTON: 'buy',
+      MESSAGE: 'buy-message',
+      FIELD: 'buy-field'
+    },
+    PURCHASES_BUTTON: 'purchases-button',
+    ERROR: 'error',
   },
   REQUEST: {
     QUERY: {
@@ -236,6 +245,9 @@ const TEST = {
       },
     },
   },
+  INPUT: {
+    ADDRESS:'0x279d13c64171431b9ec4960654c15482'
+  }
 };
 
 export {

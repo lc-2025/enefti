@@ -1,5 +1,6 @@
 import React from 'react';
 import { ApolloError } from '@apollo/client';
+import { TEST } from '@/utilities/constants';
 
 /**
  * @description Error message
@@ -13,7 +14,7 @@ const CustomError = ({ error }: { error: ApolloError }): React.ReactNode => {
 
   return (
     // Error Start
-    <aside className="error">
+    <aside className="error" data-testid={TEST.ID.ERROR}>
       <h2 className="error__title">Error</h2>
       <p className="error__message">
         {name}: {message}

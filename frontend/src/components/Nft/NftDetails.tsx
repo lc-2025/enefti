@@ -25,6 +25,7 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
   const { FILTER } = ANIMATION;
   const { DETAILS } = ANIMATION.NFT;
   const { IMAGE, TITLE, DESCRIPTION, OWNER } = DETAILS;
+  const { NFT, BACK } = TEST.ID;
   const { id, name, description, image, owner, price } = nft;
   // Hooks
   const starred = useAppSelector(selectStarred);
@@ -37,12 +38,13 @@ const NftDetails = ({ nft }: { nft: Nft }): React.ReactNode => {
     // NFT Details Start
     <div
       className="nft mx-auto flex w-6/6 flex-col items-center pr-6 pl-6 sm:w-2/3 lg:w-1/3"
-      data-testid={TEST.ID.NFT}
+      data-testid={NFT}
     >
       <Link
         className="nft__backlink link mb-12 flex items-center"
         href="/"
         title="Back to the NFT Catalogue - eNeFTi"
+        data-testid={BACK}
       >
         <ArrowLeftCircleIcon className="backlink__icon mr-6 size-6" />
         Back to the Catalogue

@@ -11,9 +11,9 @@ import { useAppSelector, useAppDispatch } from '@/hooks/state';
 import { removeNfts, selectAdded } from '@/slices/cart';
 import { buy, setError, selectError, selectPurchased } from '@/slices/wallet';
 import useNftSaved from '@/hooks/database';
-import { ACTION_PREFIX } from '@/utilities/constants';
 import { useMutation } from '@apollo/client';
 import NFT_QUERY from '@/queries/nft';
+import { ACTION_PREFIX, TEST } from '@/utilities/constants';
 
 /**
  * @description Checkout form
@@ -22,6 +22,8 @@ import NFT_QUERY from '@/queries/nft';
  * @returns {*}  {React.ReactNode}
  */
 const CheckoutForm = (): React.ReactNode => {
+  const { BUY, ERROR } = TEST.ID;
+  const { BUTTON, MESSAGE, FIELD } = BUY;
   // Hooks
   const added = useAppSelector(selectAdded);
   const purchased = useAppSelector(selectPurchased);
@@ -109,9 +111,13 @@ const CheckoutForm = (): React.ReactNode => {
           placeholder="0x123456789..."
           required
           tabIndex={250}
+          data-testid={FIELD}
         />
         {errorWallet && (
-          <span className="label__error flew-wrap mt-6 flex items-center text-(--accent-purple)">
+          <span
+            className="label__error flew-wrap mt-6 flex items-center text-(--accent-purple)"
+            data-testid={ERROR}
+          >
             <ExclamationCircleIcon className="error__icon mr-3 size-6" /> Please
             enter a valid address
           </span>
@@ -123,10 +129,14 @@ const CheckoutForm = (): React.ReactNode => {
         type="submit"
         value="Buy"
         tabIndex={300}
+        data-testid={BUTTON}
       />
     </form>
   ) : purchased && purchased.length > 0 ? (
-    <aside className="checkout-done flex flex-col items-center">
+    <aside
+      className="checkout-done flex flex-col items-center"
+      data-testid={MESSAGE}
+    >
       <h3 className="checkout-done__title subtitle mb-6">Thank you</h3>
       <p className="checkout-done__message">
         Your purchase has benn completed successfully.
