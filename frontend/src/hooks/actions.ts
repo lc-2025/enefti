@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   addNft as addNftWishlist,
   removeNft as removeNftWishlist,
@@ -19,8 +20,14 @@ const useNftActions = (nfts: Array<Nft>) => {
   // Hooks
   const starred = useAppSelector(selectStarred);
   const added = useAppSelector(selectAdded);
-  const [storage, setStorage] = useNftStored();
+  let [storage, setStorage] = useNftStored() as (
+    | TStorage
+    | React.Dispatch<React.SetStateAction<TStorage>>
+  )[];
   const { wishlist, cart } = storage as TStorage;
+
+  setStorage = setStorage as React.Dispatch<React.SetStateAction<TStorage>>;
+
   const dispatch = useAppDispatch();
   const { WISHLIST, CART } = ACTION_PREFIX;
 
@@ -70,14 +77,16 @@ const useNftActions = (nfts: Array<Nft>) => {
       dispatch(data[type].dispatch.add(getNft(id)));
       setStorage((state: TStorage) => ({
         ...state,
-        [type]: [...state[type], id],
+        [type]: [...(state[type as keyof TStorage] as Array<string>), id],
       }));
     } else {
       dispatch(data[type].dispatch.remove(id));
       setStorage((state: TStorage) => ({
         ...state,
         [type]: [
-          ...state[type].filter((existingId: string) => existingId !== id),
+          ...(state[type as keyof TStorage] as Array<string>).filter(
+            (existingId: string) => existingId !== id,
+          ),
         ],
       }));
     }
@@ -86,7 +95,7 @@ const useNftActions = (nfts: Array<Nft>) => {
   return {
     wishlist,
     cart,
-    handleData
+    handleData,
   };
 };
 

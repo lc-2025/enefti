@@ -4,15 +4,15 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useAnimate } from 'motion/react';
 import Empty from './Empty';
 import NftList from './Nft/NftList';
+import CustomLoading from './Loading';
 import CustomError from './CustomError';
 import { useAppDispatch, useAppSelector } from '@/hooks/state';
 import useNftStored from '@/hooks/storage';
 import useNftSaved from '@/hooks/database';
 import { selectTheme } from '@/slices/theme';
 import { removeNft, selectStarred } from '@/slices/wishlist';
-import { ACTION_PREFIX, THEME, ANIMATION } from '@/utilities/constants';
+import { ACTION_PREFIX, THEME, ANIMATION, TEST } from '@/utilities/constants';
 import TStorage from '@/types/storage';
-import CustomLoading from './Loading';
 
 /**
  * @description Wishlist
@@ -38,10 +38,13 @@ const Wishlist = ({
   const { DARK } = THEME.NAME;
   const { MODAL } = ANIMATION;
   const { OPTIONS } = MODAL;
+  const { CLOSE } = TEST.ID.WISHLIST_BUTTON;
   // Hooks
   const theme = useAppSelector(selectTheme);
   const starred = useAppSelector(selectStarred);
-  const [, setStorage] = useNftStored();
+  const [, setStorage] = useNftStored() as React.Dispatch<
+    React.SetStateAction<TStorage>
+  >[];
   const { loading, data, error } = useNftSaved(WISHLIST);
   const dispatch = useAppDispatch();
   const [scope, animate] = useAnimate();
@@ -89,6 +92,7 @@ const Wishlist = ({
     <section
       ref={scope}
       className="wishlist fixed top-0 right-0 bottom-0 left-0 z-50 flex h-dvh w-dvw flex-col items-center justify-center bg-(--glass-bg-1)"
+      data-testid={WISHLIST}
     >
       <h2 className="wishlist__title title mb-6 uppercase">Wishlist</h2>
       <XMarkIcon
@@ -97,6 +101,7 @@ const Wishlist = ({
           handleAnimation();
           handler();
         }}
+        data-testid={CLOSE}
       />
       {error ? (
         <CustomError error={error} />

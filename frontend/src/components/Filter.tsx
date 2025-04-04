@@ -96,7 +96,6 @@ const Filter = ({
         {type === FILTER.TYPE.RADIO ? (
           <>
             <RadioGroup
-              by="name"
               value={filterPrice}
               onChange={handleFilter}
               aria-label={title}

@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -58,7 +59,7 @@ const makeClient = (): ApolloClient<unknown> => {
                     // if offset and limit are not provided.
                     offset = 0,
                     limit = 10,
-                  } = {},
+                  } = {} as any,
                 },
               ): FieldReadFunction {
                 // If we ask for a page outside the bounds of the existing array,
@@ -73,7 +74,7 @@ const makeClient = (): ApolloClient<unknown> => {
               merge(
                 existing,
                 incoming,
-                { args: { offset = 0, limit = 10 } },
+                { args: { offset = 0, limit = 10 } = {} as any },
               ): FieldMergeFunction {
                 return updateCache(existing, incoming, offset, limit);
               },

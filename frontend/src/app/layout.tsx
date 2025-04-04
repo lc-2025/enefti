@@ -23,6 +23,7 @@ export const poppins = Poppins({
   display: 'swap',
   variable: '--font-poppins',
   weight: '400',
+  subsets: ['latin'],
 });
 
 /**

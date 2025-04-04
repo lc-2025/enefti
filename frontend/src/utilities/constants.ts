@@ -213,6 +213,11 @@ const TEST = {
       CART: 'button-cart',
     },
     NFT: 'nft-details',
+    BACK: 'back-to-top',
+    WISHLIST_BUTTON: {
+      OPEN: 'wishlist-open',
+      CLOSE: 'wishlist-close',
+    },
   },
   REQUEST: {
     QUERY: {
@@ -220,7 +225,7 @@ const TEST = {
         request: {
           query: NFT_QUERY.nfts.query,
           variables: {
-            "search": NFTS[0].name
+            search: NFTS[0].name,
           },
         },
         result: {

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { ChevronUpIcon } from '@heroicons/react/24/outline';
 import { useAppDispatch, useAppSelector } from '@/hooks/state';
 import { setBack, selectTools } from '@/slices/tools';
-import { TOOLS } from '@/utilities/constants';
+import { TEST, TOOLS } from '@/utilities/constants';
 
 /**
  * @description Back to top
@@ -52,6 +52,7 @@ const Back = (): React.ReactNode => {
     <aside
       className={`back btn btn-secondary fixed right-6 bottom-6 z-40 cursor-pointer p-6 ${!back && 'pointer-events-none opacity-0'}`}
       onClick={handleScroll}
+      data-testid={TEST.ID.BACK}
     >
       <h2 className="back__title hidden">Back to top</h2>
       <ChevronUpIcon className="back__icon size-6" />

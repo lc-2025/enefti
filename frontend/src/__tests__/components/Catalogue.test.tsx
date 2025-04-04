@@ -48,8 +48,8 @@ describe('Catalogue Unit/Integration Test', () => {
     renderWithProviders(
       <Filter
         title="Filter"
-        filters={current[mode].variant}
-        type={current[mode].type}
+        filters={current[mode as keyof typeof current].variant}
+        type={current[mode as keyof typeof current].type}
       />,
     );
     expect(getByRole(mode === 1 ? 'radiogroup' : 'checkbox')).toBeInTheDocument();
@@ -75,7 +75,7 @@ describe('Catalogue Unit/Integration Test', () => {
       expect(getAllByTestId(ELEMENT_PRICE, options).length).toBe(1)
     } else {
       expect(getAllByTestId(ELEMENT_PRICE, options)[0]).toHaveTextContent(
-        NFTS[0].price,
+        NFTS[0].price as unknown as string,
       );
     }
   };

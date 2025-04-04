@@ -20,7 +20,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/state';
 import SearchSelect from '../SearchSelect';
 import useNftStored from '@/hooks/storage';
 import { selectPurchased } from '@/slices/wallet';
-import { ANIMATION } from '@/utilities/constants';
+import { ANIMATION, TEST } from '@/utilities/constants';
 import TStorage from '@/types/storage';
 
 /**
@@ -100,6 +100,7 @@ const Header = (): React.ReactNode => {
           <StarIcon
             className="wishlist__icon size-12 cursor-pointer transition duration-200 ease-linear hover:opacity-75"
             onClick={handleOpen}
+            data-testid={TEST.ID.WISHLIST_BUTTON.OPEN}
           />
           <Wishlist open={open} handler={handleOpen} />
         </div>

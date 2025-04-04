@@ -115,14 +115,15 @@ const Catalogue = (): React.ReactNode => {
       </Suspense>
       {
         // Paginate until the last set
-        limit < data.nfts![0]!.count && (
+        limit < (data.nfts![0]! as Nft).count! && (
           // Pagination Start
-          <aside className="catalogue__more mt-16 mb-16 flex basis-full justify-center" data-testid={TEST.ID.MORE}>
+          <aside className="catalogue__more mt-16 mb-16 flex basis-full justify-center">
             <h2 className="more__title hidden">More</h2>
             <button
               className="more__button btn btn-secondary cursor-pointer uppercase select-none"
               onClick={handleMore}
               tabIndex={data.nfts!.length + 1}
+              data-testid={TEST.ID.MORE}
             >
               Load more
             </button>
