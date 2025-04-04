@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  transpilePackages: ['jest']
 };
 
 export default nextConfig;
