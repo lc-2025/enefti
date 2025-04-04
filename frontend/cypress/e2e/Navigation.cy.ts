@@ -36,9 +36,7 @@ describe('Navigation E2E Test', () => {
    * @param {string} section
    */
   const assertLocation = (section: string): void => {
-    cy.location().should((location) => {
-      expect(location.pathname).to.include(section);
-    });
+    cy.location('pathname').should('include', section);
   };
 
   /**
