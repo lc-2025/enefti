@@ -1,5 +1,5 @@
 name: eNeFTi CD
-run-name: eNeeNeFTifti Content-Delivery
+run-name: eNeFTi Content-Delivery
 on:
   # Pipeline dependency
   workflow_run:
