@@ -1,7 +1,8 @@
-
 # eNeFTi
 
 NFTs E-Commerce demo.
+
+![eNefti](./docs/preview.png "eNefti")
 
 [![eNeFTi CI](https://github.com/lc-2025/enefti/actions/workflows/ci.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/ci.yml) [![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
 
@@ -13,7 +14,13 @@ A full-stack application based on MERN consisting of a NFTs e-commerce for demo 
 
 ## Features
 
-TBD
+- Catalogue pagination and details displaying
+- NFTs filtering by price and ownership
+- Products wishlist and cart persistence
+- Checkout simulation and storage
+- Persisting purchases history
+- Token search by name
+- Light/Dark theme with system-detection support
 
 ## Stack
 
@@ -46,6 +53,7 @@ TBD
 - TailwindCSS
 - Express
 - Jest
+- Cypress
 
 ### Pre/Post-Processors
 
@@ -88,7 +96,7 @@ TBD
 
 ## Getting Started
 
-The project production version is available on _Vercel_ at https://
+The project production version is available on _Vercel_ at [https://enefti-demo.vercel.app](https://enefti-demo.vercel.app)
 For any contribution, maintanance and/or trial needs, please refer to the following specifications and side-ones:
 
 - [Frontend](./frontend/README.md)

@@ -2,6 +2,11 @@
 
 NFTs E-Commerce backend demo.
 
+![eNefti - Backend - REST](./docs/docs.png "eNefti - Backend - REST")
+![eNefti - Backend - GraphQL](./docs/docs-1.png "eNefti - Backend - GraphQL")
+
+[![eNeFTi CI](https://github.com/lc-2025/enefti/actions/workflows/ci.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/ci.yml) [![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
+
 ## About
 
 A server application that provides **REST/GraphQL API** to access and manage the e-commerce products data stored on a **NoSQL database** cluster.
@@ -74,7 +79,7 @@ A server application that provides **REST/GraphQL API** to access and manage the
 
 ## Getting Started
 
-The project production version is available on _Heroku_ at https://
+The project production version is available on _Render_ at [https://enefti-sha256.onrender.com](https://enefti-sha256.onrender.com)
 For any contribution, maintanance and/or trial needs, please refer to the following specifications.
 
 ### Environment
@@ -143,7 +148,7 @@ docker-compose stop
 ## Deploy
 
 _eNeFTi Backend_ is integrated and delivered to production via _GitHub Actions_ workflows pipeline, where the server is being set up, tested, built and containerized with _Docker_.
-Then the _Docker_ image is hosted on _GitHub Container Registry_ and deployed on _Render_ production environment available at https://enefti-sha256.onrender.com
+Then the _Docker_ image is hosted on _GitHub Container Registry_ and deployed on _Render_ production environment available at [https://enefti-sha256.onrender.com](https://enefti-sha256.onrender.com)
 
 ## Storage
 

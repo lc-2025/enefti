@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# eNeFTi - Frontend Demo
+
+NFTs E-Commerce frontend demo.
+
+[![eNeFTi CI](https://github.com/lc-2025/enefti/actions/workflows/ci.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/ci.yml) [![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
+
+## About
+
+A front-end application consisting of a NFTs e-commerce populated and managed by a dedicated back-end.
+
+© Luca Cattide 2025. All Rights reserved.
+
+## Stack
+
+### Languages
+
+- HTML
+- CSS
+- SASS
+- JavaScript
+- TypeScript
+- GraphQL
+- YAML
+- Bash
+
+### Environments
+
+- DOM
+
+### Libraries
+
+- Heroicons
+- Headless UI
+- Apollo GraphQL
+
+### Frameworks
+
+- React
+- NextJS
+- TailwindCSS
+- Jest
+- Cypress
+
+### Pre/Post-Processors
+
+- PostCSS
+- Sass
+
+### Linters/Plugins
+
+- stylelint
+- ESLint
+- Prettier
+
+### Compilers
+
+- TypeScript
+
+### Testing
+
+- Jest
+- Cypress
+
+### Versioning
+
+- GitHub
+
+### Content-integration/Delivery
+
+- GitHub Actions
+
+### Deployment
+
+- Docker/Compose
+- Vercel
 
 ## Getting Started
 
-First, run the development server:
+The project production version is available on _Render_ at [https://enefti-demo.vercel.app](https://enefti-demo.vercel.app)
+For any contribution, maintanance and/or trial needs, please refer to the following specifications.
+
+### Environment
+
+In order to manage `development` or `production` versions, please set the proper `.env | .env.*` root file according to the distribution guidelines contained in the `.env.dist` version.
+The environment configuration contains the core info required by the client in order to start and communicate with the database, as well as perform End-To-End testing. For any local test, please provide the expected one.
+
+### Client
+
+On terminal, from project root:
+
+- To run in `development` mode
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- To build the production version
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- To run in `production` mode
 
-## Learn More
+```bash
+npm run start
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Tests
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### Unit/Integration/End-To-End
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+On terminal, from project root:
 
-## Deploy on Vercel
+- To run the unit/integration tests in `development` mode
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run test
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- To run the end-to-end tests in `development` mode
+
+```bash
+npm run cypress:open
+```
+
+- To run the tests in `testing` mode (staging or content-integration/delivery environments)
+
+```bash
+npm run test:ci
+```
+
+## Deploy
+
+_eNeFTi Frontend_ is integrated and delivered to production via _GitHub Actions_ workflows pipeline, where the client is being set up, tested and built.
+Then the artifacts are deployed on _Vercel_ production environment available at [https://enefti-demo.vercel.app](https://enefti-demo.vercel.app)
+
+## Contributing
+
+Please read more about required best practices on the specific [contributing reference document](../.github/CONTRIBUTING.md)
