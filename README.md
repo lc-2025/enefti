@@ -45,6 +45,7 @@ A full-stack application based on MERN consisting of a NFTs e-commerce for demo 
 
 - Heroicons
 - Headless UI
+- Motion
 - Apollo GraphQL
 
 ### Frameworks

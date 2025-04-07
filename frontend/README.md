@@ -33,6 +33,7 @@ A front-end application consisting of a NFTs e-commerce populated and managed by
 
 - Heroicons
 - Headless UI
+- Motion
 - Apollo GraphQL
 
 ### Frameworks
