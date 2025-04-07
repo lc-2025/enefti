@@ -79,6 +79,7 @@ A full-stack application based on MERN consisting of a NFTs e-commerce for demo 
 ### Versioning
 
 - GitHub
+- Husky
 
 ### Content-integration/Delivery
 
