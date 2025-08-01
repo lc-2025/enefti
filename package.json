@@ -26,13 +26,13 @@
     "setup:ci": "npm ci --legacy-peer-deps",
     "lint": "npm run lint -w frontend",
     "test": "npm run test:ci --ws",
-    "test:e2e": "npm run build -w backend && conc 'npm run start -w backend' 'npm run build -w frontend' && wait-on ./frontend/.next && conc 'npm run start -w frontend' 'npm run test:e2e -w frontend'",
+    "test:e2e": "npm-run-all build -w backend --parallel npm run start -w backend wait-on ./backend/dist && npm run build -w frontend --serial wait-on ./frontend/.next && npm-run-all --parallel npm run start -w frontend npm run test:e2e -w frontend",
     "build": "npm run build --ws",
     "prepare": "husky"
   },
   "devDependencies": {
-    "concurrently": "^9.2.0",
     "husky": "^9.1.7",
+    "npm-run-all": "^4.1.5",
     "wait-on": "^8.0.4"
   }
 }
