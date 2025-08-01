@@ -52,7 +52,7 @@ export default function RootLayout({
         {/* Content-Security Policy (vs. XSS) */}
         <meta
           httpEquiv="Content-Security-Policy"
-          content="default-src 'self' localhost:4000 enefti-sha256.onrender.com; script-src 'self' 'unsafe-inline'; style-src 'self' fonts.googleapis.com 'unsafe-inline'; img-src 'self' coin-images.coingecko.com; connect-src 'self' localhost:4000 enefti-sha256.onrender.com; font-src 'self' fonts.googleapis.com fonts.gstatic.com; form-action 'self';"
+          content="default-src 'self' localhost:4000 enefti-sha256.onrender.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' fonts.googleapis.com 'unsafe-inline'; img-src 'self' coin-images.coingecko.com; connect-src 'self' localhost:4000 enefti-sha256.onrender.com; font-src 'self' fonts.googleapis.com fonts.gstatic.com; form-action 'self';"
         />
         {/* Browser rendering version support (retro-compatibility) */}
         <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />

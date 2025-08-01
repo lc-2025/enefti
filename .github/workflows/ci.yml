@@ -82,13 +82,12 @@ jobs:
       - name: Test applications
         run: npm run test
       - name: Test applications - E2E
-        run: npm run test:e2e
-        #uses: cypress-io/github-action@v6
-        #with:
-        #  working-directory: .
-        #  project: ./frontend
-        #  build: npm run build -w backend && concurrently 'npm run start -w backend' 'npm run build -w frontend'
-        #  start: npm run start -w frontend
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: .
+          project: ./frontend
+          build: npm run build
+          start: npm run start -w frontend
       # Tests report storing for QA/checks
       - name: Archive code coverage results
         uses: actions/upload-artifact@v4

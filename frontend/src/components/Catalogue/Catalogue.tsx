@@ -2,7 +2,7 @@
 
 import React, { Suspense } from 'react';
 import { notFound } from 'next/navigation';
-import { useSuspenseQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import CatalogueList from '@/components/Catalogue/CatalogueList';
 import Skeleton from '../Layout/Skeleton';
 import Back from '../Layout/Back';
@@ -25,6 +25,7 @@ import { selectAddress } from '@/slices/wallet';
 import { QUERY, TEST } from '@/utilities/constants';
 import { Price } from '@/types/reducers/filters';
 import type { Nft } from '@/types/graphql/graphql';
+import CustomLoading from '../Loading';
 
 /**
  * @description  NFTs Catalogue
@@ -45,7 +46,7 @@ const Catalogue = (): React.ReactNode => {
    * to initialize state and populate the catalogue
    * - Pagination of 10 records/call support
    */
-  const { data, error, fetchMore } = useSuspenseQuery(NFT_QUERY.nfts.query, {
+  const { loading, data, fetchMore } = useQuery(NFT_QUERY.nfts.query, {
     variables: { ...QUERY.PAGINATION, limit },
     // Caching queries as performance improvement
     fetchPolicy: 'cache-first',
@@ -61,7 +62,7 @@ const Catalogue = (): React.ReactNode => {
    * @returns {*}  {Array<Nft>}
    */
   const handleFilters = (): Array<Nft> => {
-    let catalogue = [...(data.nfts as Array<Nft>)];
+    let catalogue = [...(data!.nfts as Array<Nft>)];
 
     // Price filter check
     if (filterPrice) {
@@ -89,7 +90,7 @@ const Catalogue = (): React.ReactNode => {
    * @date 14/03/2025
    */
   const handleMore = (): void => {
-    const length = data.nfts!.length;
+    const length = data!.nfts!.length;
     const currentLength = offset >= length ? offset : offset + length;
 
     fetchMore({
@@ -104,8 +105,8 @@ const Catalogue = (): React.ReactNode => {
     });
   };
 
-  return error ? (
-    <CustomError error={error} />
+  return loading ? (
+    <CustomLoading />
   ) : !data ? (
     notFound()
   ) : handleFilters().length > 0 ? (
