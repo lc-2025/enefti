@@ -32,7 +32,7 @@ jobs:
       - name: Create `env` files and provide environment variables
         run: |
           touch .env
-          echo FRONTEND_URL=$BASE_URL_FRONTEND >> .env
+          echo FRONTEND_URL=$FRONTEND_URL >> .env
           echo NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL >> .env
           mv .env frontend/
           touch .env
