@@ -81,6 +81,8 @@ jobs:
           group-id: ${{ secrets.ATLAS_GROUP_ID }}
       - name: Test applications
         run: npm run test
+      - name: Build & run backend - E2E
+        run: npm run build -w backend && npm run start -w backend
       - name: Test applications - E2E
         uses: cypress-io/github-action@v6
         with:
