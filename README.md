@@ -3,13 +3,14 @@
 NFTs E-Commerce demo.
 
 ![eNefti](./docs/logo.svg "eNefti")
+![eNefti - E-Commerce](./docs/preview.gif "eNefti - E-Commerce")
 ![eNefti - E-Commerce](./docs/preview.png "eNefti - E-Commerce")
 
 [![eNeFTi CI](https://github.com/lc-2025/enefti/actions/workflows/ci.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/ci.yml) [![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
 
 ## About
 
-A full-stack application based on MERN consisting of a NFTs e-commerce for demo purposes.
+A full-stack website based on MERN consisting of a NFTs e-commerce for demo purposes.
 
 © Luca Cattide 2025. All Rights reserved.
 
@@ -22,6 +23,7 @@ A full-stack application based on MERN consisting of a NFTs e-commerce for demo 
 - Persisting purchases history
 - Token search by name
 - Light/Dark theme with system-detection support
+- Responsiveness
 
 ## Stack
 
@@ -70,7 +72,6 @@ A full-stack application based on MERN consisting of a NFTs e-commerce for demo 
 
 ### Compilers
 
-- Babel
 - TypeScript
 
 ### Testing
@@ -99,7 +100,7 @@ A full-stack application based on MERN consisting of a NFTs e-commerce for demo 
 
 ## Getting Started
 
-The project production version is available on _Vercel_ at [https://enefti-demo.vercel.app](https://enefti-demo.vercel.app)
+The project production version is available on _Vercel_ at [https://enefti-demo.vercel.app](https://enefti-demo.vercel.app).
 For any contribution, maintanance and/or trial needs, please refer to the following specifications and side-ones:
 
 - [Frontend](./frontend/README.md)

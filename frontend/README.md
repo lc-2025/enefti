@@ -2,6 +2,7 @@
 
 NFTs E-Commerce frontend demo.
 
+![eNefti - Frontend](../docs/preview.gif "eNefti - Frontend")
 ![eNefti - Frontend](./docs/preview.png "eNefti - Frontend")
 
 [![eNeFTi CI](https://github.com/lc-2025/enefti/actions/workflows/ci.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/ci.yml) [![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
@@ -79,7 +80,7 @@ A front-end application consisting of a NFTs e-commerce populated and managed by
 
 ## Getting Started
 
-The project production version is available on _Render_ at [https://enefti-demo.vercel.app](https://enefti-demo.vercel.app)
+The project production version is available on _Vercel_ at [https://enefti-demo.vercel.app](https://enefti-demo.vercel.app)
 For any contribution, maintanance and/or trial needs, please refer to the following specifications.
 
 ### Environment
