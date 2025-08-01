@@ -26,6 +26,7 @@
     "setup:ci": "npm ci --legacy-peer-deps",
     "lint": "npm run lint -w frontend",
     "test": "npm run test:ci --ws",
+    "test:e2e": "npm run build -w backend && conc 'npm run start -w backend' 'npm run build -w frontend' && wait-on ./frontend/.next && conc 'npm run start -w frontend' 'npm run test:e2e -w frontend'",
     "build": "npm run build --ws",
     "prepare": "husky"
   },
