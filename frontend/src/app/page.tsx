@@ -1,9 +1,7 @@
 import React from 'react';
-import { PreloadQuery } from '@/apolloRsc';
 import Filter from '@/components/Filter';
 import Catalogue from '@/components/Catalogue/Catalogue';
-import NFT_QUERY from '@/queries/nft';
-import { FILTER, QUERY } from '@/utilities/constants';
+import { FILTER } from '@/utilities/constants';
 
 /**
  * @description Index page
@@ -38,16 +36,7 @@ export default function Home(): React.ReactNode {
           />
         </aside>
         {/* Filters End */}
-        {/*
-          The query is referenced and executed in background
-          then passed to child and consumed via `read` hook.
-          This prevents request waterfalls
-          i.e. consecutive calls performed prior to previous outline ending
-          during suspension
-         */}
-        <PreloadQuery query={NFT_QUERY.nfts.query} variables={QUERY.PAGINATION}>
-          <Catalogue />
-        </PreloadQuery>
+        <Catalogue />
       </div>
     </section>
     // Catalogue End
