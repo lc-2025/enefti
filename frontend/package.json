@@ -23,6 +23,7 @@
     "cypress:open": "cypress open",
     "test": "jest --watch",
     "test:ci": "jest",
+    "test:e2e": "cypress run --e2e",
     "build": "next build",
     "build:types": "graphql-codegen",
     "start": "next start"
