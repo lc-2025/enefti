@@ -85,8 +85,8 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           project: ./frontend
-          build: npm run build -w backend && concurrently 'npm run start -w backend' 'npm run build -w frontend'
-          start: npm run start -w frontend
+          build: cd .. && npm run build -w backend && concurrently 'npm run start -w backend' 'npm run build -w frontend'
+          start: cd .. && npm run start -w frontend
       # Tests report storing for QA/checks
       - name: Archive code coverage results
         uses: actions/upload-artifact@v4
