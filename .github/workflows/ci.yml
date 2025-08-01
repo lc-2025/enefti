@@ -82,10 +82,7 @@ jobs:
       - name: Test applications
         run: npm run test
       - name: Test applications - E2E
-        run: |
-          npm run build -w backend
-          conc 'npm run start -w backend' 'npm run build -w frontend'
-          wait-on ./frontend/.next && conc 'npm run start -w frontend' 'npm run test:e2e -w frontend'
+        run: npm run test:e2e
         #uses: cypress-io/github-action@v6
         #with:
         #  working-directory: .
