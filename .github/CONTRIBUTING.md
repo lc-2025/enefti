@@ -2,6 +2,8 @@
 
 ## Styles & Coding
 
+- HTML, CSS and SASS follow in general the Google Style Guide conventions (https://github.com/google/styleguide);
+- Custom CSS and SASS follow the BEM convention (http://getbem.com/);
 - JavaScript follows the [AirBnB Style Guide](https://github.com/airbnb/javascript) conventions;
 
 Please be sure to check and follow them before attempt any modification to the sources, in order to preserve the general integrity of the project patterns.
