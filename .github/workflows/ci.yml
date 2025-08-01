@@ -12,7 +12,11 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     env:
-      BASE_URL: ${{ vars.BASE_URL }}
+      # Frontend
+      FRONTEND_URL: ${{ vars.BASE_URL_FRONTEND }}
+      NEXT_PUBLIC_BACKEND_URL: ${{ vars.BASE_URL_BACKEND }}
+      # Backend
+      BASE_URL: ${{ vars.BASE_URL_BACKEND }}
       PORT: ${{ vars.PORT }}
       DB_NAME: ${{ secrets.DB_NAME }}
       DB_USER: ${{ secrets.DB_USER }}
@@ -25,8 +29,12 @@ jobs:
         with:
           node-version: '22.x'
           cache: 'npm'
-      - name: Create `env` file and provide environment variables
+      - name: Create `env` files and provide environment variables
         run: |
+          touch .env
+          echo FRONTEND_URL=$BASE_URL_FRONTEND >> .env
+          echo NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL >> .env
+          mv .env frontend/
           touch .env
           echo BASE_URL=$BASE_URL >> .env
           echo PORT=$PORT >> .env
