@@ -2,10 +2,10 @@
   "name": "@enefti/backend",
   "version": "0.1.0",
   "description": "NFTs E-Commerce backend demo - © Luca Cattide 2025. All Rights reserved.",
-  "homepage": "https://",
+  "homepage": "https://enefti-sha256.onrender.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lc-2025/enefti"
+    "url": "https://github.com/lc-2025/enefti/backend"
   },
   "bugs": {
     "email": "lucacattide@pm.me"
