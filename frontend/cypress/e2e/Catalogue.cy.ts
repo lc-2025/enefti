@@ -9,18 +9,12 @@ describe('Catalogue E2E Test', () => {
 
     const elements = '.catalogue__container .container__element';
 
-    cy.get(elements).should(
-      'have.length',
-      10,
-    );
+    cy.get(elements).should('have.length', 10);
     // `onClick` event handler workaround
     cy.findByTestId(TEST.ID.MORE).click().trigger('click');
     cy.intercept('/graphql').as('Nfts');
     cy.wait('@Nfts').then(() => {
-      cy.get(elements).should(
-        'have.length',
-        20,
-      );
+      cy.get(elements).should('have.length', 20);
     });
   });
 });

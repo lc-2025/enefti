@@ -80,14 +80,13 @@ const NftList = ({
     // List Start
     <ul
       ref={scope}
-      className={`wishlist__collection flex ml-6 mr-6 max-h-2/3 flex-col overflow-x-hidden overflow-y-auto ${search ? 'fixed z-40 h-0 border-2 bg-(--bg-primary)' : 'pr-6'}`}
+      className={`wishlist__collection mr-6 ml-6 flex max-h-2/3 flex-col overflow-x-hidden overflow-y-auto ${search ? 'fixed z-40 h-0 border-2 bg-(--bg-primary)' : 'pr-6'}`}
     >
       {nfts.map(({ id, name, image, price }, i) => (
         // NFT start
         <li
           key={crypto.randomUUID() + id}
-          className={`collection__element group flex flex-col sm:flex-row sm:flex-wrap justify-between p-6 transition duration-200 ease-linear odd:bg-(--bg-primary) even:bg-(--bg-primary)/75 hover:bg-(--accent-pink)/25 ${theme === DARK && 'text-white'} ${!search && 'mt-6'}`}
-
+          className={`collection__element group flex flex-col justify-between p-6 transition duration-200 ease-linear odd:bg-(--bg-primary) even:bg-(--bg-primary)/75 hover:bg-(--accent-pink)/25 sm:flex-row sm:flex-wrap ${theme === DARK && 'text-white'} ${!search && 'mt-6'}`}
         >
           <Link
             className="element__link flex flex-nowrap items-center"
@@ -103,9 +102,14 @@ const NftList = ({
                 alt={`${name} - eNeFTi`}
               />
             )}
-            <div className="link__container sm:mr-6 ml-6 flex flex-col">
+            <div className="link__container ml-6 flex flex-col sm:mr-6">
               {!search && 'See Details:'}
-              <span className="link__name title" data-testid={TEST.ID.LIST_ELEMENT}>{name}</span>
+              <span
+                className="link__name title"
+                data-testid={TEST.ID.LIST_ELEMENT}
+              >
+                {name}
+              </span>
               {!search && (
                 <span className="link__price subtitle uppercase">
                   {price!.toFixed(4)} ETH
@@ -115,7 +119,7 @@ const NftList = ({
           </Link>
           {handler && (
             <button
-              className="element__button btn btn-primary sm:ml-12 mt-12 sm:mt-0 cursor-pointer uppercase"
+              className="element__button btn btn-primary mt-12 cursor-pointer uppercase sm:mt-0 sm:ml-12"
               onClick={(e: MouseEvent<HTMLButtonElement>) => handler(e, id!)}
             >
               Remove

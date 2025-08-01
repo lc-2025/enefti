@@ -50,7 +50,7 @@ const Filter = ({
 }): React.ReactNode => {
   const { HEADER } = ANIMATION;
   const { TRANSITION } = HEADER;
-  const {CATALOGUE_FILTER} = TEST.ID
+  const { CATALOGUE_FILTER } = TEST.ID;
   // Hooks
   const filterPrice = useAppSelector(selectFilterPrice);
   const filterOwner = useAppSelector(selectFilterOwner);

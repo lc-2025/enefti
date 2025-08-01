@@ -223,7 +223,7 @@ const TEST = {
     BUY: {
       BUTTON: 'buy',
       MESSAGE: 'buy-message',
-      FIELD: 'buy-field'
+      FIELD: 'buy-field',
     },
     PURCHASES_BUTTON: 'purchases-button',
     ERROR: 'error',
@@ -246,8 +246,8 @@ const TEST = {
     },
   },
   INPUT: {
-    ADDRESS:'0x279d13c64171431b9ec4960654c15482'
-  }
+    ADDRESS: '0x279d13c64171431b9ec4960654c15482',
+  },
 };
 
 export {

@@ -15,7 +15,7 @@ const catalogueSlice = createSlice({
     },
     updateLimit: (state, action: PayloadAction<number>) => {
       state.limit = action.payload;
-    }
+    },
   },
 });
 

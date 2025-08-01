@@ -52,7 +52,9 @@ describe('Catalogue Unit/Integration Test', () => {
         type={current[mode as keyof typeof current].type}
       />,
     );
-    expect(getByRole(mode === 1 ? 'radiogroup' : 'checkbox')).toBeInTheDocument();
+    expect(
+      getByRole(mode === 1 ? 'radiogroup' : 'checkbox'),
+    ).toBeInTheDocument();
 
     const filter = getAllByTestId(CATALOGUE_FILTER, options)[0];
 
@@ -72,7 +74,7 @@ describe('Catalogue Unit/Integration Test', () => {
 
     // Filter type check
     if (mode === 3) {
-      expect(getAllByTestId(ELEMENT_PRICE, options).length).toBe(1)
+      expect(getAllByTestId(ELEMENT_PRICE, options).length).toBe(1);
     } else {
       expect(getAllByTestId(ELEMENT_PRICE, options)[0]).toHaveTextContent(
         NFTS[0].price as unknown as string,

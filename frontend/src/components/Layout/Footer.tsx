@@ -10,7 +10,9 @@ const Footer = (): React.ReactNode => {
   return (
     // Footer Start
     <footer className="footer p-12 text-center">
-      <small className='footer__credits'>&copy; Luca Cattide 2025. All Rights reserved.</small>
+      <small className="footer__credits">
+        &copy; Luca Cattide 2025. All Rights reserved.
+      </small>
     </footer>
     // Footer End
   );

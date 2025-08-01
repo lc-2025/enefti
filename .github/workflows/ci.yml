@@ -20,10 +20,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Use Node.js 18.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: '22.x'
           cache: 'npm'
       - name: Create `env` file and provide environment variables
         run: |
@@ -35,19 +35,21 @@ jobs:
           echo DB_PASSWORD=$DB_PASSWORD >> .env
           mv .env backend/
       - name: Installing dependencies
-        run: |
-          npm run setup
+        run: npm run setup:ci
       # Cache dependencies for future reuse
       - name: Cache dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
-          path: ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
+          path: |
+            ~/.cache
+            ./node_modules
+          key: modules-${{ hashFiles('**/package-lock.json') }}
       # Store project for future reuse
       - name: Archive project artifacts
         uses: actions/upload-artifact@v4
         with:
           name: enefti
+          # i.e. dotfiles
           include-hidden-files: true
           # Exclude dependencies to lighten artifacts (provided via cache)
           path: |
@@ -60,10 +62,12 @@ jobs:
       # Get dependencies
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
-          path: ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
+          path: |
+            ~/.cache
+            ./node_modules
+          key: modules-${{ hashFiles('**/package-lock.json') }}
       # Download stored project
       - name: Getting project artifacts
         uses: actions/download-artifact@v4
@@ -76,41 +80,51 @@ jobs:
           atlas-public-key: ${{ secrets.ATLAS_PUBLIC_KEY }}
           group-id: ${{ secrets.ATLAS_GROUP_ID }}
       - name: Test applications
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: |
-          npm run test:ci
+        run: npm run test
+      - name: Test applications - E2E
+        uses: cypress-io/github-action@v6
+        with:
+          project: ./frontend
+          build: npm run build -w frontend
+          start: npm run start -w frontend
       # Tests report storing for QA/checks
       - name: Archive code coverage results
         uses: actions/upload-artifact@v4
         with:
           name: enefti-test
-          path: |
-            ./**/coverage/**/*
+          path: ./**/coverage/**/*
   build:
     runs-on: ubuntu-latest
     needs: test
     steps:
-      # Get dependencies
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
-      # Download stored project
+          key: modules-${{ hashFiles('**/package-lock.json') }}
       - name: Getting project artifacts
         uses: actions/download-artifact@v4
         with:
           name: enefti
       - name: Build packages
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: |
-          npm run build
-      # Store production versions for future reuse
+        run: npm run build
+      - name: Cache production dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
       - name: Archive production verions
         uses: actions/upload-artifact@v4
         with:
           name: enefti-production
           path: |
-            ./backend/dist
-            ./frontend/.next
+            ./backend
+            ./frontend
+            ./package*

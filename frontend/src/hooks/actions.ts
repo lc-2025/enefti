@@ -20,10 +20,10 @@ const useNftActions = (nfts: Array<Nft>) => {
   // Hooks
   const starred = useAppSelector(selectStarred);
   const added = useAppSelector(selectAdded);
-  let [storage, setStorage] = useNftStored() as (
-    | TStorage
-    | React.Dispatch<React.SetStateAction<TStorage>>
-  )[];
+  const [storage] = useNftStored() as TStorage[];
+  let [setStorage] = useNftStored() as React.Dispatch<
+    React.SetStateAction<TStorage>
+  >[];
   const { wishlist, cart } = storage as TStorage;
 
   setStorage = setStorage as React.Dispatch<React.SetStateAction<TStorage>>;

@@ -9,7 +9,7 @@ import { NFTS, TEST } from '@/utilities/constants';
 // Unit/Integration Test - Layout
 describe('Layout Unit/Integration Test', () => {
   const { getByRole, getAllByTestId } = screen;
-  const {REQUEST, ID} = TEST
+  const { REQUEST, ID } = TEST;
   const area = {
     header: 'header',
     footer: 'footer',
@@ -35,12 +35,12 @@ describe('Layout Unit/Integration Test', () => {
     assertSection(area.header, 'textbox');
 
     const search = getByRole('textbox');
-    const value = NFTS[0].name
+    const value = NFTS[0].name;
 
     fireEvent.change(search, { target: { value } });
 
-    renderWithProviders(<NftList nfts={NFTS} search={true} />)
-    expect(getAllByTestId(ID.LIST_ELEMENT)[0]).toHaveTextContent(value)
+    renderWithProviders(<NftList nfts={NFTS} search={true} />);
+    expect(getAllByTestId(ID.LIST_ELEMENT)[0]).toHaveTextContent(value);
   });
   it('Renders the Footer section', () => {
     assertSection(area.footer, 'contentinfo');

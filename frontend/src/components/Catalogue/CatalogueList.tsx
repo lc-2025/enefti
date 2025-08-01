@@ -21,7 +21,7 @@ import TStorage from '@/types/storage';
  */
 const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
   const { WISHLIST, CART, WALLET } = ACTION_PREFIX;
-  const {CATALOGUE_LIST, LIST_ELEMENT, ELEMENT_PRICE} = TEST.ID
+  const { CATALOGUE_LIST, LIST_ELEMENT, ELEMENT_PRICE } = TEST.ID;
   // Hooks
   const starred = useAppSelector(selectStarred);
   const added = useAppSelector(selectAdded);
@@ -57,7 +57,10 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
           {/* Titles Start */}
           <hgroup className="element__titles mt-6 mb-6 pr-6 pl-6">
             <h2 className="element__name title mb-6 min-h-19">{name}</h2>
-            <h3 className="element__price subtitle pl-6 text-right uppercase" data-testid={`${ELEMENT_PRICE}-${i}`}>
+            <h3
+              className="element__price subtitle pl-6 text-right uppercase"
+              data-testid={`${ELEMENT_PRICE}-${i}`}
+            >
               {price!.toFixed(4)} ETH
             </h3>
           </hgroup>

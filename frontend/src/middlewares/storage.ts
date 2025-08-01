@@ -14,7 +14,7 @@ const storageMiddleware: Middleware<{}, RootState> =
   (store) => (next) => (action: any) => {
     const { type, payload } = action;
     const { WISHLIST, CART, WALLET } = ACTION;
-    let actions = [
+    const actions = [
       WISHLIST.ADD,
       WISHLIST.REMOVE,
       CART.ADD,

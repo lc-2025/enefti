@@ -90,7 +90,10 @@ const NftActions = ({
         ) : (
           <span className="button__icon">
             {isAdded ? (
-              <ShoppingCartIconSolid className="white size-9" data-testid={ICON.CART} />
+              <ShoppingCartIconSolid
+                className="white size-9"
+                data-testid={ICON.CART}
+              />
             ) : (
               <ShoppingCartIcon className="white size-9" />
             )}

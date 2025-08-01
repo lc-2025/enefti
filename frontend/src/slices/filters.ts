@@ -30,8 +30,13 @@ const filtersSlice = createSlice({
 });
 
 // Actions
-const { setFilterPrice, setFilterPriceAsc, setFilterPriceDesc, setFilterPriceReset, setFilterOwner } =
-  filtersSlice.actions;
+const {
+  setFilterPrice,
+  setFilterPriceAsc,
+  setFilterPriceDesc,
+  setFilterPriceReset,
+  setFilterOwner,
+} = filtersSlice.actions;
 
 // Selectors
 /**
