@@ -69,7 +69,6 @@ jobs:
     steps:
       # Get dependencies
       - name: Cache dependencies
-        id: cache
         uses: actions/cache@v4
         with:
           path: |
@@ -107,7 +106,6 @@ jobs:
     needs: test
     steps:
       - name: Cache dependencies
-        id: cache
         uses: actions/cache@v4
         with:
           path: ./node_modules
