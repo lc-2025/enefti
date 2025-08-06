@@ -34,9 +34,7 @@ const assertFunnel = (input: string, error?: boolean): void => {
   cy.get('.container__element')
     .first()
     .within(() => {
-      // `onClick` event handler workaround
       cy.findByTestId(BUTTON.CART).click();
-      cy.findByTestId(BUTTON.CART).trigger('click');
     });
 
   assertPresence(ICON.CART);
@@ -51,4 +49,35 @@ const assertFunnel = (input: string, error?: boolean): void => {
   assertPresence(error ? ERROR : MESSAGE);
 };
 
-export { getApp, assertPresence, assertFunnel };
+/**
+ * @description GraphQL request helper
+ * Matches the query based match on the operation name
+ * @author Luca Cattide
+ * @date 06/08/2025
+ * @param {*} req
+ * @param {string} operationName
+ * @returns {*}  {boolean}
+ */
+const hasOperationName = (req: any, operationName: string): boolean => {
+  const { body } = req;
+  return (
+    Object.prototype.hasOwnProperty.call(body, 'operationName') &&
+    body.operationName === operationName
+  );
+};
+
+/**
+ * @description GraphQL query helper
+ * Alias query if operationName matches
+ * @author Luca Cattide
+ * @date 06/08/2025
+ * @param {*} req
+ * @param {string} operationName
+ */
+const aliasQuery = (req: any, operationName: string): void => {
+  if (hasOperationName(req, operationName)) {
+    req.alias = `gql${operationName}Query`;
+  }
+};
+
+export { getApp, assertPresence, assertFunnel, aliasQuery };
