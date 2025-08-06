@@ -107,7 +107,7 @@ const patchNfts = async (
     const filter = setFilter(ids as string, true);
     const nftsUpdated = await nftModel
       // Updates and returns the records with new values
-      .updateMany(filter, { owner: body.owner }, { new: true })
+      .updateMany(filter, { owner: body.owner })
       .exec();
 
     // Data check

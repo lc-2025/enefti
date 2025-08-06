@@ -13,7 +13,7 @@ LABEL org.opencontainers.image.source=https://github.com/lc-2025/enefti
 LABEL org.opencontainers.image.description="eNefti"
 LABEL org.opencontainers.image.licenses=UNLICENSED
 # Working directory
-WORKDIR /enefti
+WORKDIR /enefti/backend
 # Production dependencies stage
 FROM base as deps
 # Build Arguments
@@ -65,8 +65,8 @@ USER node
 # Copy package
 COPY package.json .
 # Copy production dependencies & build
-COPY --from=deps /enefti/node_modules ./node_modules
-COPY --from=build /enefti/dist ./dist
+COPY --from=deps /enefti/backend/node_modules ./node_modules
+COPY --from=build /enefti/backend/dist ./dist
 # Expore Port
 EXPOSE ${PORT}
 # Start app
