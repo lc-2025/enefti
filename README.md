@@ -121,6 +121,12 @@ On terminal, from project root:
 npm run setup
 ```
 
+- To lint the sources for the `Frontend` workspace:
+
+```bash
+npm run lint
+```
+
 - To build the production version of all the workspaces:
 
 ```bash
@@ -130,7 +136,7 @@ npm run build
 - To run the tests in `testing` mode (staging or content-integration/delivery environments) on all the workspaces:
 
 ```bash
-npm run test:ci
+npm run test
 ```
 
 ## Contributing
