@@ -1,3 +1,4 @@
+import bundleAnalyzer from '@next/bundle-analyzer';
 import { NEXT_PUBLIC_BACKEND_URL } from '@/utilities/environment';
 import type { NextConfig } from 'next';
 
@@ -17,6 +18,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    optimizePackageImports: ['apollo'],
+  },
 };
+// Build Analyzer
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);
