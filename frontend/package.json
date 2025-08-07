@@ -18,7 +18,7 @@
     "cypress:open": "cypress open",
     "test": "jest --watch",
     "test:ci": "jest",
-    "build": "ANALYZE=true next build",
+    "build": "next build",
     "build:types": "graphql-codegen",
     "start": "next start"
   },
@@ -27,7 +27,6 @@
     "@apollo/experimental-nextjs-app-support": "^0.11.10",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
-    "@next/bundle-analyzer": "^15.4.6",
     "@next/env": "^15.2.2",
     "@reduxjs/toolkit": "^2.6.0",
     "@types/react-redux": "^7.1.34",
