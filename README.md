@@ -84,7 +84,7 @@ A full-stack website based on MERN consisting of a NFTs e-commerce for demo purp
 - GitHub
 - Husky
 
-### Content-integration/Delivery
+### Continuous-Integration/Delivery
 
 - GitHub Actions
 

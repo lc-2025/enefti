@@ -69,7 +69,7 @@ A front-end application consisting of a NFTs e-commerce populated and managed by
 
 - GitHub
 
-### Content-integration/Delivery
+### Continuous-Integration/Delivery
 
 - GitHub Actions
 

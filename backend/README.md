@@ -59,7 +59,7 @@ A server application that provides **REST/GraphQL API** to access and manage the
 
 - GitHub
 
-### Content-integration/Delivery
+### Continuous-Integration/Delivery
 
 - GitHub Actions
 
