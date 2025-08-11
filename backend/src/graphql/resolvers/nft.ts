@@ -1,14 +1,17 @@
 import { GraphQLResolverMap } from '@apollo/subgraph/dist/schema-helper';
 import { Types } from 'mongoose';
 import nftModel from '../../models/NFT';
-import setFilter from '../../utils/api';
-import { setError, setResponse } from '../../utils/graphql';
+import { setFilter } from '../../utils/api';
+import { setError, setResponse, validateRequest } from '../../utils/graphql';
 import { MESSAGE } from '../../utils/constants';
 
 // GraphQL - NFT Resolvers
 const resolversNft: GraphQLResolverMap<any> = {
   Query: {
     async nfts(parent, args) {
+      // Query validation
+      validateRequest(args);
+
       const count = await nftModel.countDocuments().exec();
       const nfts = await nftModel
         .aggregate([
@@ -44,6 +47,9 @@ const resolversNft: GraphQLResolverMap<any> = {
       return setResponse(nfts);
     },
     async nft(parent, args) {
+      // Query validation
+      validateRequest(args);
+
       // Requirements check
       if (!args.id) {
         setError(MESSAGE.INPUT, '400', 'id');

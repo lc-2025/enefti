@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import Joi from 'joi';
 
 // Constants
 /**
@@ -9,7 +10,17 @@ import 'dotenv/config';
 const { NODE_ENV, BASE_URL, PORT, DB_NAME, DB_USER, DB_PASSWORD } = process.env;
 // Listen to all interfaces
 const HOST = '0.0.0.0';
+const HEADER = {
+  XFP: 'x-forwarded-proto',
+};
+const PROTOCOL = {
+  HTTPS: 'https',
+};
 const PORT_DEFAULT = 4000;
+const RATE_LIMIT = {
+  WINDOW: 15 * 60 * 1000,
+  MAX_REQUESTS: 100,
+};
 const MESSAGE = {
   LISTEN: 'Server started and listening in',
   MISSING: 'Missing data: ',
@@ -21,6 +32,7 @@ const MESSAGE = {
   SEED_DUMP: 'DB dumped. Populating with fresh data...',
   SEED_DONE: 'DB populated. Closing connection...',
   INPUT: 'BAD_USER_INPUT',
+  VALIDATION: 'Invalid query string',
   SERVER: 'Internal server error',
 };
 const EVENT = {
@@ -91,5 +103,24 @@ const TEST = {
     },
   },
 };
+const QUERY_VALIDATION = {
+  search: Joi.string().alphanum().pattern(new RegExp('^[a-zA-Z0-9]$')),
+  ids: Joi.array().items(Joi.string().alphanum()),
+  id: Joi.string().alphanum(),
+  owner: Joi.string().alphanum().min(26).max(35),
+};
 
-export { NODE_ENV, HOST, PORT_DEFAULT, PORT, MESSAGE, EVENT, ROUTES, TEST };
+export {
+  NODE_ENV,
+  HOST,
+  HEADER,
+  PROTOCOL,
+  PORT_DEFAULT,
+  PORT,
+  RATE_LIMIT,
+  MESSAGE,
+  EVENT,
+  ROUTES,
+  TEST,
+  QUERY_VALIDATION,
+};

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
+import Joi from 'joi';
 import nftModel from '../models/NFT';
-import setFilter from '../utils/api';
+import { setFilter, validateRequest } from '../utils/api';
 import { MESSAGE } from '../utils/constants';
 
 /**
@@ -13,6 +14,9 @@ import { MESSAGE } from '../utils/constants';
  * @param {NextFunction} next
  */
 const getNfts = (req: Request, res: Response, next: NextFunction): void => {
+  // Query validation
+  validateRequest(req, res);
+
   // Query Pagination
   const options = {
     skip: req.query.skip ? Number(req.query.skip) : undefined,
@@ -60,6 +64,8 @@ const getNfts = (req: Request, res: Response, next: NextFunction): void => {
 const getNft = (req: Request, res: Response, next: NextFunction): void => {
   // Requirements check
   if (req.query.id) {
+    // Query validation
+    validateRequest(req, res);
     nftModel
       .findById(req.query.id)
       .exec()
@@ -104,6 +110,21 @@ const patchNfts = async (
   if (req.query.ids && req.body.owner) {
     const { ids } = req.query;
     const { body } = req;
+    // Query & body validation
+    const schema = Joi.object({
+      ids: Joi.array().items(Joi.string().alphanum()).required(),
+      owner: Joi.string().alphanum().min(26).max(35).required(),
+    });
+    const { error } = schema.validate({
+      ...req.query,
+      ...req.body,
+    });
+
+    // Validation check
+    if (error) {
+      res.status(409).send(error.details[0].message);
+    }
+
     const filter = setFilter(ids as string, true);
     const nftsUpdated = await nftModel
       // Updates and returns the records with new values

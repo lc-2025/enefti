@@ -1,4 +1,6 @@
 import { GraphQLError } from 'graphql';
+import Joi from 'joi';
+import { QUERY_VALIDATION } from './constants';
 
 // GraphQL Utilities
 // Helpers
@@ -26,4 +28,28 @@ const setError = (message: string, code: string, arg?: string): void => {
 const setResponse = (data: Array<any>) =>
   data.map((record) => ({ ...record, id: record._id }));
 
-export { setError, setResponse };
+/**
+ * @description Request validation helper
+ * Checks the integrity of query and mutation sent data
+ * @author Luca Cattide
+ * @date 11/08/2025
+ * @param {*} args
+ */
+const validateRequest = (args: any): void => {
+  // Validation
+  const validationParam = Joi.number();
+  const schema = Joi.object({
+    skip: validationParam,
+    limit: validationParam,
+    offset: validationParam,
+    ...QUERY_VALIDATION
+  });
+  const { error } = schema.validate(args);
+
+  // Validation check
+  if (error) {
+    setError(error.details[0].message, '409');
+  }
+};
+
+export { setError, setResponse, validateRequest };
