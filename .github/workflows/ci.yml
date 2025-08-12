@@ -77,8 +77,7 @@ jobs:
       - name: Getting dependencies
         uses: actions/cache/restore@v4
         with:
-          path: |
-            ~/.cachepath: ${{ env.DEPENDENCIES_PATH }}
+          path: ${{ env.DEPENDENCIES_PATH }}
           key: modules-${{ hashFiles(env.DEPENDENCIES_KEY) }}
           fail-on-cache-miss: true
       # Download stored project
