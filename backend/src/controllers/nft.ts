@@ -112,7 +112,7 @@ const patchNfts = async (
     const { body } = req;
     // Query & body validation
     const schema = Joi.object({
-      ids: Joi.array().items(Joi.string().alphanum()).required(),
+      ids: Joi.string().required(),
       owner: Joi.string().alphanum().min(26).max(35).required(),
     });
     const { error } = schema.validate({
