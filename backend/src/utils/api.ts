@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import Joi from 'joi';
 import { QUERY_VALIDATION } from './constants';
 import TQueryFilter from 'src/types/api/Query';
@@ -12,11 +13,15 @@ import TQueryFilter from 'src/types/api/Query';
  * @param {boolean} [parse]
  * @returns {*}  {TQueryFilter}
  */
-const setFilter = (data: any, parse?: boolean): TQueryFilter => ({
-  _id: {
-    $in: parse ? JSON.parse(data as string) : data,
-  },
-});
+const setFilter = (data: any, parse?: boolean): TQueryFilter => {
+  data = parse ? JSON.parse(data as string) : data;
+
+  return {
+    _id: {
+      $in: data.map((element: string) => new mongoose.Types.ObjectId(element)),
+    },
+  };
+};
 
 /**
  * @description Request validation helper
