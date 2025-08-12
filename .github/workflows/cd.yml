@@ -79,14 +79,20 @@ jobs:
   deploy-frontend:
     runs-on: ubuntu-latest
     needs: deploy-backend
+    env:
+      # Repository
+      DEPENDENCIES_PATH: |
+        ~/.cache
+        ./node_modules
+      DEPENDENCIES_KEY: '**/package-lock.json'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Getting dependencies
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
-          path: ./node_modules
-          key: modules-${{ hashFiles('**/package-lock.json') }}
+          path: ${{ env.DEPENDENCIES_PATH }}
+          key: modules-${{ hashFiles(env.DEPENDENCIES_KEY) }}
       - name: Getting production dependencies
         uses: actions/cache@v4
         with:

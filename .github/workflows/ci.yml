@@ -6,6 +6,13 @@ on:
   # For collaborations
   pull_request:
     branches: [main]
+env:
+  # Repository
+  DEPENDENCIES_PATH: |
+    ~/.cache
+    ./node_modules
+  DEPENDENCIES_KEY: '**/package-lock.json'
+  ARTIFACTS_NAME: enefti
 jobs:
   # Following jobs might be simplified into single one
   # Splitting as pipeline demonstration
@@ -46,17 +53,16 @@ jobs:
         run: npm run setup:ci
       # Cache dependencies for future reuse
       - name: Cache dependencies
-        uses: actions/cache@v4
+        uses: actions/cache/save@v4
         with:
-          path: |
-            ~/.cache
-            ./node_modules
-          key: modules-${{ hashFiles('**/package-lock.json') }}
+          path: ${{ env.DEPENDENCIES_PATH }}
+          # Generate a new cache whenever packages or source files change.
+          key: modules-${{ hashFiles(env.DEPENDENCIES_KEY) }}
       # Store project for future reuse
       - name: Archive project artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: enefti
+          name: ${{ env.ARTIFACTS_NAME }}
           # i.e. dotfiles
           include-hidden-files: true
           # Exclude dependencies to lighten artifacts (provided via cache)
@@ -68,18 +74,18 @@ jobs:
     needs: setup
     steps:
       # Get dependencies
-      - name: Cache dependencies
-        uses: actions/cache@v4
+      - name: Getting dependencies
+        uses: actions/cache/restore@v4
         with:
           path: |
-            ~/.cache
-            ./node_modules
-          key: modules-${{ hashFiles('**/package-lock.json') }}
+            ~/.cachepath: ${{ env.DEPENDENCIES_PATH }}
+          key: modules-${{ hashFiles(env.DEPENDENCIES_KEY) }}
+          fail-on-cache-miss: true
       # Download stored project
       - name: Getting project artifacts
         uses: actions/download-artifact@v4
         with:
-          name: enefti
+          name: ${{ env.ARTIFACTS_NAME }}
       - name: Allow MongoDB Atlas IP
         uses: textbook/atlas-ip@v1.1.0
         with:
@@ -105,15 +111,16 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
-      - name: Cache dependencies
-        uses: actions/cache@v4
+      - name: Getting dependencies
+        uses: actions/cache/restore@v4
         with:
-          path: ./node_modules
-          key: modules-${{ hashFiles('**/package-lock.json') }}
+          path: ${{ env.DEPENDENCIES_PATH }}
+          key: modules-${{ hashFiles(env.DEPENDENCIES_KEY) }}
+          fail-on-cache-miss: true
       - name: Getting project artifacts
         uses: actions/download-artifact@v4
         with:
-          name: enefti
+          name: ${{ env.ARTIFACTS_NAME }}
       - name: Build packages
         run: npm run build
       - name: Cache production dependencies
