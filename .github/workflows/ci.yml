@@ -8,8 +8,9 @@ on:
     branches: [main]
 permissions:
   actions: write
-  checks: read
+  checks: write
   contents: write
+  id-token: read
 env:
   # Repository
   DEPENDENCIES_PATH: |
