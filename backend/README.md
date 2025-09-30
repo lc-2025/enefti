@@ -20,62 +20,18 @@ A server application that provides **REST/GraphQL API** to access and manage the
 
 ## Stack
 
-### Languages
-
-- JavaScript
-- TypeScript
-- GraphQL
-- YAML
-- Bash
-
-### Environments
-
-- NodeJS
-
-### Libraries
-
-- Apollo GraphQL
-
-### Frameworks
-
-- Express
-- Jest
-
-### Linters/Plugins
-
-- ESLint
-- Prettier
-
-### Compilers
-
-- Babel
-- TypeScript
-
-### Testing
-
-- Jest
-
-### Versioning
-
-- GitHub
-
-### Content-integration/Delivery
-
-- GitHub Actions
-
-### Deployment
-
-- Docker/Compose
-- GitHub Container Registry
-- Render
-
-### Data storage
-
-- MongoDB Atlas
-
-### APIs
-
-- CoinGecko
+- **Languages**: JavaScript, Typescript, GraphQL, YAML, Bash
+- **Environments**: Node.js
+- **Libraries**: Apollo GraphQL, Supertest
+- **Frameworks**: Express, Jest
+- **Linters/Plugins**: ESLint, Prettier
+- **Compilers**: Babel, TypeScript
+- **Testing**: Jest, Supertest
+- **Versioning**: GitHub, Husky
+- **Continuous-Integration/Delivery**: GitHub Actions
+- **Deployment**: Docker/Compose, GitHub Container Registry, Render
+- **Database**: MongoDB Atlas
+- **APIs**: CoinGecko
 
 ## Getting Started
 
@@ -150,7 +106,7 @@ docker-compose stop
 _eNeFTi Backend_ is integrated and delivered to production via _GitHub Actions_ workflows pipeline, where the server is being set up, tested, built and containerized with _Docker_.
 Then the _Docker_ image is hosted on _GitHub Container Registry_ and deployed on _Render_ production environment available at [https://enefti-sha256.onrender.com](https://enefti-sha256.onrender.com)
 
-## Storage
+## Database
 
 The production database has been populated with mocked data generated via [automated seeding](./src/seed.ts). The process takes advantage of the third-party [CoinGecko API](https://www.coingecko.com/en/api) to provide realistic simulation of e-commerce crypto-related products.
 The automated seeding may be tested manually on a [local environment](#environment) via specific script.
@@ -162,7 +118,3 @@ On terminal, from project root:
 ```bash
 npm run seed
 ```
-
-## Contributing
-
-Please read more about required best practices on the specific [contributing reference document](../.github/CONTRIBUTING.md)

@@ -27,76 +27,18 @@ A full-stack website based on MERN consisting of a NFTs e-commerce for demo purp
 
 ## Stack
 
-### Languages
-
-- HTML
-- CSS
-- SASS
-- JavaScript
-- TypeScript
-- GraphQL
-- YAML
-- Bash
-
-### Environments
-
-- DOM
-- NodeJS
-
-### Libraries
-
-- Heroicons
-- Headless UI
-- Motion
-- Apollo GraphQL
-
-### Frameworks
-
-- React
-- NextJS
-- TailwindCSS
-- Express
-- Jest
-- Cypress
-
-### Pre/Post-Processors
-
-- PostCSS
-- Sass
-
-### Linters/Plugins
-
-- stylelint
-- ESLint
-- Prettier
-
-### Compilers
-
-- TypeScript
-
-### Testing
-
-- Jest
-- Cypress
-
-### Versioning
-
-- GitHub
-- Husky
-
-### Content-integration/Delivery
-
-- GitHub Actions
-
-### Deployment
-
-- Docker/Compose
-- Vercel
-- Render
-
-### Data storage
-
-- MongoDB Atlas
+- **Languages**: HTML, CSS, SASS, JavaScript, Typescript, GraphQL, YAML, Bash
+- **Environments**: DOM, Node.js
+- **Libraries**: Heroicons, Headless UI, Motion, Apollo GraphQL, Testing Library
+- **Frameworks**: React, Next.js, TailwindCSS, Express, Jest, Cypress
+- **Pre/Post-Processors**: PostCSS, Sass
+- **Linters/Plugins**: stylelint, ESLint, Prettier
+- **Compilers**: TypeScript
+- **Testing**: Jest, Testing Library, Cypress
+- **Versioning**: GitHub, Husky
+- **Continuous-Integration/Delivery**: GitHub Actions
+- **Deployment**: Docker/Compose, Vercel, Render
+- **Database**: MongoDB Atlas
 
 ## Getting Started
 
@@ -138,7 +80,3 @@ npm run build
 ```bash
 npm run test
 ```
-
-## Contributing
-
-Please read more about required best practices on the specific [contributing reference document](./.github/CONTRIBUTING.md)
