@@ -15,68 +15,17 @@ A front-end application consisting of a NFTs e-commerce populated and managed by
 
 ## Stack
 
-### Languages
-
-- HTML
-- CSS
-- SASS
-- JavaScript
-- TypeScript
-- GraphQL
-- YAML
-- Bash
-
-### Environments
-
-- DOM
-
-### Libraries
-
-- Heroicons
-- Headless UI
-- Motion
-- Apollo GraphQL
-
-### Frameworks
-
-- React
-- NextJS
-- TailwindCSS
-- Jest
-- Cypress
-
-### Pre/Post-Processors
-
-- PostCSS
-- Sass
-
-### Linters/Plugins
-
-- stylelint
-- ESLint
-- Prettier
-
-### Compilers
-
-- TypeScript
-
-### Testing
-
-- Jest
-- Cypress
-
-### Versioning
-
-- GitHub
-
-### Continuous-Integration/Delivery
-
-- GitHub Actions
-
-### Deployment
-
-- Docker/Compose
-- Vercel
+- **Languages**: HTML, CSS, SASS, JavaScript, Typescript, GraphQL, YAML, Bash
+- **Environments**: DOM
+- **Libraries**: Heroicons, Headless UI, Motion, Apollo GraphQL, Testing Library
+- **Frameworks**: React, Next.js, TailwindCSS, Express, Jest, Cypress
+- **Pre/Post-Processors**: PostCSS, Sass
+- **Linters/Plugins**: stylelint, ESLint, Prettier
+- **Compilers**: TypeScript
+- **Testing**: Jest, Testing Library, Cypress
+- **Versioning**: GitHub, Husky
+- **Continuous-Integration/Delivery**: GitHub Actions
+- **Deployment**: Docker/Compose, Vercel, Render
 
 ## Getting Started
 
@@ -138,7 +87,3 @@ npm run test:ci
 
 _eNeFTi Frontend_ is integrated and delivered to production via _GitHub Actions_ workflows pipeline, where the client is being set up, tested and built.
 Then the artifacts are deployed on _Vercel_ production environment available at [https://enefti-demo.vercel.app](https://enefti-demo.vercel.app)
-
-## Contributing
-
-Please read more about required best practices on the specific [contributing reference document](../.github/CONTRIBUTING.md)
