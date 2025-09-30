@@ -11,7 +11,7 @@ env:
   DEPENDENCIES_PATH: |
     ~/.cache
     ./node_modules
-  DEPENDENCIES_KEY: '**/package-lock.json'
+  DEPENDENCIES_KEY: "**/package-lock.json"
   ARTIFACTS_NAME: enefti
 jobs:
   # Following jobs might be simplified into single one
@@ -34,8 +34,8 @@ jobs:
       - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
-          cache: 'npm'
+          node-version: "22.x"
+          cache: "npm"
       - name: Create `env` files and provide environment variables
         run: |
           touch .env

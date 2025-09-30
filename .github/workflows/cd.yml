@@ -84,7 +84,7 @@ jobs:
       DEPENDENCIES_PATH: |
         ~/.cache
         ./node_modules
-      DEPENDENCIES_KEY: '**/package-lock.json'
+      DEPENDENCIES_KEY: "**/package-lock.json"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
