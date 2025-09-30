@@ -71,6 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      deployments: write
     needs: build-push
     steps:
       - name: Deploy Backend
@@ -83,6 +84,7 @@ jobs:
     permissions:
       contents: read
       deployments: write
+      id-token: write
     needs: deploy-backend
     env:
       # Repository

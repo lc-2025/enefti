@@ -8,6 +8,7 @@ on:
     branches: [main]
 permissions:
   actions: write
+  checks: read
   contents: write
 env:
   # Repository
