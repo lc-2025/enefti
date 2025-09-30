@@ -10,7 +10,7 @@ permissions:
   actions: write
   checks: write
   contents: write
-  id-token: read
+  id-token: write
 env:
   # Repository
   DEPENDENCIES_PATH: |
