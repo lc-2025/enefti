@@ -6,6 +6,8 @@ on:
   # For collaborations
   pull_request:
     branches: [main]
+permissions:
+  contents: write
 env:
   # Repository
   DEPENDENCIES_PATH: |

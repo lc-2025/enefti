@@ -19,7 +19,7 @@ jobs:
     # Pipeline Check
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     env:
-      BASE_URL: ${{ vars.BASE_URL }}
+      BASE_URL: ${{ vars.BASE_URL_BACKEND }}
       PORT: ${{ vars.PORT }}
       DB_NAME: ${{ secrets.DB_NAME }}
       DB_USER: ${{ secrets.DB_USER }}
@@ -69,6 +69,8 @@ jobs:
           push-to-registry: true
   deploy-backend:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: build-push
     steps:
       - name: Deploy Backend
@@ -78,6 +80,9 @@ jobs:
           curl "$deploy_url"
   deploy-frontend:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
     needs: deploy-backend
     env:
       # Repository
@@ -118,6 +123,7 @@ jobs:
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
   failure:
     runs-on: ubuntu-latest
+    permissions: {}
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps:
       - run: echo 'The triggering workflow failed'
