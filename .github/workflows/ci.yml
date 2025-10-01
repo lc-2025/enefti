@@ -98,7 +98,7 @@ jobs:
         with:
           working-directory: .
           project: ./frontend
-          build: NEXT_PRIVATE_EXPORT_WORKER_TIMEOUT=180000 npm run build
+          build: npm run build
           start: npm run start -w frontend
       # Tests report storing for QA/checks
       - name: Archive code coverage results
