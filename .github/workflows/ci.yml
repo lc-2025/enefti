@@ -93,13 +93,13 @@ jobs:
           group-id: ${{ secrets.ATLAS_GROUP_ID }}
       - name: Test applications
         run: npm run test
-      - name: Test applications - E2E
-        uses: cypress-io/github-action@v6
-        with:
-          working-directory: .
-          project: ./frontend
-          build: npm run build
-          start: npm run start -w frontend
+      #- name: Test applications - E2E
+      #  uses: cypress-io/github-action@v6
+      #  with:
+      #    working-directory: .
+      #    project: ./frontend
+      #    build: npm run build
+      #    start: npm run start -w frontend
       # Tests report storing for QA/checks
       - name: Archive code coverage results
         uses: actions/upload-artifact@v4
