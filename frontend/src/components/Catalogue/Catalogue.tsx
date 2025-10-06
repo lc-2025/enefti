@@ -106,7 +106,9 @@ const Catalogue = (): React.ReactNode => {
   };
 
   return loading ? (
-    <CustomLoading />
+    <div className="catalogue__loading mt-16 mb-16 flex basis-full justify-center">
+      <CustomLoading />
+    </div>
   ) : !data ? (
     notFound()
   ) : handleFilters().length > 0 ? (
