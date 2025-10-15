@@ -2,6 +2,17 @@
   "name": "@enefti/backend",
   "version": "0.1.0",
   "description": "NFTs E-Commerce backend demo - © LC 2025. All Rights reserved.",
+  "keywords": [
+    "express",
+    "graphql",
+    "mongodb",
+    "typescript",
+    "backend",
+    "docker",
+    "api",
+    "crypto-ecommerce",
+    "nft"
+  ],
   "homepage": "https://enefti-sha256.onrender.com",
   "repository": {
     "type": "git",
