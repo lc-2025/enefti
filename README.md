@@ -4,7 +4,10 @@ NFTs E-Commerce demo.
 
 ![eNefti](./docs/logo.svg "eNefti")
 ![eNefti - E-Commerce](./docs/preview.gif "eNefti - E-Commerce")
-![eNefti - E-Commerce](./docs/preview.png "eNefti - E-Commerce")
+![eNefti - E-Commerce - Light](./docs/preview.png "eNefti - E-Commerce - Light")
+![eNefti - E-Commerce - Dark](./frontend/docs/preview.png "eNefti - E-Commerce - Dark")
+![eNefti - Backend - REST](./docs/docs.png 'eNefti - Backend - REST')
+![eNefti - Backend - GraphQL](./docs/docs-1.png 'eNefti - Backend - GraphQL')
 
 [![eNeFTi CI](https://github.com/lc-2025/enefti/actions/workflows/ci.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/ci.yml) [![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
 
@@ -12,7 +15,7 @@ NFTs E-Commerce demo.
 
 A full-stack website based on MERN consisting of a NFTs e-commerce for demo purposes.
 
-© Luca Cattide 2025. All Rights reserved.
+© LC. All Rights reserved.
 
 ## Features
 

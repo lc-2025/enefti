@@ -1,7 +1,7 @@
 {
   "name": "@enefti/backend",
   "version": "0.1.0",
-  "description": "NFTs E-Commerce backend demo - © LC 2025. All Rights reserved.",
+  "description": "NFTs E-Commerce backend demo - © LC. All Rights reserved.",
   "keywords": [
     "express",
     "graphql",

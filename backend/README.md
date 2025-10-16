@@ -11,7 +11,7 @@ NFTs E-Commerce backend demo.
 
 A server application that provides **REST/GraphQL API** to access and manage the e-commerce products data stored on a **NoSQL database** cluster.
 
-© Luca Cattide 2025. All Rights reserved.
+© LC. All Rights reserved.
 
 ## API Documentation
 
