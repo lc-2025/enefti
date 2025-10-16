@@ -6,8 +6,8 @@ NFTs E-Commerce demo.
 ![eNefti - E-Commerce](./docs/preview.gif "eNefti - E-Commerce")
 ![eNefti - E-Commerce - Light](./docs/preview.png "eNefti - E-Commerce - Light")
 ![eNefti - E-Commerce - Dark](./frontend/docs/preview.png "eNefti - E-Commerce - Dark")
-![eNefti - Backend - REST](./docs/docs.png 'eNefti - Backend - REST')
-![eNefti - Backend - GraphQL](./docs/docs-1.png 'eNefti - Backend - GraphQL')
+![eNefti - Backend - REST](./backend/docs/docs.png 'eNefti - Backend - REST')
+![eNefti - Backend - GraphQL](./backend/docs/docs-1.png 'eNefti - Backend - GraphQL')
 
 [![eNeFTi CI](https://github.com/lc-2025/enefti/actions/workflows/ci.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/ci.yml) [![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
 
