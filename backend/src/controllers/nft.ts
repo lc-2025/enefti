@@ -122,7 +122,7 @@ const patchNfts = async (
 
     // Validation check
     if (error) {
-      res.status(409).send(error.details[0].message);
+      res.status(409).send({ message: escapeHtml(error.details[0].message) });
     }
 
     const filter = setFilter(ids as string, true);
