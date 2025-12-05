@@ -1,7 +1,20 @@
 {
   "name": "enefti",
   "version": "0.1.0",
-  "description": "NFTs E-Commerce demo - © LC 2025. All Rights reserved.",
+  "description": "NFTs E-Commerce demo - © LC. All Rights reserved.",
+  "keywords": [
+    "crypto-ecommerce",
+    "nft",
+    "fullstack",
+    "nextjs",
+    "express",
+    "graphql",
+    "mongodb",
+    "typescript",
+    "vercel",
+    "docker",
+    "ecommerce"
+  ],
   "homepage": "https://enefti-demo.vercel.app",
   "repository": {
     "type": "git",
