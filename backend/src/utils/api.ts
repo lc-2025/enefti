@@ -46,7 +46,7 @@ const validateRequest = (req: Request, res: Response): void => {
 
   // Validation check
   if (error) {
-    res.status(409).send(error.details[0].message);
+    res.status(409).json({ error: error.details[0].message });
   }
 };
 
