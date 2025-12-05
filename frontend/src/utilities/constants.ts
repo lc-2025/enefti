@@ -145,6 +145,11 @@ const ANIMATION = {
         duration: 0.1,
       },
     },
+    CATALOGUE: {
+      INITIAL: { opacity: 0, y: '100%' },
+      ANIMATE: { opacity: 1, y: 0 },
+      TRANSITION: { delay: 1 },
+    },
     DETAILS: {
       IMAGE: {
         INITIAL: {

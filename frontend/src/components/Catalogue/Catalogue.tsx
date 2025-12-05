@@ -1,13 +1,13 @@
 'use client';
 
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { notFound } from 'next/navigation';
 import { useQuery } from '@apollo/client';
 import CatalogueList from '@/components/Catalogue/CatalogueList';
-import Skeleton from '../Layout/Skeleton';
+import CustomLoading from '../Layout/CustomLoading';
 import Back from '../Layout/Back';
 import Empty from '../Empty';
-import CustomError from '../CustomError';
+import Filter from '@/components/Filter';
 import NFT_QUERY from '@/queries/nft';
 import { useAppDispatch, useAppSelector } from '@/hooks/state';
 import {
@@ -22,10 +22,10 @@ import {
   selectFilterPriceOrder,
 } from '@/slices/filters';
 import { selectAddress } from '@/slices/wallet';
-import { QUERY, TEST } from '@/utilities/constants';
+import { QUERY, TEST, FILTER } from '@/utilities/constants';
 import { Price } from '@/types/reducers/filters';
 import type { Nft } from '@/types/graphql/graphql';
-import CustomLoading from '../Loading';
+import { ArrowPathIcon } from '@heroicons/react/24/solid';
 
 /**
  * @description  NFTs Catalogue
@@ -34,6 +34,7 @@ import CustomLoading from '../Loading';
  * @returns {*}  {React.ReactNode}
  */
 const Catalogue = (): React.ReactNode => {
+  const [spinner, setSpinner] = useState<boolean>(false);
   // Hooks
   const offset = useAppSelector(selectOffset);
   const limit = useAppSelector(selectLimit);
@@ -93,12 +94,14 @@ const Catalogue = (): React.ReactNode => {
     const length = data!.nfts!.length;
     const currentLength = offset >= length ? offset : offset + length;
 
+    setSpinner(true);
     fetchMore({
       variables: {
         offset: currentLength,
         limit,
       },
     }).then((fetchMoreResult) => {
+      setSpinner(false);
       // Update current offset/limit
       dispatch(updateOffset(currentLength));
       dispatch(updateLimit(currentLength + fetchMoreResult.data.nfts!.length));
@@ -106,13 +109,42 @@ const Catalogue = (): React.ReactNode => {
   };
 
   return loading ? (
-    <CustomLoading />
+    <div className="catalogue__loading mt-16 mb-16 flex flex-1 justify-center">
+      <CustomLoading />
+    </div>
   ) : !data ? (
     notFound()
-  ) : handleFilters().length > 0 ? (
+  ) : (
     <>
-      <Suspense fallback={<Skeleton />}>
-        <CatalogueList nfts={handleFilters()} />
+      <Suspense fallback={<CustomLoading />}>
+        {/*  BEM notation for styles */}
+        <h1 className="catalogue__title title mt-12 mb-12 text-center uppercase">
+          Catalogue
+        </h1>
+        <div className="catalogue__container flex flex-col lg:flex-row lg:flex-wrap">
+          {/* Filters Start */}
+          <aside className="catalogue__filters mx-auto w-6/6 pr-6 pb-6 pl-6 lg:w-1/6">
+            <h2 className="filters__title title mb-12 text-center uppercase lg:text-left">
+              Filters
+            </h2>
+            <Filter
+              title="By Price"
+              filters={FILTER.PRICES}
+              type={FILTER.TYPE.RADIO}
+            />
+            <Filter
+              title="By Purchase"
+              filters={FILTER.OWNERS}
+              type={FILTER.TYPE.CHECK}
+            />
+          </aside>
+          {/* Filters End */}
+          {handleFilters().length > 0 ? (
+            <CatalogueList nfts={handleFilters()} />
+          ) : (
+            <Empty />
+          )}
+        </div>
       </Suspense>
       {
         // Paginate until the last set
@@ -120,22 +152,24 @@ const Catalogue = (): React.ReactNode => {
           // Pagination Start
           <aside className="catalogue__more mt-16 mb-16 flex basis-full justify-center">
             <h2 className="more__title hidden">More</h2>
-            <button
-              className="more__button btn btn-secondary cursor-pointer uppercase select-none"
-              onClick={handleMore}
-              tabIndex={data.nfts!.length + 1}
-              data-testid={TEST.ID.MORE}
-            >
-              Load more
-            </button>
+            {spinner ? (
+              <ArrowPathIcon className="more__icon size-12 animate-spin select-none" />
+            ) : (
+              <button
+                className="more__button btn btn-secondary cursor-pointer uppercase select-none"
+                onClick={handleMore}
+                tabIndex={data.nfts!.length + 1}
+                data-testid={TEST.ID.MORE}
+              >
+                Load more
+              </button>
+            )}
           </aside>
         )
         // Pagination End
       }
       <Back />
     </>
-  ) : (
-    <Empty />
   );
 };
 

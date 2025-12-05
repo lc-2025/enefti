@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { query } from '@/apolloRsc';
-import Skeleton from '@/components/Layout/Skeleton';
+import CustomLoading from '@/components/Layout/CustomLoading';
 import NftDetails from '@/components/Nft/NftDetails';
 import CustomError from '@/components/CustomError';
 import NFT_QUERY from '@/queries/nft';
@@ -40,7 +40,7 @@ export default async function Nft({
       <h1 className="details__title title mt-12 mb-12 text-center uppercase">
         Details
       </h1>
-      <Suspense fallback={<Skeleton />}>
+      <Suspense fallback={<CustomLoading />}>
         <NftDetails nft={data.nft as Nft} />
       </Suspense>
     </section>

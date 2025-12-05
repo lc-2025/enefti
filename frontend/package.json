@@ -1,7 +1,19 @@
 {
   "name": "@enefti/frontend",
   "version": "0.1.0",
-  "description": "NFT E-Commerce frontend demo - © LC 2025. All Rights reserved.",
+  "description": "NFT E-Commerce frontend demo - © LC. All Rights reserved.",
+  "keywords": [
+    "crypto-ecommerce",
+    "nft",
+    "nextjs",
+    "typescript",
+    "graphql-client",
+    "tailwindcss",
+    "redux",
+    "headlessui",
+    "vercel",
+    "frontend"
+  ],
   "homepage": "https://enefti-demo.vercel.app",
   "repository": {
     "type": "git",

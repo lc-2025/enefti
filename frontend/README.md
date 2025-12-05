@@ -3,7 +3,8 @@
 NFTs E-Commerce frontend demo.
 
 ![eNefti - Frontend](../docs/preview.gif 'eNefti - Frontend')
-![eNefti - Frontend](../docs/preview.png 'eNefti - Frontend')
+![eNefti - Frontend - Light](../docs/preview.png 'eNefti - Frontend - Light')
+![eNefti - Frontend - Dark](./docs/preview.png 'eNefti - Frontend - Dark')
 
 [![eNeFTi CI](https://github.com/lc-2025/enefti/actions/workflows/ci.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/ci.yml) [![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
 
@@ -11,21 +12,21 @@ NFTs E-Commerce frontend demo.
 
 A front-end application consisting of a NFTs e-commerce populated and managed by a dedicated back-end.
 
-© Luca Cattide 2025. All Rights reserved.
+© LC. All Rights reserved.
 
 ## Stack
 
 - **Languages**: HTML, CSS, SASS, JavaScript, Typescript, GraphQL, YAML, Bash
 - **Environments**: DOM
 - **Libraries**: Heroicons, Headless UI, Motion, Apollo GraphQL, Testing Library
-- **Frameworks**: React, Next.js, TailwindCSS, Express, Jest, Cypress
+- **Frameworks**: React, Next.js, TailwindCSS, Jest, Cypress
 - **Pre/Post-Processors**: PostCSS, Sass
 - **Linters/Plugins**: stylelint, ESLint, Prettier
 - **Compilers**: TypeScript
 - **Testing**: Jest, Testing Library, Cypress
 - **Versioning**: GitHub, Husky
 - **Continuous-Integration/Delivery**: GitHub Actions
-- **Deployment**: Docker/Compose, Vercel, Render
+- **Deployment**: Docker/Compose, Vercel
 
 ## Getting Started
 

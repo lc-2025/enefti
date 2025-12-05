@@ -104,7 +104,7 @@ const TEST = {
   },
 };
 const QUERY_VALIDATION = {
-  search: Joi.string().alphanum().pattern(new RegExp('^[a-zA-Z0-9]$')),
+  search: Joi.string().alphanum(),
   ids: Joi.string(),
   id: Joi.string().alphanum(),
   owner: Joi.string().alphanum().min(26).max(35),
