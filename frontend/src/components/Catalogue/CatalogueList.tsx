@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { motion } from 'motion/react';
 import NftActions from '../Nft/NftActions';
 import { selectStarred } from '@/slices/wishlist';
 import { selectAdded } from '@/slices/cart';
@@ -8,7 +9,7 @@ import useNftStored from '@/hooks/storage';
 import useNftActions from '@/hooks/actions';
 import { useAppSelector, useAppState } from '@/hooks/state';
 import { checkNftStatus, getNftIds, isPurchased } from '@/utilities/utils';
-import { ACTION_PREFIX, TEST } from '@/utilities/constants';
+import { ACTION_PREFIX, TEST, ANIMATION } from '@/utilities/constants';
 import { Nft } from '@/types/graphql/graphql';
 import TStorage from '@/types/storage';
 
@@ -20,6 +21,7 @@ import TStorage from '@/types/storage';
  * @returns {*}  {React.ReactNode}
  */
 const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
+  const { NFT, HEADER } = ANIMATION;
   const { WISHLIST, CART, WALLET } = ACTION_PREFIX;
   const { CATALOGUE_LIST, LIST_ELEMENT, ELEMENT_PRICE } = TEST.ID;
   // Hooks
@@ -34,7 +36,14 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
 
   return (
     // List Start
-    <ul
+    <motion.ul
+      variants={NFT.CATALOGUE}
+      initial="INITIAL"
+      animate="ANIMATE"
+      transition={{
+        ...HEADER.TRANSITION,
+        ...NFT.CATALOGUE.TRANSITION,
+      }}
       className="catalogue__container asymmetric-grid mx-auto w-6/6 lg:w-5/6"
       data-testid={CATALOGUE_LIST}
     >
@@ -94,7 +103,7 @@ const CatalogueList = ({ nfts }: { nfts: Array<Nft> }): React.ReactNode => {
         </li>
         // Element End
       ))}
-    </ul>
+    </motion.ul>
     // List End
   );
 };

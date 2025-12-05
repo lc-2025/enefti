@@ -8,7 +8,7 @@ import React from 'react';
  */
 const Empty = (): React.ReactNode => {
   return (
-    <p className="container__empty subtitle mx-auto self-center">
+    <p className="container__empty subtitle flex flex-1 items-center justify-center">
       No NFTs available.
     </p>
   );
