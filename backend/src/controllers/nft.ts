@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
+import { escape } from 'lodash';
 import nftModel from '../models/NFT';
 import { setFilter, validateRequest } from '../utils/api';
 import { MESSAGE } from '../utils/constants';
@@ -122,7 +123,7 @@ const patchNfts = async (
 
     // Validation check
     if (error) {
-      res.status(409).send({ message: escapeHtml(error.details[0].message) });
+      res.status(409).send(escape(error.details[0].message));
     }
 
     const filter = setFilter(ids as string, true);

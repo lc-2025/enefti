@@ -48,6 +48,7 @@
     "graphql-tag": "^2.12.6",
     "helmet": "^8.1.0",
     "joi": "^18.0.0",
+    "lodash": "^4.17.21",
     "mongoose": "^8.12.1",
     "swagger-ui-express": "^5.0.1"
   },
@@ -64,6 +65,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
+    "@types/lodash": "^4.17.21",
     "@types/mocha": "^10.0.10",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20.17.24",
