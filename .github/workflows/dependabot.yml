@@ -1,19 +1,29 @@
 name: Dependabot PRs
 run-name: Dependabot Pull-Requests
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
 permissions:
   contents: write
   pull-requests: write
+  checks: read
+  statuses: read
 jobs:
-  dependabot-auto-merge:
+  pr:
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]' && github.event.action != 'closed'
     env:
       VERSION: version-update:semver
     steps:
-      - name: Checkout repository
+      - name: Required status checks feedback
+        uses: fountainhead/action-wait-for-check@v1.2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          # Leaving empty to wait for all the checks
+          checkName: ""
+          intervalSeconds: 20
+      - name: Checkout PR branch
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
@@ -23,19 +33,23 @@ jobs:
         uses: dependabot/fetch-metadata@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Enable auto-merge for patch/minor
+      - name: Approve & Auto-merge (patch/minor) + PR branch deletion
         if: |
           steps.metadata.outputs.update-type == '${{ env.VERSION }}-patch' ||
           steps.metadata.outputs.update-type == '${{ env.VERSION }}-minor'
         run: |
-          gh pr merge --auto --squash "${{ github.event.pull_request.number }}"
+          gh pr review "${{ github.event.pull_request.number }}" --approve
+          gh pr merge "${{ github.event.pull_request.number }}" \
+            --auto --squash --delete-branch
+          echo "Patch/minor update merged and branch deleted"
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Comment on major updates
-        if: steps.metadata.outputs.update-type == 'version-update:semver-major'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Request review from codeowner on major update
+        if: steps.metadata.outputs.update-type == '${{ env.VERSION }}-major'
         run: |
-          gh pr comment "${{ github.event.pull_request.number }}" -b "This is a **major version update** and requires manual review before merging."
+          gh pr comment "${{ github.event.pull_request.number }}" \
+            -b "@lc-2025 This is a **major version bump** — please review before merging."
+          gh pr review "${{ github.event.pull_request.number }}" \
+            --request "@lc-2025"
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
