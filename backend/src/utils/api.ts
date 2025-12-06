@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import Joi from 'joi';
+import { escape } from 'lodash';
 import { QUERY_VALIDATION } from './constants';
 import TQueryFilter from 'src/types/api/Query';
 
@@ -46,7 +47,8 @@ const validateRequest = (req: Request, res: Response): void => {
 
   // Validation check
   if (error) {
-    res.status(409).json({ error: error.details[0].message });
+    // Escaping text response for security
+    res.status(409).send(escape(error.details[0].message));
   }
 };
 
