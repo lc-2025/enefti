@@ -40,10 +40,8 @@ jobs:
         if: |
           steps.metadata.outputs.update-type == '${{ env.VERSION }}-patch' || steps.metadata.outputs.update-type == '${{ env.VERSION }}-minor'
         run: |
-          gh pr review "${{ github.event.pull_request.number }}" --approve
-          gh pr merge "${{ github.event.pull_request.number }}" --auto --squash --delete-branch
+          scripts/dependabot_merge.sh ${{ github.event.pull_request.number }}
       - name: Request review from codeowner on major update
         if: steps.metadata.outputs.update-type == '${{ env.VERSION }}-major'
         run: |
-          gh pr comment "${{ github.event.pull_request.number }}" -b "@${{ env.USER }} This is a **major version bump** — please review before merging."
-          gh pr review "${{ github.event.pull_request.number }}" --request "${{ env.USER }}"
+          scripts/dependabot_review.sh ${{ github.event.pull_request.number }} ${{ env.USER }}
