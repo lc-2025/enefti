@@ -1,7 +1,8 @@
+# .github/workflows/dependabot.yml
 name: Dependabot PRs
 run-name: Dependabot Pull-Requests
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 permissions:
   contents: write
@@ -10,9 +11,11 @@ permissions:
   statuses: read
 jobs:
   pr:
+    if: github.actor == 'dependabot[bot]' && github.event.pull_request.draft == false && github.event.action != 'closed'
     runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]' && github.event.action != 'closed'
     env:
+      USER: ${{ github.repository_owner }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       VERSION: version-update:semver
     steps:
       - name: Required status checks feedback
@@ -35,21 +38,12 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Approve & Auto-merge (patch/minor) + PR branch deletion
         if: |
-          steps.metadata.outputs.update-type == '${{ env.VERSION }}-patch' ||
-          steps.metadata.outputs.update-type == '${{ env.VERSION }}-minor'
+          steps.metadata.outputs.update-type == '${{ env.VERSION }}-patch' || steps.metadata.outputs.update-type == '${{ env.VERSION }}-minor'
         run: |
           gh pr review "${{ github.event.pull_request.number }}" --approve
-          gh pr merge "${{ github.event.pull_request.number }}" \
-            --auto --squash --delete-branch
-          echo "Patch/minor update merged and branch deleted"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          gh pr merge "${{ github.event.pull_request.number }}" --auto --squash --delete-branch
       - name: Request review from codeowner on major update
         if: steps.metadata.outputs.update-type == '${{ env.VERSION }}-major'
         run: |
-          gh pr comment "${{ github.event.pull_request.number }}" \
-            -b "@lc-2025 This is a **major version bump** — please review before merging."
-          gh pr review "${{ github.event.pull_request.number }}" \
-            --request "@lc-2025"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          gh pr comment "${{ github.event.pull_request.number }}" -b "@${{ env.USER }} This is a **major version bump** — please review before merging."
+          gh pr review "${{ github.event.pull_request.number }}" --request "${{ env.USER }}"

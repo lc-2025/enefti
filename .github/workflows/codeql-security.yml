@@ -12,18 +12,18 @@ permissions:
 jobs:
   autofix:
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_REPO: ${{ github.repository }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install jq
         run: sudo apt-get install jq
       - name: Get open CodeQL alerts
         id: alerts
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          GITHUB_REPO: ${{ github.repository }}
         run: |
           # Opened Query Alerts (tool=CodeQL, state=open)
           ALERTS=$(gh api /repos/$GITHUB_REPO/code-scanning/alerts --jq '.alerts[] | select(.tool.name=="CodeQL") | @base64')
@@ -34,9 +34,7 @@ jobs:
       - name: Generate and apply fixes
         if: steps.alerts.outputs.alerts_count > 0
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          GITHUB_REPO: ${{ github.repository }}
-          USERNAME: "lc-2025"
+          USER: ${{ github.repository_owner }}
         run: |
           ALERTS=$(cat <<EOF
           ${{ steps.alerts.outputs.alerts_data }}
@@ -74,7 +72,7 @@ jobs:
             PR_NUMBER=$(echo $PR_RESPONSE | jq -r '.number')
 
             # Step 4: Assign to owner
-            gh pr edit $PR_NUMBER --add-assignee $USERNAME
+            gh pr edit $PR_NUMBER --add-assignee $USER
             # Close fixed alert
             gh api -X PATCH /repos/$GITHUB_REPO/code-scanning/alerts/$ALERT_ID -f state="fixed"
           done
