@@ -1,4 +1,3 @@
-# .github/workflows/dependabot.yml
 name: Dependabot PRs
 run-name: Dependabot Pull-Requests
 on:
