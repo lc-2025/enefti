@@ -33,7 +33,7 @@
     "seed": "ts-node --project tsconfig.json ./src/seed.ts"
   },
   "dependencies": {
-    "@apollo/server": "^4.11.3",
+    "@apollo/server": "^5.2.0",
     "@apollo/subgraph": "^2.10.0",
     "axios": "^1.8.2",
     "body-parser": "^1.20.3",
