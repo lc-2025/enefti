@@ -10,11 +10,9 @@ permissions:
   statuses: read
 jobs:
   pr:
-    if: github.actor == 'dependabot[bot]' && github.event.pull_request.draft == false && github.event.action != 'closed'
+    if: ${{ github.actor == 'dependabot[bot]' && github.event.pull_request.draft == false && github.event.action != 'closed' }}
     runs-on: ubuntu-latest
     env:
-      USER: ${{ github.repository_owner }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       VERSION: version-update:semver
     steps:
       - name: Required status checks feedback
@@ -36,11 +34,13 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Approve & Auto-merge (patch/minor) + PR branch deletion
-        if: |
-          steps.metadata.outputs.update-type == '${{ env.VERSION }}-patch' || steps.metadata.outputs.update-type == '${{ env.VERSION }}-minor'
-        run: |
-          scripts/dependabot_merge.sh ${{ github.event.pull_request.number }}
+        env:
+          PATCH: ${{ env.VERSION }}-patch
+          MINOR: ${{ env.VERSION }}-minor
+        if: ${{ steps.metadata.outputs.update-type == env.PATCH || steps.metadata.outputs.update-type == env.MINOR }}
+        run: scripts/dependabot_merge.sh ${{ github.event.pull_request.number }}
       - name: Request review from codeowner on major update
-        if: steps.metadata.outputs.update-type == '${{ env.VERSION }}-major'
-        run: |
-          scripts/dependabot_review.sh ${{ github.event.pull_request.number }} ${{ env.USER }}
+        env:
+          MAJOR: ${{ env.VERSION }}-major
+        if: ${{ steps.metadata.outputs.update-type == env.MAJOR }}
+        run: scripts/dependabot_review.sh ${{ github.event.pull_request.number }} ${{ github.repository_owner }}
