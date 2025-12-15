@@ -23,9 +23,7 @@ jobs:
         run: sudo apt-get install jq
       - name: Get open CodeQL alerts
         id: alerts
-        run: |
-          scripts/codeql_alerts.sh ${{ env.REPOSITORY }}
+        run: scripts/codeql_alerts.sh ${{ env.REPOSITORY }}
       - name: Generate and apply fixes
         if: steps.alerts.outputs.alerts_count > 0
-        run: |
-          scripts/codeql_fixes.sh ${{ steps.alerts.outputs.alerts_data }} ${{ env.REPOSITORY }} ${{ github.repository_owner }}
+        run: scripts/codeql_fixes.sh ${{ steps.alerts.outputs.alerts_data }} ${{ env.REPOSITORY }} ${{ github.repository_owner }}
