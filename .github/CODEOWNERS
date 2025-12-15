@@ -1,1 +1,3 @@
 * @lc-2025
+# Exclude automated PRs reviews
+.github/workflows/
