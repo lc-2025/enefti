@@ -20,7 +20,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          running-workflow-name: "Dependabot PRs"
+          running-workflow-name: ${{ github.workflow }}
       - name: Checkout PR branch
         uses: actions/checkout@v4
         with:
