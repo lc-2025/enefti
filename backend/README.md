@@ -1,120 +1,145 @@
-# eNeFTi - Backend Demo
+# eNeFTi — Backend
 
-NFTs E-Commerce backend demo.
+NFT e-commerce API server built with **Node.js**, **Express 4**, **Apollo Server 4 (GraphQL)**, **TypeScript 5.9**, and **MongoDB Atlas (Mongoose 8)**.
 
-![eNefti - Backend - REST](./docs/docs.png 'eNefti - Backend - REST')
-![eNefti - Backend - GraphQL](./docs/docs-1.png 'eNefti - Backend - GraphQL')
+[![eNeFTi CI](https://github.com/lc-2025/enefti/actions/workflows/ci.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/ci.yml)
+[![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
 
-[![eNeFTi CI](https://github.com/lc-2025/enefti/actions/workflows/ci.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/ci.yml) [![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
+**Live API:** [enefti-sha256.onrender.com](https://enefti-sha256.onrender.com)
 
-## About
+---
 
-A server application that provides **REST/GraphQL API** to access and manage the e-commerce products data stored on a **NoSQL database** cluster.
+## Overview
 
-© LC. All Rights reserved.
+The **eNeFTi Backend** exposes dual **GraphQL** and **REST** APIs to manage digital collectible catalogs, filtering, wishlist/cart persistence, and simulated checkout history backed by a **MongoDB Atlas** cluster.
 
-## API Documentation
+### Core Capabilities
 
-- The **REST API** documentation is provieded via _Swagger_ at [dedicated endpoint (see)](https://enefti-sha256.onrender.com/docs/rest)
-- The **GraphQL API** documentation is accessible via _Apolllo Studio_ at [dedicated endpoint (see)](https://enefti-sha256.onrender.com/graphql)
+- **Dual API Layer (GraphQL & REST):** Serves typed GraphQL queries and mutations via **Apollo Server 4** (`/graphql`) alongside versioned REST endpoints (`/docs/rest`) documented with **Swagger UI**.
+- **Production-Hardened Express Middleware:** Enforces security and performance best practices using **Helmet**, **CORS**, **express-rate-limit**, **express-mongo-sanitize**, **Joi** payload validation, and **compression**.
+- **Automated Catalog Seeding:** Includes a TypeScript seeding pipeline (`src/seed.ts`) integrated with the **CoinGecko API** to populate the database with 100 realistic NFT product records.
+- **Containerized Cloud Delivery:** Built with **Docker / Docker Compose**, published to **GitHub Container Registry (GHCR)**, and deployed to **Render** via automated GitHub Actions workflows.
 
-## Stack
+---
 
-- **Languages**: JavaScript, Typescript, GraphQL, YAML, Bash
-- **Environments**: Node.js
-- **Libraries**: Apollo GraphQL, Supertest
-- **Frameworks**: Express, Jest
-- **Linters/Plugins**: ESLint, Prettier
-- **Compilers**: Babel, TypeScript
-- **Testing**: Jest, Supertest
-- **Versioning**: GitHub, Husky
-- **Continuous-Integration/Delivery**: GitHub Actions
-- **Deployment**: Docker/Compose, GitHub Container Registry, Render
-- **Database**: MongoDB Atlas
-- **APIs**: CoinGecko
+## API Documentation & Previews
+
+- **REST API (Swagger UI):** [enefti-sha256.onrender.com/docs/rest](https://enefti-sha256.onrender.com/docs/rest)
+- **GraphQL API (Apollo Studio):** [enefti-sha256.onrender.com/graphql](https://enefti-sha256.onrender.com/graphql)
+
+![eNefti - Backend - REST](./docs/docs.png "eNefti - Backend - REST")
+![eNefti - Backend - GraphQL](./docs/docs-1.png "eNefti - Backend - GraphQL")
+
+---
+
+## Tech Stack
+
+- **Runtime & Framework:** Node.js, Express 4, TypeScript 5.9
+- **GraphQL & API Docs:** Apollo Server 4 (`@apollo/server`, `@apollo/subgraph`), GraphQL 16, Swagger UI Express
+- **Database & Validation:** MongoDB Atlas, Mongoose 8, Joi 18
+- **Security & Performance:** Helmet 8, CORS, express-rate-limit 8, express-mongo-sanitize, Compression
+- **External Integrations:** Axios, CoinGecko API
+- **Code Quality & Testing:** Jest 29, Supertest 7, ESLint 9, Prettier 3, Husky
+- **Containerization & Hosting:** Docker, Docker Compose, GitHub Actions, GitHub Container Registry (GHCR), Render
+
+---
 
 ## Getting Started
 
-The project production version is available on _Render_ at [https://enefti-sha256.onrender.com](https://enefti-sha256.onrender.com)
-For any contribution, maintanance and/or trial needs, please refer to the following specifications.
+### Prerequisites
 
-### Environment
+- **Node.js** (LTS) and **npm**
+- **MongoDB** instance (local or **MongoDB Atlas** cluster)
+- **Docker & Docker Compose** (optional, for containerized execution)
 
-In order to manage `development` or `production` versions, please set the proper `.env | .env.*` root file according to the distribution guidelines contained in the `.env.dist` version.
-The environment configuration contains the core info required by the server in order to start and communicate with the database. Live data resides on a _MongoDB Atlas_ cluster. For any local test, please provide the expected _MongoDB_ one.
+### Environment Configuration
 
-### Server
+Create your local environment file (`.env` / `.env.*`) in the `backend/` workspace based on `.env.dist`:
 
-On terminal, from project root:
+```bash
+cp .env.dist .env
+```
 
-- To run in `development` mode
+Configure the MongoDB connection string, CORS origins, rate-limit thresholds, and CoinGecko API settings prior to starting the server.
+
+### Database Seeding
+
+Populate a MongoDB cluster with 100 mocked NFT records generated via [src/seed.ts](./src/seed.ts) using the [CoinGecko API](https://www.coingecko.com/en/api):
+
+```bash
+npm run seed
+```
+
+### Development & Build Commands
+
+Run commands from the `backend/` directory (or via workspace scripts from the repository root):
+
+- **Start development server (`nodemon`):**
 
 ```bash
 npm run dev
 ```
 
-- To build the production version
+- **Run code formatter:**
+
+```bash
+npm run lint
+```
+
+- **Build TypeScript output & copy GraphQL schema:**
 
 ```bash
 npm run build
 ```
 
-- To run in `production` mode
+- **Start production server:**
 
 ```bash
 npm run start
 ```
 
-### Tests
+---
 
-#### Unit/Integration
+## Testing
 
-On terminal, from project root:
-
-- To run the tests in `development` mode
+- **Run unit & integration tests in watch mode:**
 
 ```bash
 npm run test
 ```
 
-- To run the tests in `testing` mode (staging or content-integration/delivery environments)
+- **Run unit & integration tests in CI mode:**
 
 ```bash
 npm run test:ci
 ```
 
-### Using Docker
+---
 
-You may use Docker to build the container and run the image required in the deployment step.
+## Docker & Deployment
 
-On terminal, from project root:
+### Local Container Execution
 
-- Build the image and run the container
+- **Build image and start container in detached mode:**
 
 ```bash
 docker-compose up -d --build
 ```
 
-- Stop the container
+- **Stop running container:**
 
 ```bash
 docker-compose stop
 ```
 
-## Deploy
+### Production CI/CD Pipeline
 
-_eNeFTi Backend_ is integrated and delivered to production via _GitHub Actions_ workflows pipeline, where the server is being set up, tested, built and containerized with _Docker_.
-Then the _Docker_ image is hosted on _GitHub Container Registry_ and deployed on _Render_ production environment available at [https://enefti-sha256.onrender.com](https://enefti-sha256.onrender.com)
+Automated **GitHub Actions** workflows (`ci.yml` / `cd.yml`) lint, test, compile, and containerize the server into a **Docker** image pushed to **GitHub Container Registry (GHCR)** and deployed to **Render** at [enefti-sha256.onrender.com](https://enefti-sha256.onrender.com).
 
-## Database
+---
 
-The production database has been populated with mocked data generated via [automated seeding](./src/seed.ts). The process takes advantage of the third-party [CoinGecko API](https://www.coingecko.com/en/api) to provide realistic simulation of e-commerce crypto-related products.
-The automated seeding may be tested manually on a [local environment](#environment) via specific script.
+## Copyright & Disclaimer
 
-On terminal, from project root:
+**All Rights Reserved (`UNLICENSED`).** The source code in this repository is the original work of the author and is published solely for portfolio demonstration and technical evaluation purposes. No license is granted for commercial use, redistribution, or derivative works.
 
-- Seed a _MongoDB_ cluster with 100 NFTs
-
-```bash
-npm run seed
-```
+All third-party trademarks, logos, digital asset artwork, and external API references (including CoinGecko) displayed in the application or preview media belong to their respective owners. The author claims no ownership or affiliation with those entities.
