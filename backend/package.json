@@ -43,7 +43,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-mongo-sanitize": "^2.2.0",
-    "express-rate-limit": "^8.0.1",
+    "express-rate-limit": "^8.7.5",
     "graphql": "^16.10.0",
     "graphql-tag": "^2.12.6",
     "helmet": "^8.1.0",
