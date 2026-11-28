@@ -1,21 +1,21 @@
 # eNeFTi
 
-NFT e-commerce storefront and digital asset platform built with **Next.js**, **React**, **TypeScript**, **GraphQL**, and **Node.js** in an NPM Workspaces monorepo.
+NFT e-commerce storefront and digital asset platform built with **Next.js**, **React**, **TypeScript**, **GraphQL**, and **Node.js** in an **NPM Workspaces** monorepo.
 
 [![eNeFTi CI](https://github.com/lc-2025/enefti/actions/workflows/ci.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/ci.yml)
 [![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
 
 **Live Demo:** [enefti-demo.vercel.app](https://enefti-demo.vercel.app)
-> Please note that the backend services are subject to cold starts. You might experience a little delay on a first run.
+> **Note:** Backend services are hosted on Render free-tier containers and may experience cold-start latency on the initial request.
 
-![eNefti](./docs/logo.svg "eNefti")
-![eNefti - E-Commerce](./docs/preview.gif "eNefti - E-Commerce")
+![eNeFTi](./docs/logo.svg "eNeFTi")
+![eNeFTi - E-Commerce](./docs/preview.gif "eNeFTi - E-Commerce")
 
 ---
 
 ## Overview
 
-**eNeFTi** is a full-stack digital collectibles storefront enabling users to browse paginated NFT catalogs, filter assets by price and ownership, manage persistent wishlists and shopping carts, and simulate end-to-end checkout flows with persisted purchase history.
+**eNeFTi** is an end-to-end digital collectibles storefront enabling users to browse paginated NFT catalogs, filter assets by price and ownership, manage persistent wishlists and shopping carts, and simulate checkout flows with persisted purchase history.
 
 ### Core Capabilities
 
@@ -26,9 +26,24 @@ NFT e-commerce storefront and digital asset platform built with **Next.js**, **R
 
 ---
 
-## Architecture & Tech Stack
+## System Architecture
 
-The repository is structured as an **NPM Workspaces monorepo** decoupling the Next.js storefront from the containerized GraphQL/REST backend:
+The repository is structured as an **NPM Workspaces** monorepo decoupling the Next.js storefront from the containerized GraphQL/REST backend:
+
+```mermaid
+flowchart LR
+    subgraph Monorepo ["NPM Workspaces Monorepo"]
+        FE["frontend/\nNext.js · React · TS\nApollo Client · Tailwind · Motion"]
+        BE["backend/\nNode.js · Express · TS\nApollo GraphQL · REST"]
+    end
+
+    FE <-- "GraphQL & REST API" --> BE
+    BE <-- "Persistence" --> DB[("MongoDB Atlas")]
+    FE -- "CI/CD" --> Vercel["Vercel Edge Network"]
+    BE -- "Docker Image" --> Render["Render Cloud"]
+```
+
+### Repository Layout
 
 ```text
 enefti/
@@ -48,14 +63,14 @@ enefti/
 
 ## Visual Previews
 
-- **Light Theme:** ![eNefti - E-Commerce - Light](./docs/preview.png "eNefti - E-Commerce - Light")
-- **Dark Theme:** ![eNefti - E-Commerce - Dark](./frontend/docs/preview.png "eNefti - E-Commerce - Dark")
-- **REST API Docs:** ![eNefti - Backend - REST](./backend/docs/docs.png "eNefti - Backend - REST")
-- **GraphQL Playground:** ![eNefti - Backend - GraphQL](./backend/docs/docs-1.png "eNefti - Backend - GraphQL")
+- **Light Theme:** ![eNeFTi - E-Commerce - Light](./docs/preview.png "eNeFTi - E-Commerce - Light")
+- **Dark Theme:** ![eNeFTi - E-Commerce - Dark](./frontend/docs/preview.png "eNeFTi - E-Commerce - Dark")
+- **REST API Docs:** ![eNeFTi - Backend - REST](./backend/docs/docs.png "eNeFTi - Backend - REST")
+- **GraphQL Playground:** ![eNeFTi - Backend - GraphQL](./backend/docs/docs-1.png "eNeFTi - Backend - GraphQL")
 
 ---
 
-## Documentation
+## Workspace Documentation
 
 For workspace-specific environment setup, API schemas, Docker Compose workflows, and testing instructions, refer to the dedicated guides:
 
@@ -64,38 +79,24 @@ For workspace-specific environment setup, API schemas, Docker Compose workflows,
 
 ---
 
-## Getting Started
+## Local Development & Scripts
 
-Run all workspace commands from the repository root:
+All root scripts orchestrate workspace tasks via NPM Workspaces:
 
-- **Install dependencies across all workspaces:**
-
-```bash
-npm run setup
-```
-
-- **Run linter and formatting checks:**
-
-```bash
-npm run lint
-```
-
-- **Execute test suites across all workspaces:**
-
-```bash
-npm run test
-```
-
-- **Build production bundles for all workspaces:**
-
-```bash
-npm run build
-```
+| Command | Scope | Description |
+| :--- | :--- | :--- |
+| `npm run setup` | All Workspaces | Installs dependencies across root, `frontend`, and `backend` (`--legacy-peer-deps`). |
+| `npm run setup:ci` | All Workspaces | Deterministic clean install for CI environments (`npm ci --legacy-peer-deps`). |
+| `npm run lint` | `frontend` | Runs ESLint, Stylelint, and Prettier validation on the storefront codebase. |
+| `npm run test` | All Workspaces | Executes CI unit and integration test suites across all workspaces (`--ws`). |
+| `npm run build` | All Workspaces | Compiles production bundles for both `frontend` and `backend` (`--ws`). |
 
 ---
 
 ## Copyright & Disclaimer
 
 **All Rights Reserved (`UNLICENSED`).** The source code in this repository is the original work of the author and is published solely for portfolio demonstration and technical evaluation purposes. No license is granted for commercial use, redistribution, or derivative works.
+
+All third-party trademarks, logos, digital asset artwork, and external API references displayed in the application or preview media belong to their respective owners. The author claims no ownership or affiliation with those entities.
 
 All third-party trademarks, logos, digital asset artwork, and external API references displayed in the application or preview media belong to their respective owners. The author claims no ownership or affiliation with those entities.
