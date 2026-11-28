@@ -27,8 +27,9 @@ The **eNeFTi Frontend** provides a responsive digital collectibles storefront th
 
 ## Visual Previews
 
-- **Light Theme:** ![eNefti - Frontend - Light](../docs/preview.png "eNefti - Frontend - Light")
-- **Dark Theme:** ![eNefti - Frontend - Dark](./docs/preview.png "eNefti - Frontend - Dark")
+| Light Theme | Dark Theme |
+| :---: | :---: |
+| ![eNeFTi - Frontend - Light](../docs/preview.png "eNeFTi - Frontend - Light") | ![eNeFTi - Frontend - Dark](./docs/preview.png "eNeFTi - Frontend - Dark") |
 
 ---
 
