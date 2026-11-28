@@ -1,90 +1,130 @@
-# eNeFTi - Frontend Demo
+# eNeFTi — Frontend
 
-NFTs E-Commerce frontend demo.
+NFT e-commerce storefront application built with **Next.js 16**, **React 19**, **TypeScript 5.9**, **Apollo GraphQL**, **Redux Toolkit**, and **Tailwind CSS v4**.
 
-![eNefti - Frontend](../docs/preview.gif 'eNefti - Frontend')
-![eNefti - Frontend - Light](../docs/preview.png 'eNefti - Frontend - Light')
-![eNefti - Frontend - Dark](./docs/preview.png 'eNefti - Frontend - Dark')
+[![eNeFTi CI](https://github.com/lc-2025/enefti/actions/workflows/ci.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/ci.yml)
+[![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
 
-[![eNeFTi CI](https://github.com/lc-2025/enefti/actions/workflows/ci.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/ci.yml) [![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
+**Live Demo:** [enefti-demo.vercel.app](https://enefti-demo.vercel.app)
 
-## About
+![eNefti - Frontend](../docs/preview.gif "eNefti - Frontend")
 
-A front-end application consisting of a NFTs e-commerce populated and managed by a dedicated back-end.
+---
 
-© LC. All Rights reserved.
+## Overview
 
-## Stack
+The **eNeFTi Frontend** provides a responsive digital collectibles storefront that connects to the dedicated GraphQL/REST backend API to browse paginated NFT catalogs, filter assets, manage persistent cart and wishlist state, and complete simulated checkout flows.
 
-- **Languages**: HTML, CSS, SASS, JavaScript, Typescript, GraphQL, YAML, Bash
-- **Environments**: DOM
-- **Libraries**: Heroicons, Headless UI, Motion, Apollo GraphQL, Testing Library
-- **Frameworks**: React, Next.js, TailwindCSS, Jest, Cypress
-- **Pre/Post-Processors**: PostCSS, Sass
-- **Linters/Plugins**: stylelint, ESLint, Prettier
-- **Compilers**: TypeScript
-- **Testing**: Jest, Testing Library, Cypress
-- **Versioning**: GitHub, Husky
-- **Continuous-Integration/Delivery**: GitHub Actions
-- **Deployment**: Docker/Compose, Vercel
+### Core Capabilities
+
+- **Typed GraphQL Data Layer:** Uses **Apollo Client** (`@apollo/client` & `@apollo/experimental-nextjs-app-support`) paired with **GraphQL Code Generator** (`graphql-codegen`) for end-to-end type-safe queries and mutations.
+- **Client State & Persistence:** Manages shopping cart, wishlist, and purchase history state with **Redux Toolkit** (`@reduxjs/toolkit`, `react-redux`).
+- **Accessible & Animated UI:** Built with **Tailwind CSS v4**, **Sass**, **Headless UI**, **Heroicons**, and **Motion**, supporting automatic system-detected Light and Dark themes.
+- **Cold-Start Resilience & UX:** Handles backend cold-start states gracefully with non-blocking loading feedback while fetching catalog data.
+
+---
+
+## Visual Previews
+
+- **Light Theme:** ![eNefti - Frontend - Light](../docs/preview.png "eNefti - Frontend - Light")
+- **Dark Theme:** ![eNefti - Frontend - Dark](./docs/preview.png "eNefti - Frontend - Dark")
+
+---
+
+## Tech Stack
+
+- **Framework & Core:** Next.js 16 (`--turbopack`), React 19, TypeScript 5.9
+- **Data & State Management:** Apollo Client 3, GraphQL 16, GraphQL Codegen, Redux Toolkit 2
+- **Styling & UI Components:** Tailwind CSS v4, Sass, Headless UI, Heroicons, Motion 12
+- **Code Quality & Linting:** ESLint 9, Prettier 3 (`prettier-plugin-tailwindcss`), Stylelint 16, Husky
+- **Testing:** Jest 29, React Testing Library 16, Cypress 14 (`@testing-library/cypress`)
+- **CI/CD & Hosting:** GitHub Actions, Docker, Vercel
+
+---
 
 ## Getting Started
 
-The project production version is available on _Vercel_ at [https://enefti-demo.vercel.app](https://enefti-demo.vercel.app)
-For any contribution, maintanance and/or trial needs, please refer to the following specifications.
+### Prerequisites
 
-### Environment
+- **Node.js** (LTS) and **npm**
+- Running instance of the [eNeFTi Backend](../backend/README.md) (or configured remote API endpoint)
 
-In order to manage `development` or `production` versions, please set the proper `.env | .env.*` root file according to the distribution guidelines contained in the `.env.dist` version.
-The environment configuration contains the core info required by the client in order to start and communicate with the database, as well as perform End-To-End testing. For any local test, please provide the expected one.
+### Environment Configuration
 
-### Client
+Create your local environment file (`.env` / `.env.local`) in the `frontend/` workspace based on `.env.dist`:
 
-On terminal, from project root:
+```bash
+cp .env.dist .env.local
+```
 
-- To run in `development` mode
+Configure the required variables for API communication and end-to-end testing before starting the development server.
+
+### Development & Build Commands
+
+Run commands from the `frontend/` directory (or via workspace scripts from the repository root):
+
+- **Start development server (Turbopack):**
 
 ```bash
 npm run dev
 ```
 
-- To build the production version
+- **Generate GraphQL TypeScript types:**
+
+```bash
+npm run build:types
+```
+
+- **Run linter and formatting checks:**
+
+```bash
+npm run lint
+```
+
+- **Build production bundle:**
 
 ```bash
 npm run build
 ```
 
-- To run in `production` mode
+- **Start production server:**
 
 ```bash
 npm run start
 ```
 
-### Tests
+---
 
-#### Unit/Integration/End-To-End
+## Testing
 
-On terminal, from project root:
-
-- To run the unit/integration tests in `development` mode
+- **Run unit & integration tests in watch mode:**
 
 ```bash
 npm run test
 ```
 
-- To run the end-to-end tests in `development` mode
-
-```bash
-npm run cypress:open
-```
-
-- To run the tests in `testing` mode (staging or content-integration/delivery environments)
+- **Run unit & integration tests in CI mode:**
 
 ```bash
 npm run test:ci
 ```
 
-## Deploy
+- **Open Cypress interactive E2E test runner:**
 
-_eNeFTi Frontend_ is integrated and delivered to production via _GitHub Actions_ workflows pipeline, where the client is being set up, tested and built.
-Then the artifacts are deployed on _Vercel_ production environment available at [https://enefti-demo.vercel.app](https://enefti-demo.vercel.app)
+```bash
+npm run cypress:open
+```
+
+---
+
+## Deployment
+
+Continuous integration and delivery are automated via **GitHub Actions** (`ci.yml` / `cd.yml`), running linting, type checks, unit/integration tests, and production builds prior to deploying the frontend artifact to **Vercel** at [enefti-demo.vercel.app](https://enefti-demo.vercel.app).
+
+---
+
+## Copyright & Disclaimer
+
+**All Rights Reserved (`UNLICENSED`).** The source code in this repository is the original work of the author and is published solely for portfolio demonstration and technical evaluation purposes. No license is granted for commercial use, redistribution, or derivative works.
+
+All third-party trademarks, logos, digital asset artwork, and external API references displayed in the application or preview media belong to their respective owners. The author claims no ownership or affiliation with those entities.
