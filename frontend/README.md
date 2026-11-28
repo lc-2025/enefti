@@ -6,6 +6,7 @@ NFT e-commerce storefront application built with **Next.js 16**, **React 19**, *
 [![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
 
 **Live Demo:** [enefti-demo.vercel.app](https://enefti-demo.vercel.app)
+> Please note that the backend services are subject to cold starts. You might experience a little delay on a first run.
 
 ![eNefti - Frontend](../docs/preview.gif "eNefti - Frontend")
 
