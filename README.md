@@ -1,85 +1,100 @@
 # eNeFTi
 
-NFTs E-Commerce demo.
+NFT e-commerce storefront and digital asset platform built with **Next.js**, **React**, **TypeScript**, **GraphQL**, and **Node.js** in an NPM Workspaces monorepo.
+
+[![eNeFTi CI](https://github.com/lc-2025/enefti/actions/workflows/ci.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/ci.yml)
+[![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
+
+**Live Demo:** [enefti-demo.vercel.app](https://enefti-demo.vercel.app)
 
 ![eNefti](./docs/logo.svg "eNefti")
 ![eNefti - E-Commerce](./docs/preview.gif "eNefti - E-Commerce")
-![eNefti - E-Commerce - Light](./docs/preview.png "eNefti - E-Commerce - Light")
-![eNefti - E-Commerce - Dark](./frontend/docs/preview.png "eNefti - E-Commerce - Dark")
-![eNefti - Backend - REST](./backend/docs/docs.png 'eNefti - Backend - REST')
-![eNefti - Backend - GraphQL](./backend/docs/docs-1.png 'eNefti - Backend - GraphQL')
 
-[![eNeFTi CI](https://github.com/lc-2025/enefti/actions/workflows/ci.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/ci.yml) [![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
+---
 
-## About
+## Overview
 
-A full-stack website based on MERN consisting of a NFTs e-commerce for demo purposes.
+**eNeFTi** is a full-stack digital collectibles storefront enabling users to browse paginated NFT catalogs, filter assets by price and ownership, manage persistent wishlists and shopping carts, and simulate end-to-end checkout flows with persisted purchase history.
 
-© LC. All Rights reserved.
+### Core Capabilities
 
-## Features
+- **Catalog Discovery & Filtering:** Browse paginated digital asset listings, inspect token details, search tokens by name, and filter inventory by price range and ownership status.
+- **Persistent Cart, Wishlist & Checkout Simulation:** Maintain wishlist and cart state across sessions, execute simulated checkout transactions, and review persisted purchase history in **MongoDB Atlas**.
+- **Dual API Layer (GraphQL & REST):** Powered by **Apollo GraphQL** and **Express** to serve structured catalog queries and transactional mutations alongside documented REST endpoints.
+- **Adaptive UI & Motion:** Responsive interface built with **Next.js**, **TailwindCSS**, **Headless UI**, and **Motion**, supporting automatic system-detected Light and Dark themes.
 
-- Catalogue pagination and details displaying
-- NFTs filtering by price and ownership
-- Products wishlist and cart persistence
-- Checkout simulation and storage
-- Persisting purchases history
-- Token search by name
-- Light/Dark theme with system-detection support
-- Responsiveness
+---
 
-## Stack
+## Architecture & Tech Stack
 
-- **Languages**: HTML, CSS, SASS, JavaScript, Typescript, GraphQL, YAML, Bash
-- **Environments**: DOM, Node.js
-- **Libraries**: Heroicons, Headless UI, Motion, Apollo GraphQL, Testing Library
-- **Frameworks**: React, Next.js, TailwindCSS, Express, Jest, Cypress
-- **Pre/Post-Processors**: PostCSS, Sass
-- **Linters/Plugins**: stylelint, ESLint, Prettier
-- **Compilers**: TypeScript
-- **Testing**: Jest, Testing Library, Cypress
-- **Versioning**: GitHub, Husky
-- **Continuous-Integration/Delivery**: GitHub Actions
-- **Deployment**: Docker/Compose, Vercel, Render
-- **Database**: MongoDB Atlas
+The repository is structured as an **NPM Workspaces monorepo** decoupling the Next.js storefront from the containerized GraphQL/REST backend:
+
+```text
+enefti/
+├── frontend/          # Next.js, React, TypeScript, TailwindCSS, Apollo Client, Motion, Jest, Cypress
+├── backend/           # Node.js, Express, TypeScript, Apollo GraphQL, MongoDB Atlas, Jest, Docker
+├── docs/              # Documentation assets, brand logo, and preview media
+└── .github/workflows/ # Automated CI (lint, unit/E2E tests, build) & CD (Docker -> Render / Vercel)
+```
+
+### Engineering Trade-offs
+
+- **Hybrid GraphQL & REST API Architecture:** Combining **Apollo GraphQL** for flexible storefront catalog queries and client-side cache normalization with **Express** REST endpoints provides strict data-fetching efficiency on the UI while preserving straightforward integration and documentation for backend services.
+- **End-to-End TypeScript & Code Quality Governance:** Shared TypeScript compilation, ESLint, Prettier, stylelint, and Husky pre-commit hooks enforce consistent code standards across both workspaces before running Jest unit/integration suites and Cypress E2E tests.
+- **Decoupled Cloud Deployment:** Automated GitHub Actions CI/CD pipelines validate builds and test suites prior to deploying the frontend storefront to **Vercel** and the containerized backend service via **Docker** to **Render**.
+
+---
+
+## Visual Previews
+
+- **Light Theme:** ![eNefti - E-Commerce - Light](./docs/preview.png "eNefti - E-Commerce - Light")
+- **Dark Theme:** ![eNefti - E-Commerce - Dark](./frontend/docs/preview.png "eNefti - E-Commerce - Dark")
+- **REST API Docs:** ![eNefti - Backend - REST](./backend/docs/docs.png "eNefti - Backend - REST")
+- **GraphQL Playground:** ![eNefti - Backend - GraphQL](./backend/docs/docs-1.png "eNefti - Backend - GraphQL")
+
+---
+
+## Documentation
+
+For workspace-specific environment setup, API schemas, Docker Compose workflows, and testing instructions, refer to the dedicated guides:
+
+- **[Frontend Documentation](./frontend/README.md)** — Next.js storefront, Apollo GraphQL client, theme management, Jest & Cypress E2E.
+- **[Backend Documentation](./backend/README.md)** — Express & Apollo GraphQL server, MongoDB Atlas persistence, Docker & Render deployment.
+
+---
 
 ## Getting Started
 
-The project production version is available on _Vercel_ at [https://enefti-demo.vercel.app](https://enefti-demo.vercel.app).
-For any contribution, maintanance and/or trial needs, please refer to the following specifications and side-ones:
+Run all workspace commands from the repository root:
 
-- [Frontend](./frontend/README.md)
-- [Backend](./backend/README.md)
-
-## Repository
-
-The project reflects a monolithic setting - monorepo - using _NPM Workspaces_ to organize both frontend than backend sides.
-Workspaces may be globally managed accordingly to the following specifications.
-
-## Setting Up
-
-On terminal, from project root:
-
-- To install dependencies for all the workspaces:
+- **Install dependencies across all workspaces:**
 
 ```bash
 npm run setup
 ```
 
-- To lint the sources for the `Frontend` workspace:
+- **Run linter and formatting checks:**
 
 ```bash
 npm run lint
 ```
 
-- To build the production version of all the workspaces:
+- **Execute test suites across all workspaces:**
+
+```bash
+npm run test
+```
+
+- **Build production bundles for all workspaces:**
 
 ```bash
 npm run build
 ```
 
-- To run the tests in `testing` mode (staging or content-integration/delivery environments) on all the workspaces:
+---
 
-```bash
-npm run test
-```
+## Copyright & Disclaimer
+
+**All Rights Reserved (`UNLICENSED`).** The source code in this repository is the original work of the author and is published solely for portfolio demonstration and technical evaluation purposes. No license is granted for commercial use, redistribution, or derivative works.
+
+All third-party trademarks, logos, digital asset artwork, and external API references displayed in the application or preview media belong to their respective owners. The author claims no ownership or affiliation with those entities.
