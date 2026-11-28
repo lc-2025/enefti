@@ -6,6 +6,7 @@ NFT e-commerce storefront and digital asset platform built with **Next.js**, **R
 [![eNeFTi CD](https://github.com/lc-2025/enefti/actions/workflows/cd.yml/badge.svg)](https://github.com/lc-2025/enefti/actions/workflows/cd.yml)
 
 **Live Demo:** [enefti-demo.vercel.app](https://enefti-demo.vercel.app)
+> Please note that the backend services are subject to cold starts. You might experience a little delay on a first run.
 
 ![eNefti](./docs/logo.svg "eNefti")
 ![eNefti - E-Commerce](./docs/preview.gif "eNefti - E-Commerce")
